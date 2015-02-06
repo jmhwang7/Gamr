@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">Gamr</string>
+    <string name="title_section1">Section 1</string>
+    <string name="title_section2">Section 2</string>
+    <string name="title_section3">Section 3</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
+    <string name="title_activity_splash_screen">SplashScreenActivity</string>
+
+    <string name="splash_screen_greeting">Find friends to play LoL or Smash with Gamr.</string>
+    <string name="splash_screen_next">Get Started</string>
+
+    <string name="registration_username_hint">Pick a Username</string>
+    <string name="registration_email_hint">Enter Your Email</string>
+    <string name="registration_password_hint">Choose a Password</string>
+    <string name="registration_create">Create Account</string>
+
+</resources>
