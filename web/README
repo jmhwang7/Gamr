@@ -1,0 +1,7 @@
+Website URL: http://gamr.buildism.net/
+To pull from the repository to the server, use http://gamr.buildism.net/git_sync.php
+
+Database server: localhost
+Database username: the name of this app (lowercase)
+Database password: team##
+Database admin: http://buildism.net/phpmyadmin
