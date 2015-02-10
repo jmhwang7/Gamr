@@ -8,13 +8,51 @@
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
     <string name="title_activity_splash_screen">SplashScreenActivity</string>
-
     <string name="splash_screen_greeting">Find friends to play LoL or Smash with Gamr.</string>
-    <string name="splash_screen_next">Get Started</string>
-
+    <string name="splash_screen_lol_button">Get Started</string>
     <string name="registration_username_hint">Pick a Username</string>
     <string name="registration_email_hint">Enter Your Email</string>
     <string name="registration_password_hint">Choose a Password</string>
     <string name="registration_create">Create Account</string>
+    <string name="title_activity_league_profile">LeagueProfileActivity</string>
+
+    <!-- These are the strings for the League profile activity-->
+    <string name="default_tag_string">Choose a tag name</string>
+    <string name="default_profile_string">Enter your summoner name</string>
+
+    <string name="role_string">Role</string>
+
+    <!-- Role dropdown menu -->
+    <string-array name="role_dropdown">
+        <item>AD Carry</item>
+        <item>Support</item>
+        <item>Jungle</item>
+        <item>Mid</item>
+        <item>Top</item>
+    </string-array>
+
+    <string name="modes_string">Mode</string>
+
+    <!-- Modes dropdown menu -->
+    <string-array name="modes_dropdown">
+        <item>Ranked Duo</item>
+        <item>Ranked 5v5</item>
+        <item>Ranked 3v3</item>
+        <item>Casual 5v5</item>
+        <item>Dominion</item>
+    </string-array>
+
+    <string name="server_string">Server</string>
+
+    <!-- Server dropdown menu -->
+    <string-array name="server_dropdown">
+        <item>US East</item>
+        <item>US West</item>
+        <item>EU East</item>
+        <item>EU West</item>
+    </string-array>
+
+    <string name="find_matches_string">Find matches</string>
+
 
 </resources>

@@ -1,39 +1,44 @@
 package com.gamr.gamr;
 
-import android.support.v7.app.ActionBarActivity;
+import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuItem;
+import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 
 
-public class SplashScreenActivity extends ActionBarActivity {
-
+public class SplashScreenActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        // Sets the activity to fullscreen with no settings bar
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+                WindowManager.LayoutParams.FLAG_FULLSCREEN);
+
         setContentView(R.layout.activity_splash_screen);
     }
 
+    /**
+     * Used to handle the various button events for starting a search
+     * @param v
+     */
+    public void buttonListener(View v) {
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_splash_screen, menu);
-        return true;
-    }
+        switch (v.getId()) {
+            case R.id.lol_button:
+                // If the user wants to start a league search
+                Intent intent = new Intent(this, LeagueProfileActivity.class);
+                startActivity(intent);
+                finish();
+            break;
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
 
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
+            default:
+
+            break;
         }
-
-        return super.onOptionsItemSelected(item);
     }
 }

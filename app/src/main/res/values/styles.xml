@@ -1,4 +1,5 @@
 <resources>
+    <color name="BasicBackgroundColor">#FDF3E7</color>
 
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
@@ -8,4 +9,8 @@
         <item name="colorAccent">@color/accent</item>
     </style>
 
+    <style name="BasicTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+        <!-- Basic background drawing -->
+        <item name="android:background">@color/BasicBackgroundColor</item>
+    </style>
 </resources>
