@@ -128,7 +128,8 @@
             android:layout_height="wrap_content"
             android:text="@string/find_matches_string"
             android:id="@+id/findMatchesButton"
-            android:layout_gravity="center_horizontal" />
+            android:layout_gravity="center_horizontal"
+            android:onClick="buttonClicked"/>
 
     </LinearLayout>
 </RelativeLayout>

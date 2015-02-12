@@ -7,17 +7,7 @@
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
-        <activity
-            android:name=".MainActivity"
-            android:label="@string/app_name" >
 
-            <!-- <intent-filter> -->
-            <!-- <action android:name="android.intent.action.MAIN" /> -->
-
-
-            <!-- <category android:name="android.intent.category.LAUNCHER" /> -->
-            <!-- </intent-filter> -->
-        </activity>
         <!-- Splash screen -->
         <activity
             android:name=".SplashScreenActivity"
@@ -32,6 +22,11 @@
         <activity
             android:name=".LeagueProfileActivity"
             android:label="@string/title_activity_league_profile"
+            android:theme="@style/BasicTheme" >
+        </activity>
+        <activity
+            android:name=".FindGamesActivity"
+            android:label="@string/title_activity_find_games"
             android:theme="@style/BasicTheme" >
         </activity>
     </application>
