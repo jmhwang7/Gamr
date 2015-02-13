@@ -4,19 +4,26 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
-import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.view.ViewGroup;
+
+import com.gamr.gamr.FindGamesFragments.MatchesFragment;
+import com.gamr.gamr.FindGamesFragments.MessagesFragment;
+import com.gamr.gamr.FindGamesFragments.NearYouFragment;
 
 import java.util.Locale;
 
 
 public class FindGamesActivity extends ActionBarActivity {
+    public static final int MATCHES_FRAGMENT_NUMBER = 0;
+    public static final int NEAR_YOU_FRAGMENT_NUMBER = 1;
+    public static final int MESSAGES_FRAGMENT_NUMBER = 2;
+
+    public static final String[] TAB_NAMES = {"Matches", "Near You", "Messages"};
 
     /**
      * The {@link android.support.v4.view.PagerAdapter} that will provide
@@ -36,8 +43,8 @@ public class FindGamesActivity extends ActionBarActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_find_games);
 
+        setContentView(R.layout.activity_find_games);
 
         // Create the adapter that will return a fragment for each of the three
         // primary sections of the activity.
@@ -47,6 +54,37 @@ public class FindGamesActivity extends ActionBarActivity {
         mViewPager = (ViewPager) findViewById(R.id.pager);
         mViewPager.setAdapter(mSectionsPagerAdapter);
 
+        getSupportActionBar().setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
+
+        mViewPager.setOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
+            @Override
+            public void onPageSelected(int position) {
+                getSupportActionBar().setSelectedNavigationItem(position);
+            }
+        });
+
+
+        // Create a tab listener that is called when the user changes tabs.
+        ActionBar.TabListener tabListener = new ActionBar.TabListener() {
+            public void onTabSelected(ActionBar.Tab tab, FragmentTransaction ft) {
+                // show the given tab
+                mViewPager.setCurrentItem(tab.getPosition());
+            }
+
+            public void onTabUnselected(ActionBar.Tab tab, FragmentTransaction ft) {
+                // hide the given tab
+            }
+
+            public void onTabReselected(ActionBar.Tab tab, FragmentTransaction ft) {
+                // probably ignore this event
+            }
+        };
+
+        for (int i = 0 ; i < 3 ; i++) {
+            getSupportActionBar().addTab(getSupportActionBar()
+                    .newTab().setText(TAB_NAMES[i])
+                    .setTabListener(tabListener));
+        }
     }
 
 
@@ -87,11 +125,18 @@ public class FindGamesActivity extends ActionBarActivity {
         public Fragment getItem(int position) {
             // getItem is called to instantiate the fragment for the given page.
             // Return a PlaceholderFragment (defined as a static inner class below).
-            if (position % 2 == 0) {
-                Log.w("THIS IS A WARNING", "POSITION : " + position);
-                return PlaceholderFragment.newInstance(position + 1);
+            switch (position) {
+                case MATCHES_FRAGMENT_NUMBER:
+                    return MatchesFragment.newInstance(MATCHES_FRAGMENT_NUMBER);
+
+                case NEAR_YOU_FRAGMENT_NUMBER:
+                    return NearYouFragment.newInstance(NEAR_YOU_FRAGMENT_NUMBER);
+
+                case MESSAGES_FRAGMENT_NUMBER:
+                    return MessagesFragment.newInstance(MESSAGES_FRAGMENT_NUMBER);
             }
-            return PlaceholderFragment2.newInstance(position + 1);
+
+            return null;
         }
 
         @Override
@@ -112,73 +157,6 @@ public class FindGamesActivity extends ActionBarActivity {
                     return getString(R.string.title_section3).toUpperCase(l);
             }
             return null;
-        }
-    }
-
-    /**
-     * A placeholder fragment containing a simple view.
-     */
-    public static class PlaceholderFragment extends Fragment {
-        /**
-         * The fragment argument representing the section number for this
-         * fragment.
-         */
-        private static final String ARG_SECTION_NUMBER = "section_number";
-
-        /**
-         * Returns a new instance of this fragment for the given section
-         * number.
-         */
-        public static PlaceholderFragment newInstance(int sectionNumber) {
-            PlaceholderFragment fragment = new PlaceholderFragment();
-            Bundle args = new Bundle();
-            args.putInt(ARG_SECTION_NUMBER, sectionNumber);
-            fragment.setArguments(args);
-            return fragment;
-        }
-
-        public PlaceholderFragment() {
-        }
-
-        @Override
-        public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                                 Bundle savedInstanceState) {
-            View rootView = inflater.inflate(R.layout.fragment_find_games, container, false);
-            return rootView;
-        }
-    }
-
-
-    /**
-     * A placeholder fragment containing a simple view.
-     */
-    public static class PlaceholderFragment2 extends Fragment {
-        /**
-         * The fragment argument representing the section number for this
-         * fragment.
-         */
-        private static final String ARG_SECTION_NUMBER = "section_number";
-
-        /**
-         * Returns a new instance of this fragment for the given section
-         * number.
-         */
-        public static PlaceholderFragment2 newInstance(int sectionNumber) {
-            PlaceholderFragment2 fragment = new PlaceholderFragment2();
-            Bundle args = new Bundle();
-            args.putInt(ARG_SECTION_NUMBER, sectionNumber);
-            fragment.setArguments(args);
-            return fragment;
-        }
-
-        public PlaceholderFragment2() {
-        }
-
-        @Override
-        public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                                 Bundle savedInstanceState) {
-            View rootView = inflater.inflate(R.layout.fragment_find_games2, container, false);
-            return rootView;
         }
     }
 }

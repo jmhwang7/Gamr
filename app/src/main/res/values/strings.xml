@@ -56,4 +56,9 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="title_activity_find_games">FindGamesActivity</string>
 
+
+    <!-- These are the string for the Messages Fragment -->
+    <string name="pass_string">Pass</string>
+    <string name="match_string">Match</string>
+
 </resources>

@@ -4,8 +4,6 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.view.Window;
-import android.view.WindowManager;
 
 /**
  * Activity that let's the user set various criteria for finding a game for League of Legends
@@ -18,9 +16,9 @@ public class LeagueProfileActivity extends Activity {
         super.onCreate(savedInstanceState);
 
         // Sets the activity to fullscreen with no settings bar
-        requestWindowFeature(Window.FEATURE_NO_TITLE);
+        /*requestWindowFeature(Window.FEATURE_NO_TITLE);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
-                WindowManager.LayoutParams.FLAG_FULLSCREEN);
+                WindowManager.LayoutParams.FLAG_FULLSCREEN);*/
 
         setContentView(R.layout.activity_league_profile);
     }

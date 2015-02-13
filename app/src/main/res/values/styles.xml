@@ -1,16 +1,35 @@
 <resources>
-    <color name="BasicBackgroundColor">#FDF3E7</color>
+    <color name="BasicBackgroundColor">#DFE2DB</color>
+    <color name="ActionBarColor">#DFE2DB</color>
+    <color name="TextColor">#000000</color>
+    <color name="TabTextColor">#000000</color>
 
-    <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
-        <!-- Customize your theme here. -->
-        <item name="colorPrimary">@color/primary</item>
-        <item name="colorPrimaryDark">@color/primary_dark</item>
-        <item name="colorAccent">@color/accent</item>
-    </style>
-
-    <style name="BasicTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+    <style name="BasicTheme" parent="Theme.AppCompat.Light">
         <!-- Basic background drawing -->
         <item name="android:background">@color/BasicBackgroundColor</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:textColor">@color/TextColor</item>
+        <item name="android:actionBarStyle">@style/BasicTheme.ActionBar</item>
+    </style>
+
+    <style name="BasicTheme.ActionBar" parent="Theme.AppCompat.Light.DarkActionBar">
+        <item name="android:background">@color/ActionBarColor</item>
+        <item name="android:actionBarTabTextStyle">@style/BasicTheme.ActionBar.TextStyle</item>
+    </style>
+
+    <style name="BasicTheme.ActionBar.TextStyle" parent="Theme.AppCompat.Light.DarkActionBar">
+        <item name="android:textColor">@color/TabTextColor</item>
+    </style>
+
+    <style name="LargeTextTheme" parent="@android:style/TextAppearance.Large">
+        <item name="android:textColor">@color/TextColor</item>
+    </style>
+
+    <style name="MediumTextTheme" parent="@android:style/TextAppearance.Medium">
+        <item name="android:textColor">@color/TextColor</item>
+    </style>
+
+    <style name="SmallTextTheme" parent="@android:style/TextAppearance.Small">
+        <item name="android:textColor">@color/TextColor</item>
     </style>
 </resources>
