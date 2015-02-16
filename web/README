@@ -5,3 +5,7 @@ Database server: localhost
 Database username: the name of this app (lowercase)
 Database password: team##
 Database admin: http://buildism.net/phpmyadmin
+
+http://gamr.buildism.net/api1/api_call?x=y is rewritten to http://gamr.buildism.net/api.php?version=1&function=api_call&x=y
+api.php routes API calls to the appropriate functions, located in the functions/ folder, after verifying that the data types of the given parameters match the ones defined in functions.php.
+include/ contains helper methods only.
