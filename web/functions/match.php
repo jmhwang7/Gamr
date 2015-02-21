@@ -1,5 +1,14 @@
 <?php
-function match($user_id, $use_location, $use_games) {
-    outputError('TODO', 500);
+function match($db, $user_id, $use_location, $use_games) {
+    $result = $db->query('SELECT * FROM users WHERE id != "'.$user_id.'"');
+    $users = array();
+    while($row = $result->fetch_assoc()) {
+        $users[] = $row;
+    }
+
+     $response = array(
+        'matches' => $users
+     );
+    outputResponse($response, 500);
 }
 ?>

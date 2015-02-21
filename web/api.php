@@ -3,10 +3,12 @@
 
 define('API_VERSION', 1);
 define('DEBUG', true);
+require('include/config.php');
 
 require('include/input.php');
 require('include/response.php');
 require('include/errorHandler.php');
+require('include/db.php');
 require('functions.php');
 
 if(!paramIsSet('version') || !is_numeric(param('version'))) {
@@ -27,7 +29,7 @@ if(!isset($functions[$function])) {
 // Validate all of the parameters
 $functionDef = $functions[$function];
 $functionParams = $functionDef['params'];
-$callParams = array(); // An indexed array of parameters that will be passed to the function
+$callParams = array($db); // An indexed array of parameters that will be passed to the function
 foreach($functionParams as $param => $paramDef) {
     if(!paramIsSet($param)) {
         if($paramDef['required']) {
