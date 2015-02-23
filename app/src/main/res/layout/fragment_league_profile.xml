@@ -4,7 +4,7 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     android:paddingBottom="@dimen/activity_vertical_margin"
-    tools:context="com.gamr.gamr.LeagueProfileActivity">
+    tools:context="com.gamr.gamr.GameProfileActivity">
 
     <LinearLayout
         android:focusable="true" android:focusableInTouchMode="true"
@@ -128,8 +128,7 @@
             android:layout_height="wrap_content"
             android:text="@string/find_matches_string"
             android:id="@+id/findMatchesButton"
-            android:layout_gravity="center_horizontal"
-            android:onClick="buttonClicked"/>
+            android:layout_gravity="center_horizontal" />
 
     </LinearLayout>
 </RelativeLayout>

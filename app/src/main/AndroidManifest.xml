@@ -20,7 +20,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".LeagueProfileActivity"
+            android:name=".GameProfileActivity"
             android:label="@string/title_activity_league_profile"
             android:theme="@style/BasicTheme" >
         </activity>
