@@ -3,6 +3,9 @@
     <color name="ActionBarColor">#DFE2DB</color>
     <color name="TextColor">#000000</color>
     <color name="TabTextColor">#000000</color>
+    <color name="NewMessageBackground">#7a9bd0dd</color>
+    <color name="DividerColor">#000000</color>
+    <color name="TransparentColor">#00000000</color>
 
     <style name="BasicTheme" parent="Theme.AppCompat.Light">
         <!-- Basic background drawing -->
@@ -31,5 +34,12 @@
 
     <style name="SmallTextTheme" parent="@android:style/TextAppearance.Small">
         <item name="android:textColor">@color/TextColor</item>
+    </style>
+
+    <style name="MessagesListView" parent="@android:style/Widget.ListView">
+        <item name="android:minHeight">20dp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:divider">@color/DividerColor</item>
+        <item name="android:dividerHeight">5px</item>
     </style>
 </resources>
