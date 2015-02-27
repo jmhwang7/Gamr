@@ -19,6 +19,15 @@ class DBMySQLi {
         }
         return $result;
     }
+    
+    // Shortcut to query one row from the DB as an associative array
+    function queryRow($query) {
+        $result = $this->query($query);
+        if($result->num_rows == 0) {
+            return null;
+        }
+        return $result->fetch_assoc();
+    }
 }
 $db = new DBMySQLi();
 ?>

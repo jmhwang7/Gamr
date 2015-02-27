@@ -34,4 +34,18 @@ function validateDataType($value, $type, $typeDetails) {
             return is_numeric($value);
     }
 }
+
+// Convert a string parameter into the proper data type
+function convertDataType($value, $type, $typeDetails) {
+    switch($type) {
+        case 'boolean':
+            return $value === 'true' ? true : false;
+        case 'int':
+            return intval($value);
+        case 'decimal':
+            return floatval($value);
+        default:
+            return $value;
+    }
+}
 ?>

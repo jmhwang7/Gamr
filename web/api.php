@@ -44,7 +44,7 @@ foreach($functionParams as $param => $paramDef) {
     if(!validateDataType($value, $paramDef['type'], isset($paramDef['typeDetails']) ? $paramDef['typeDetails'] : null)) {
         outputError('Invalid parameter type: '.$param, 400);
     } else {
-        $callParams[] = $value;
+        $callParams[] = convertDataType($value, $paramDef['type'], $value, isset($paramDef['typeDetails']) ? $paramDef['typeDetails'] : null);
     }
 }
 
