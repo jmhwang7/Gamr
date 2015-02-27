@@ -37,7 +37,7 @@
         <item>Ranked Duo</item>
         <item>Ranked 5v5</item>
         <item>Ranked 3v3</item>
-        <item>Casual 5v5</item>
+        <item>Normal 5v5</item>
         <item>Dominion</item>
     </string-array>
 
@@ -45,8 +45,8 @@
 
     <!-- Server dropdown menu -->
     <string-array name="server_dropdown">
-        <item>US East</item>
-        <item>US West</item>
+        <item>NA</item>
+        <item>LAN</item>
         <item>EU East</item>
         <item>EU West</item>
     </string-array>
