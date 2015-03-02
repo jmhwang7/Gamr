@@ -24,3 +24,26 @@ matches: array
     lat: decimal
     lon: decimal
     distance: decimal (miles)
+    
+    
+send_message - Sends a message to another user.
+user_id         uuid            required
+other_user_id   uuid            required
+text            string          required
+
+Returns:
+message_id: int
+
+
+get_messages - Finds messages between two users.
+user_id         uuid            required
+other_user_id   uuid            required
+before          int (timestamp) optional
+
+Returns:
+messages: array
+    id: int
+    from_id: uuid
+    to_id: uuid
+    date: int (timestamp)
+    text: string
