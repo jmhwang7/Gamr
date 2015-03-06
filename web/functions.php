@@ -52,6 +52,22 @@ $functions = array(
                 'type' => 'string',
             )
         )
+    ),
+    'update_location' => array(
+        'params' => array(
+            'user_id' => array(
+                'required' => true,
+                'type' => 'uuid',
+            ),
+            'lat' => array(
+                'required' => true,
+                'type' => 'decimal',
+            ),
+            'lon' => array(
+                'required' => true,
+                'type' => 'decimal',
+            )
+        )
     )
 );
 
