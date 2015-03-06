@@ -12,12 +12,26 @@ class DBMySQLi {
         return $this->link->escape_string($str);
     }
     
+    // Returns the ID of the last row to be inserted
+    function insertId() {
+        return $this->link->insert_id;
+    }
+    
     function query($query) {
         $result = $this->link->query($query);
         if($this->link->errno) {
             outputError('Database errorL '.$this->link->error);
         }
         return $result;
+    }
+    
+    // Shortcut to query one row from the DB as an associative array
+    function queryRow($query) {
+        $result = $this->query($query);
+        if($result->num_rows == 0) {
+            return null;
+        }
+        return $result->fetch_assoc();
     }
 }
 $db = new DBMySQLi();

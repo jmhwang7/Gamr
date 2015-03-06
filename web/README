@@ -1,5 +1,5 @@
 Website URL: http://gamr.buildism.net/
-To pull from the repository to the server, use http://gamr.buildism.net/git_sync.php
+To update code on the server, push your changes then use http://gamr.buildism.net/git_sync.php to pull from the repository to the server.
 
 Database server: localhost
 Database username: the name of this app (lowercase)
@@ -9,3 +9,41 @@ Database admin: http://buildism.net/phpmyadmin
 http://gamr.buildism.net/api1/api_call?x=y is rewritten to http://gamr.buildism.net/api.php?version=1&function=api_call&x=y
 api.php routes API calls to the appropriate functions, located in the functions/ folder, after verifying that the data types of the given parameters match the ones defined in functions.php.
 include/ contains helper methods only.
+
+=== API Reference ===
+
+match - Returns information on matching users. Either use_location, use_games or both can be specified.
+Parameters:
+user_id         uuid            required
+use_location    boolean         optional
+use_games       boolean         optional
+
+Returns:
+matches: array
+    id: uuid
+    lat: decimal
+    lon: decimal
+    distance: decimal (miles)
+    
+    
+send_message - Sends a message to another user.
+user_id         uuid            required
+other_user_id   uuid            required
+text            string          required
+
+Returns:
+message_id: int
+
+
+get_messages - Finds messages between two users.
+user_id         uuid            required
+other_user_id   uuid            required
+before          int (timestamp) optional
+
+Returns:
+messages: array
+    id: int
+    from_id: uuid
+    to_id: uuid
+    date: int (timestamp)
+    text: string

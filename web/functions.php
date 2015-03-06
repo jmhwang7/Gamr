@@ -19,6 +19,39 @@ $functions = array(
                 'type' => 'boolean',
             ),
         )
+    ),
+    'get_messages' => array(
+        'params' => array(
+            'user_id' => array(
+                'required' => true,
+                'type' => 'uuid',
+            ),
+            'other_user_id' => array(
+                'required' => true,
+                'type' => 'uuid',
+            ),
+            'before' => array(
+                'required' => false,
+                'type' => 'int',
+                'default' => null
+            )
+        )
+    ),
+    'send_message' => array(
+        'params' => array(
+            'user_id' => array(
+                'required' => true,
+                'type' => 'uuid',
+            ),
+            'other_user_id' => array(
+                'required' => true,
+                'type' => 'uuid',
+            ),
+            'text' => array(
+                'required' => true,
+                'type' => 'string',
+            )
+        )
     )
 );
 
