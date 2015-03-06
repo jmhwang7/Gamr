@@ -1,6 +1,7 @@
 package com.gamr.gamr.FindGamesFragments;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -10,8 +11,8 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
+import com.gamr.gamr.ConversationActivity;
 import com.gamr.gamr.R;
 import com.gamr.gamr.ServerRepresentations.Message;
 
@@ -87,15 +88,16 @@ public class MessagesFragment extends Fragment {
     public class MessagesListener implements AdapterView.OnItemClickListener {
         @Override
         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-            // TODO Make it so that when a message is pressed it switches to a message view activity
-            Toast.makeText(getActivity().getApplicationContext(), "ITEM CLICKED : " + position,
-                    Toast.LENGTH_LONG).show();
-
             // Update that we have seen the message
             mMessages.get(position).setMessageViewed();
 
             // Redraw the entirety of the stuff
             ((ListView) mRootView.findViewById(R.id.messagesListView)).invalidateViews();
+
+            Intent intent = new Intent(getActivity(), ConversationActivity.class);
+            intent.putExtra(ConversationActivity.SENDER_KEY,
+                    mMessages.get(position).getMessageSender());
+            startActivity(intent);
         }
     }
 

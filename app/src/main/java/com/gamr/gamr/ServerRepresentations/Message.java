@@ -7,6 +7,7 @@ import java.util.ArrayList;
  */
 public class Message {
     public static final int MESSAGE_PREVIEW_LENGTH = 20;
+    public static final String RECEIVER_USER_NAME = "Antonio";
 
     private String mMessageContent;
     private String mMessageSender;
@@ -70,6 +71,20 @@ public class Message {
         list.add(message2);
         list.add(message3);
         list.add(message4);
+
+        return list;
+    }
+
+    /**
+     * Used to get a sample conversation between two people for testing purposes
+     */
+    public static ArrayList<Message> getSampleConversation(String user) {
+        ArrayList<Message> list = new ArrayList<Message>();
+
+        list.add(new Message("Hello there!", user, "Mon 12:00"));
+        list.add(new Message("Hi!!! Long time no talk!", "Antonio", "Mon 12:05"));
+        list.add(new Message("I know how long has it been???", user, "Mon 12:10"));
+        list.add(new Message("I don't know, a month maybe!", "Antonio", "Mon 12:00"));
 
         return list;
     }
