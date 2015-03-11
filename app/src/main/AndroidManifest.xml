@@ -29,6 +29,10 @@
             android:label="@string/title_activity_find_games"
             android:theme="@style/BasicTheme" >
         </activity>
+        <activity
+            android:name=".ConversationActivity"
+            android:label="@string/title_activity_conversation" >
+        </activity>
     </application>
 
 </manifest>
