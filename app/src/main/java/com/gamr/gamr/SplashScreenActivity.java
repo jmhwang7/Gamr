@@ -7,7 +7,6 @@ import android.os.Bundle;
 import android.telephony.TelephonyManager;
 import android.view.View;
 
-import com.gamr.gamr.ServerRepresentations.HTTPServerCommunication;
 import com.gamr.gamr.ServerRepresentations.User;
 
 
@@ -32,9 +31,6 @@ public class SplashScreenActivity extends Activity {
     private void createUser() {
         TelephonyManager manager = (TelephonyManager) getSystemService(Context.TELEPHONY_SERVICE);
         User.instantiateUser(manager.getDeviceId() );
-
-        // TODO Remove this
-        (new HTTPServerCommunication()).getMessages();
     }
 
     /**
