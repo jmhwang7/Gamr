@@ -13,7 +13,9 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.gamr.gamr.ServerRepresentations.ConversationList;
 import com.gamr.gamr.ServerRepresentations.Message;
+import com.gamr.gamr.ServerRepresentations.User;
 
 import java.util.List;
 
@@ -54,7 +56,8 @@ public class ConversationActivity extends ActionBarActivity {
      */
     private List<Message> getConversation(String user) {
         // TODO This needs to be changed to correctly get a conversation
-        return Message.getSampleConversation(user);
+        ConversationList conversationList = User.sUser.getConversation(user);
+        return conversationList.getMessageList();
     }
 
 

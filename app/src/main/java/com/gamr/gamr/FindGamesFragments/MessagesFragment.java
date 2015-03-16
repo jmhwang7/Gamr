@@ -15,6 +15,7 @@ import android.widget.TextView;
 import com.gamr.gamr.ConversationActivity;
 import com.gamr.gamr.R;
 import com.gamr.gamr.ServerRepresentations.Message;
+import com.gamr.gamr.ServerRepresentations.User;
 
 import java.util.List;
 
@@ -77,7 +78,7 @@ public class MessagesFragment extends Fragment {
      */
     public List<Message> getCurrentMessages() {
         // TODO We need to integrate this with the server
-        return Message.getSampleMessageArrayList();
+        return User.sUser.getMostRecentMessagesList();
     }
 
 
@@ -96,7 +97,7 @@ public class MessagesFragment extends Fragment {
 
             Intent intent = new Intent(getActivity(), ConversationActivity.class);
             intent.putExtra(ConversationActivity.SENDER_KEY,
-                    mMessages.get(position).getMessageSender());
+                    mMessages.get(position).getOtherUserID());
             startActivity(intent);
         }
     }

@@ -1,9 +1,13 @@
 package com.gamr.gamr;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.telephony.TelephonyManager;
 import android.view.View;
+
+import com.gamr.gamr.ServerRepresentations.User;
 
 
 public class SplashScreenActivity extends Activity {
@@ -16,7 +20,17 @@ public class SplashScreenActivity extends Activity {
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);*/
 
+        createUser();
+
         setContentView(R.layout.activity_splash_screen);
+    }
+
+    /**
+     * Creates the user for the entire application.
+     */
+    private void createUser() {
+        TelephonyManager manager = (TelephonyManager) getSystemService(Context.TELEPHONY_SERVICE);
+        User.instantiateUser(manager.getDeviceId() );
     }
 
     /**
