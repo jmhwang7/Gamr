@@ -20,6 +20,11 @@ public class HTTPServerCommunication {
     private static final String POST_STRING = "POST";
 
     private static final String MESSAGES_STRING = "MESSAGES";
+    private static final String MATCH_STRING = "MATCH";
+    private static final String USE_GAMES_STRING = "use_games";
+    private static final String USE_LOCATION_STRING = "use_location";
+
+    public static final String BASE_URL = "http://gamr.buildism.net/api.php?version=1&function=";
 
     public static final String TEST_MATCHES_STRING = "http://gamr.buildism.net/api.php?version=1&function=match&user_id=d49f9b92-b927-11e4-847c-8bb5e9000002&use_games=true&use_location=true";
 
@@ -27,7 +32,21 @@ public class HTTPServerCommunication {
     public void getMessages() {
         // First we build the string for the given user and then pass that as a get message
 
+        // TODO Need to implement this, we currently don't have a way to see those you are having a
+        // conversation with
         new AsyncHelper().execute(new String[] {GET_STRING, MESSAGES_STRING, TEST_MATCHES_STRING});
+    }
+
+    /**
+     * Used to get those who we have matched with
+     */
+    public void getMatch() {
+        String url = BASE_URL;
+        url += MATCH_STRING;
+        url += "&" + USE_GAMES_STRING + "true";
+        url += "&" + USE_LOCATION_STRING + "true";
+
+        new AsyncHelper().execute(new String[]{GET_STRING, MATCH_STRING, url});
     }
 
     private static String getHelper(String url) {
@@ -61,6 +80,8 @@ public class HTTPServerCommunication {
                 // that should handle it
                 if (params[1].equals(MESSAGES_STRING)) {
                     getMessagesHandler(response);
+                } else if (params[1].equals(MATCH_STRING)) {
+                    getMatchHandler(response);
                 }
 
                 // TODO Implement the rest of the GET requests
@@ -75,7 +96,14 @@ public class HTTPServerCommunication {
          * Deals with the response from the server when getting messages
          */
         private void getMessagesHandler(String response) {
-            
+            // TODO Implement
+        }
+
+        /**
+         * Deals with the response from the server when getting matches
+         */
+        private void getMatchHandler(String response) {
+            // TODO Implement
         }
     }
 }
