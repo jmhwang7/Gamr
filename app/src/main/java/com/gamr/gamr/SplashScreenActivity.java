@@ -42,7 +42,7 @@ public class SplashScreenActivity extends Activity {
         switch (v.getId()) {
             case R.id.lol_button:
                 // If the user wants to start a league search
-                Intent intent = new Intent(this, GameProfileActivity.class);
+                Intent intent = new Intent(this, FindGamesActivity.class);
                 startActivity(intent);
                 finish();
             break;
