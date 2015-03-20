@@ -24,11 +24,6 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".GameProfileActivity"
-            android:label="@string/app_name"
-            android:theme="@style/BasicTheme" >
-        </activity>
-        <activity
             android:name=".FindGamesActivity"
             android:label="@string/app_name"
             android:theme="@style/BasicTheme" >
