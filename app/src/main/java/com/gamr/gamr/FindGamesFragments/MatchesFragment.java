@@ -50,6 +50,8 @@ public class MatchesFragment extends Fragment implements View.OnClickListener{
 
         ((Button) mRootView.findViewById(R.id.pass_button)).setOnClickListener(this);
         ((Button) mRootView.findViewById(R.id.match_button)).setOnClickListener(this);
+        ((Button) mRootView.findViewById(R.id.findMatchesButton)).setOnClickListener(this);
+        ((Button) mRootView.findViewById(R.id.new_search_button)).setOnClickListener(this);
 
         updateTextFields();
         return mRootView;
@@ -61,14 +63,14 @@ public class MatchesFragment extends Fragment implements View.OnClickListener{
     private void updateTextFields() {
         Map<String, String> profileMap = mMatchHandler.getNextMatch();
         if (profileMap != null) {
-            ((TextView) mRootView.findViewById(R.id.summoner_name)).setText(
+            ((TextView) mRootView.findViewById(R.id.matchScreenSummonerName)).setText(
                     profileMap.get(LeagueMatchHandler.SUMMONER_NAME_KEY));
             ((TextView) mRootView.findViewById(R.id.role)).setText(
                     profileMap.get(LeagueMatchHandler.ROLE_KEY));
             ((TextView) mRootView.findViewById(R.id.ranking)).setText(
                     profileMap.get(LeagueMatchHandler.RANK_KEY));
         } else {
-            ((TextView) mRootView.findViewById(R.id.summoner_name)).setText("No summoner");
+            ((TextView) mRootView.findViewById(R.id.matchScreenSummonerName)).setText("No summoner");
             ((TextView) mRootView.findViewById(R.id.role)).setText("N/A");
             ((TextView) mRootView.findViewById(R.id.ranking)).setText("N/A");
         }
@@ -86,6 +88,21 @@ public class MatchesFragment extends Fragment implements View.OnClickListener{
             case R.id.pass_button:
                 mMatchHandler.passProfile();
                 updateTextFields();
+                mRootView.postInvalidate();
+                break;
+
+            case R.id.findMatchesButton:
+                // If we are switching the forms, we need to make one visible and one not visible
+                mRootView.findViewById(R.id.matchesFormLayout).setVisibility(View.INVISIBLE);
+                mRootView.findViewById(R.id.matchScreenLayout).setVisibility(View.VISIBLE);
+                updateTextFields();
+                mRootView.postInvalidate();
+                break;
+
+            case R.id.new_search_button:
+                // Now we will bring back the form instead of the search method
+                mRootView.findViewById(R.id.matchesFormLayout).setVisibility(View.VISIBLE);
+                mRootView.findViewById(R.id.matchScreenLayout).setVisibility(View.INVISIBLE);
                 mRootView.postInvalidate();
                 break;
         }

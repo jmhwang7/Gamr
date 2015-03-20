@@ -17,14 +17,6 @@
             android:textSize="50dp"
             android:gravity="center_horizontal"/>
 
-        <Button android:id="@+id/lol_button"
-            android:text="@string/splash_screen_lol_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/greeting"
-            android:layout_centerInParent="true"
-            android:onClick="buttonListener"/>
-
     </RelativeLayout>
 
 </RelativeLayout>
