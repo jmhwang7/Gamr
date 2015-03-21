@@ -194,22 +194,22 @@
                 android:layout_height="fill_parent"
                 android:layout_gravity="center">
 
-                <Button
+
+                <ImageView
+                    android:id="@+id/summoner_icon"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Place holder for graphics"
-                    android:id="@+id/button3"
-                    android:height="200dp"
-                    android:width="200dp"
+                    android:layout_weight="1.00"
                     android:layout_gravity="center"
                     android:layout_centerInParent="true"
-                    android:layout_margin="10dp" />
+                    android:layout_margin="10dp"
+                    android:src="@drawable/summonericon1" />
 
                 <LinearLayout
                     android:orientation="vertical"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/button3"
+                    android:layout_below="@+id/summoner_icon"
                     android:layout_centerInParent="true">
 
                     <LinearLayout
