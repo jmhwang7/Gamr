@@ -52,7 +52,7 @@ public class ConversationList {
     }
 
     private void getDemoConversation() {
-        mMostRecentMessage = new Message("This is simply a test message", "SenderTest", "3:14 p.m.",
+        mMostRecentMessage = new Message("This is simply a test message", "SenderTest", 1425261066,
                 mOtherUserID);
         mMessageList = new ArrayList<Message>();
         mMessageList.add(mMostRecentMessage);
