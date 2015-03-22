@@ -34,15 +34,9 @@ public class Server {
     private static final String USER_ID_PARAM = "&user_id=";
     private static final String OTHER_USER_ID_PARAM = "&other_user_id=";
 
-    public static void main(String[] args){
-        Server.getConversation("d49f9b92-b927-11e4-847c-8bb5e9000002", "d49f9b92-b927-11e4-847c-8bb5e9000003");
-    }
-
     public static List<MessageJson> getConversation(String fromUserId, String toUserId) {
         String response = get(GET_MESSAGE_FUNCTION, fromUserId, toUserId);
-        System.out.println(response);
         List<MessageJson> conversation = new Gson().fromJson(response, new TypeToken<List<MessageJson>>(){}.getType());
-        System.out.println(conversation.get(0));
         return conversation;
     }
 
