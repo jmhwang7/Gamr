@@ -73,21 +73,27 @@ public class HTTPServerCommunication {
         @Override
         protected String doInBackground(String... params) {
             // We need to differentiate between gets and posts
-            if (params[0].equals(GET_STRING)) {
-                String response = getHelper(params[2]);
+            String requestType = params[0];
+            String function = params[1];
+            String url = params[2];
+
+            if (requestType.equals(GET_STRING)) {
+                String response = getHelper(url);
 
                 // Once we have our response, we pass it along depending on the appropriate method
                 // that should handle it
-                if (params[1].equals(MESSAGES_STRING)) {
+                if (function.equals(MESSAGES_STRING)) {
                     getMessagesHandler(response);
-                } else if (params[1].equals(MATCH_STRING)) {
+                } else if (function.equals(MATCH_STRING)) {
                     getMatchHandler(response);
                 }
 
                 // TODO Implement the rest of the GET requests
 
             } else {
-                // TODO Implement POST
+                if(function.equals(POST_STRING)){
+
+                }
             }
             return null;
         }
