@@ -7,7 +7,7 @@ function get_messages($db, $user_id, $other_user_id, $before) {
         $messages[] = $row;
     }
     $response = array(
-        'messages' => $messages
+        $messages
     );
     outputResponse($response);
 }
