@@ -18,6 +18,7 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLEncoder;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -34,17 +35,36 @@ public class Server {
     private static final String USER_ID_PARAM = "&user_id=";
     private static final String OTHER_USER_ID_PARAM = "&other_user_id=";
 
+    public static void main(String[] args){
+        List<MatchJson> matches = getMatches("d49f9b92-b927-11e4-847c-8bb5e9000002", "true", "true");
+        System.out.println(matches.get(0));
+    }
+
     public static List<MessageJson> getConversation(String fromUserId, String toUserId) {
-        String response = get(GET_MESSAGE_FUNCTION, fromUserId, toUserId);
+        String response = null;
+        try {
+            response = get(GET_MESSAGE_FUNCTION, fromUserId, toUserId);
+        } catch (IOException e) {
+            //If request fails, return empty message list. Probably a better way to handle this but needs discussion
+            return new ArrayList<MessageJson>();
+        }
         List<MessageJson> conversation = new Gson().fromJson(response, new TypeToken<List<MessageJson>>(){}.getType());
         return conversation;
     }
 
-    public static List<String> getMatches(String userId, boolean useLocation, boolean useGames) {
-        throw new UnsupportedOperationException("getMatches not yet implemented");
+    public static List<MatchJson> getMatches(String userId, String useLocation, String useGames) {
+        String response = null;
+        try {
+            response = get(GET_MATCHES_FUNCTION, userId, useLocation, useGames);
+            System.out.println(response);
+        } catch (IOException e) {
+            return new ArrayList<MatchJson>();
+        }
+        List<MatchJson> matches = new Gson().fromJson(response, new TypeToken<List<MatchJson>>(){}.getType());
+        return matches;
     }
 
-    private static String get(String... params) {
+    private static String get(String... params) throws IOException {
         try {
             URL url = createUrl(params);
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();
@@ -58,10 +78,11 @@ public class Server {
             return response.toString();
         } catch (MalformedURLException e) {
             e.printStackTrace();
+            throw e;
         } catch (IOException e) {
             e.printStackTrace();
+            throw e;
         }
-        return null;
     }
 
     private static URL createUrl(String[] params) throws MalformedURLException {
