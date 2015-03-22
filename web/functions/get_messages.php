@@ -6,7 +6,7 @@ function get_messages($db, $user_id, $other_user_id, $before) {
     while($row = $result->fetch_assoc()) {
         $messages[] = $row;
     }
-	
+
     outputResponse($messages);
 }
 ?>

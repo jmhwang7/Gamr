@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.gamr.gamr.ProfileHandlers.LeagueMatchHandler;
@@ -69,11 +70,36 @@ public class MatchesFragment extends Fragment implements View.OnClickListener{
                     profileMap.get(LeagueMatchHandler.ROLE_KEY));
             ((TextView) mRootView.findViewById(R.id.ranking)).setText(
                     profileMap.get(LeagueMatchHandler.RANK_KEY));
+
+            setImageView(profileMap);
         } else {
             ((TextView) mRootView.findViewById(R.id.matchScreenSummonerName)).setText("No summoner");
             ((TextView) mRootView.findViewById(R.id.role)).setText("N/A");
             ((TextView) mRootView.findViewById(R.id.ranking)).setText("N/A");
+            ((ImageView) mRootView.findViewById(R.id.summoner_icon)).setImageResource(R.drawable.summonericon1);
         }
+    }
+
+    private void setImageView(Map<String, String> profileMap) {
+        int drawResId;
+        switch (profileMap.get(LeagueMatchHandler.ICON_KEY)) {
+            case "1":
+                drawResId = R.drawable.summonericon1;
+                break;
+
+            case "2":
+                drawResId = R.drawable.summonericon2;
+                break;
+
+            case "3":
+                drawResId = R.drawable.summonericon3;
+                break;
+
+            default:
+                drawResId = R.drawable.summonericon1;
+        }
+
+        ((ImageView) mRootView.findViewById(R.id.summoner_icon)).setImageResource(drawResId);
     }
 
     @Override
