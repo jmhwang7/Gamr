@@ -17,6 +17,7 @@ import org.apache.http.util.EntityUtils;
 import java.io.IOException;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * An interface that allows for http communication between the APP and Server providing methods
@@ -123,7 +124,7 @@ public class HTTPServerCommunication {
             Type collectionType = new TypeToken<ArrayList<Message>>() {
             }.getType();
             Gson gson = new Gson();
-            ArrayList<Message> messages = gson.fromJson(response, collectionType);
+            List<Message> messages = gson.fromJson(response, collectionType);
             Log.d(LOG_TAG, messages.toString());
         }
 

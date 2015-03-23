@@ -111,6 +111,8 @@ public class Message {
     }
 
     public String getMessagePreview() {
+        mMessagePreview = text.length() > MESSAGE_PREVIEW_LENGTH ?
+                text.substring(0, MESSAGE_PREVIEW_LENGTH) : text;
         return mMessagePreview;
     }
 }

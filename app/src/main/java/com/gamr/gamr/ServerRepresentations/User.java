@@ -68,7 +68,7 @@ public class User {
      * Returns the conversation for the given user.
      */
     public ConversationList getConversation(String user) {
-        return mConversationMap.get(user);
+        return new ConversationList("test");
     }
 
     /**

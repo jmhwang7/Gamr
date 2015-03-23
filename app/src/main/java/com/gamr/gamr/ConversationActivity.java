@@ -57,6 +57,7 @@ public class ConversationActivity extends ActionBarActivity {
     private List<Message> getConversation(String user) {
         // TODO This needs to be changed to correctly get a conversation
         ConversationList conversationList = User.sUser.getConversation(user);
+        conversationList.updateConversation();
         return conversationList.getMessageList();
     }
 

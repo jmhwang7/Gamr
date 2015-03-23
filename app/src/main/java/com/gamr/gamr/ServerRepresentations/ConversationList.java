@@ -1,5 +1,7 @@
 package com.gamr.gamr.ServerRepresentations;
 
+import android.os.AsyncTask;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -46,9 +48,14 @@ public class ConversationList {
      */
     public void updateConversation() {
         // TODO Ping the server for information on this
-
-        // TODO Take this out
-        getDemoConversation();
+        synchronized (mOtherUserID) {
+            new UpdateTask().execute();
+            try {
+                mOtherUserID.wait();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
     }
 
     private void getDemoConversation() {
@@ -56,5 +63,17 @@ public class ConversationList {
                 mOtherUserID);
         mMessageList = new ArrayList<Message>();
         mMessageList.add(mMostRecentMessage);
+    }
+
+    private class UpdateTask extends AsyncTask<Void, Void, Void> {
+
+        @Override
+        protected Void doInBackground(Void ... params) {
+            synchronized (mOtherUserID) {
+                mMessageList = Server.getConversation("d49f9b92-b927-11e4-847c-8bb5e9000002", "d49f9b92-b927-11e4-847c-8bb5e9000003");
+                mOtherUserID.notify();
+            }
+            return null;
+        }
     }
 }
