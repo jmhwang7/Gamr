@@ -1,5 +1,7 @@
 package com.gamr.gamr.ServerRepresentations;
 
+import com.google.gson.annotations.SerializedName;
+
 import java.text.DateFormat;
 import java.util.Date;
 
@@ -12,26 +14,38 @@ public class Message {
     public static final int MESSAGE_PREVIEW_LENGTH = 20;
     public static final String RECEIVER_USER_NAME = "Antonio";
 
+    //JSON fields
+    @SerializedName("message_id")
+    private String messageId;
+
+    @SerializedName("text")
     private String text;
-    private String from_id;
+
+    @SerializedName("to_id")
+    private String toId;
+
+    @SerializedName("from_id")
+    private String fromId;
+
+    @SerializedName("date")
     private long date;
+
     private String mMessagePreview;
-    private String to_id;
     private boolean mMessageViewed;
+
+    public Message() {
+    }
 
     public Message(String content, String sender, long timeReceived, String otherUserId) {
         text = content;
-        from_id = sender;
+        fromId = sender;
         date = timeReceived;
         mMessagePreview = text.length() > MESSAGE_PREVIEW_LENGTH ?
                 text.substring(0, MESSAGE_PREVIEW_LENGTH) : text;
         mMessageViewed = false;
-        to_id = otherUserId;
+        toId = otherUserId;
     }
 
-    public String getMessageContent() {
-        return text;
-    }
 
     public String getTimeReceived() {
         DateFormat df = DateFormat.getTimeInstance(DateFormat.SHORT);
@@ -44,20 +58,48 @@ public class Message {
 
     @Override
     public String toString() {
-        return "Sender: " + from_id + "\nReceiver: " + to_id + "\nTime Received: " + getTimeReceived()
-                + "\nMessage: " + getMessageContent() + "\n";
+        return "Sender: " + fromId + "\nReceiver: " + toId + "\nTime Received: " + getTimeReceived()
+                + "\nMessage: " + text + "\n";
     }
 
-    public String getMessageSender() {
-        return from_id;
+    public String getMessageId() {
+        return messageId;
     }
 
-    public String getMessagePreview() {
-        return mMessagePreview;
+    public void setMessageId(String messageId) {
+        this.messageId = messageId;
     }
 
-    public String getOtherUserID() {
-        return to_id;
+    public String getText() {
+        return text;
+    }
+
+    public void setText(String text) {
+        this.text = text;
+    }
+
+    public String getFromId() {
+        return fromId;
+    }
+
+    public void setFromId(String fromId) {
+        this.fromId = fromId;
+    }
+
+    public long getDate() {
+        return date;
+    }
+
+    public void setDate(long date) {
+        this.date = date;
+    }
+
+    public String getToId() {
+        return toId;
+    }
+
+    public void setToId(String toId) {
+        this.toId = toId;
     }
 
     public boolean wasMessageViewed() {
@@ -66,5 +108,9 @@ public class Message {
 
     public void setMessageViewed() {
         mMessageViewed = true;
+    }
+
+    public String getMessagePreview() {
+        return mMessagePreview;
     }
 }

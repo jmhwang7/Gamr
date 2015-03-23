@@ -54,7 +54,7 @@ public class HTTPServerCommunication {
                 .appendQueryParameter(OTHER_USER_ID_PARAM, "d49f9b92-b927-11e4-847c-8bb5e9000003")
                 .build().toString();
 
-        new AsyncHelper().execute(new String[] {GET_STRING, MESSAGES_STRING, uri});
+        new AsyncHelper().execute(new String[]{GET_STRING, MESSAGES_STRING, uri});
     }
 
     /**
@@ -120,7 +120,8 @@ public class HTTPServerCommunication {
          * Deals with the response from the server when getting messages
          */
         private void getMessagesHandler(String response) {
-            Type collectionType = new TypeToken<ArrayList<Message>>(){}.getType();
+            Type collectionType = new TypeToken<ArrayList<Message>>() {
+            }.getType();
             Gson gson = new Gson();
             ArrayList<Message> messages = gson.fromJson(response, collectionType);
             Log.d(LOG_TAG, messages.toString());
