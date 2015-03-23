@@ -53,9 +53,6 @@ function match($db, $user_id, $use_location, $use_games) {
         $users[] = $row;
     }
 
-     $response = array(
-        'matches' => $users
-     );
-    outputResponse($response);
+    outputResponse($users);
 }
 ?>

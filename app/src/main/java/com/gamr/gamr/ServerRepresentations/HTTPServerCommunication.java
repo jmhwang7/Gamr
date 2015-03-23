@@ -1,6 +1,11 @@
 package com.gamr.gamr.ServerRepresentations;
 
+import android.net.Uri;
 import android.os.AsyncTask;
+import android.util.Log;
+
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.client.ClientProtocolException;
@@ -10,43 +15,62 @@ import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.util.EntityUtils;
 
 import java.io.IOException;
+import java.lang.reflect.Type;
+import java.util.ArrayList;
 
 /**
  * An interface that allows for http communication between the APP and Server providing methods
  * for our specific needs.
  */
 public class HTTPServerCommunication {
+    private static final String LOG_TAG = HTTPServerCommunication.class.getSimpleName();
+
+    // HTTP Methods
     private static final String GET_STRING = "GET";
     private static final String POST_STRING = "POST";
 
-    private static final String MESSAGES_STRING = "MESSAGES";
-    private static final String MATCH_STRING = "MATCH";
+    // Base URL
+    public static final String BASE_URL = "http://gamr.buildism.net/api1/";
+
+    // Endpoints
+    private static final String MESSAGES_STRING = "get_messages";
+    private static final String MATCH_STRING = "match";
     private static final String USE_GAMES_STRING = "use_games";
     private static final String USE_LOCATION_STRING = "use_location";
+    private static final String UPDATE_LOCATION_STRING = "update_location";
 
-    public static final String BASE_URL = "http://gamr.buildism.net/api.php?version=1&function=";
-
-    public static final String TEST_MATCHES_STRING = "http://gamr.buildism.net/api.php?version=1&function=match&user_id=d49f9b92-b927-11e4-847c-8bb5e9000002&use_games=true&use_location=true";
-
+    // Query Params
+    public static final String USER_ID_PARAM = "user_id";
+    public static final String OTHER_USER_ID_PARAM = "other_user_id";
+    public static final String BEFORE_TIME_PARAM = "before";
+    public static final String USE_GAMES_PARAM = "use_games";
+    public static final String USE_LOCATION_PARAM = "use_location";
 
     public void getMessages() {
         // First we build the string for the given user and then pass that as a get message
+        String uri = Uri.parse(BASE_URL).buildUpon()
+                .appendPath(MESSAGES_STRING)
+                .appendQueryParameter(USER_ID_PARAM, "d49f9b92-b927-11e4-847c-8bb5e9000002")
+                .appendQueryParameter(OTHER_USER_ID_PARAM, "d49f9b92-b927-11e4-847c-8bb5e9000003")
+                .build().toString();
 
-        // TODO Need to implement this, we currently don't have a way to see those you are having a
-        // conversation with
-        new AsyncHelper().execute(new String[] {GET_STRING, MESSAGES_STRING, TEST_MATCHES_STRING});
+        new AsyncHelper().execute(new String[]{GET_STRING, MESSAGES_STRING, uri});
     }
 
     /**
      * Used to get those who we have matched with
      */
     public void getMatch() {
-        String url = BASE_URL;
-        url += MATCH_STRING;
-        url += "&" + USE_GAMES_STRING + "true";
-        url += "&" + USE_LOCATION_STRING + "true";
+        // // TODO: This was exactly the same as TEST_MATCHES_STRING; Change later.
+        String uri = Uri.parse(BASE_URL).buildUpon()
+                .appendPath(MATCH_STRING)
+                .appendQueryParameter(USER_ID_PARAM, "d49f9b92-b927-11e4-847c-8bb5e9000002")
+                .appendQueryParameter(USE_GAMES_PARAM, Boolean.toString(true))
+                .appendQueryParameter(USE_LOCATION_PARAM, Boolean.toString(true))
+                .build().toString();
 
-        new AsyncHelper().execute(new String[]{GET_STRING, MATCH_STRING, url});
+        Log.d(LOG_TAG, uri);
+        new AsyncHelper().execute(new String[]{GET_STRING, MATCH_STRING, uri});
     }
 
     private static String getHelper(String url) {
@@ -73,27 +97,21 @@ public class HTTPServerCommunication {
         @Override
         protected String doInBackground(String... params) {
             // We need to differentiate between gets and posts
-            String requestType = params[0];
-            String function = params[1];
-            String url = params[2];
-
-            if (requestType.equals(GET_STRING)) {
-                String response = getHelper(url);
-
+            if (params[0].equals(GET_STRING)) {
+                String response = getHelper(params[2]);
+                Log.d(LOG_TAG, response);
                 // Once we have our response, we pass it along depending on the appropriate method
                 // that should handle it
-                if (function.equals(MESSAGES_STRING)) {
+                if (params[1].equals(MESSAGES_STRING)) {
                     getMessagesHandler(response);
-                } else if (function.equals(MATCH_STRING)) {
+                } else if (params[1].equals(MATCH_STRING)) {
                     getMatchHandler(response);
                 }
 
                 // TODO Implement the rest of the GET requests
 
             } else {
-                if(function.equals(POST_STRING)){
-
-                }
+                // TODO Implement POST
             }
             return null;
         }
@@ -102,7 +120,11 @@ public class HTTPServerCommunication {
          * Deals with the response from the server when getting messages
          */
         private void getMessagesHandler(String response) {
-            // TODO Implement
+            Type collectionType = new TypeToken<ArrayList<Message>>() {
+            }.getType();
+            Gson gson = new Gson();
+            ArrayList<Message> messages = gson.fromJson(response, collectionType);
+            Log.d(LOG_TAG, messages.toString());
         }
 
         /**

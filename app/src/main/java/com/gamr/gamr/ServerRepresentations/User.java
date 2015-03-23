@@ -23,6 +23,7 @@ public class User {
         // and retrieve their "generated" profile
         if (checkIfUserExists()) {
             retrieveProfile();
+            (new HTTPServerCommunication()).getMessages();
         } else {
             generateProfile();
         }
@@ -56,7 +57,7 @@ public class User {
     public List<Message> getMostRecentMessagesList() {
         List<Message> mostRecentMessagesList = new ArrayList<Message>();
 
-        for(ConversationList list : mConversationMap.values()) {
+        for (ConversationList list : mConversationMap.values()) {
             mostRecentMessagesList.add(list.getMostRecentMessage());
         }
 

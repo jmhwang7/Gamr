@@ -18,10 +18,11 @@ public class MessageJson {
     private String date;
     private String text;
 
-    public MessageJson(){}
+    public MessageJson() {
+    }
 
     @Override
-    public String toString(){
+    public String toString() {
         return "From: " + fromId + "\n" + "To: " + toId + "\n" + text;
     }
 

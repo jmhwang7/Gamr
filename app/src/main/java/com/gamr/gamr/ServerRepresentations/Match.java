@@ -5,7 +5,7 @@ import com.google.gson.annotations.SerializedName;
 /**
  * Created by Thomas on 3/21/2015.
  */
-public class MatchJson {
+public class Match {
     @SerializedName("id")
     private String matchId;
 
@@ -16,7 +16,7 @@ public class MatchJson {
 
     private double distance;
 
-    public MatchJson() {
+    public Match() {
     }
 
     public String getMatchId() {
@@ -52,7 +52,7 @@ public class MatchJson {
     }
 
     @Override
-    public String toString(){
+    public String toString() {
         return "Match's ID " + matchId + "\n" + "Distance from user: " + distance;
     }
 }
