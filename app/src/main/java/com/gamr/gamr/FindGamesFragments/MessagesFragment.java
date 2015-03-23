@@ -97,7 +97,7 @@ public class MessagesFragment extends Fragment {
 
             Intent intent = new Intent(getActivity(), ConversationActivity.class);
             intent.putExtra(ConversationActivity.SENDER_KEY,
-                    mMessages.get(position).getTo_id());
+                    mMessages.get(position).getToId());
             startActivity(intent);
         }
     }
@@ -126,7 +126,7 @@ public class MessagesFragment extends Fragment {
 
             Message message = mMessages.get(position);
             previewText.setText(message.getMessagePreview());
-            senderText.setText(message.getFrom_id());
+            senderText.setText(message.getFromId());
             timeReceivedText.setText(message.getTimeReceived());
 
             // Sets the color if it hasn't been viewed yet

@@ -15,11 +15,20 @@ public class Message {
     public static final String RECEIVER_USER_NAME = "Antonio";
 
     //JSON fields
-    private String message_id;
+    @SerializedName("message_id")
+    private String messageId;
+
+    @SerializedName("text")
     private String text;
-    private String from_id;
+
+    @SerializedName("to_id")
+    private String toId;
+
+    @SerializedName("from_id")
+    private String fromId;
+
+    @SerializedName("date")
     private long date;
-    private String to_id;
 
     private String mMessagePreview;
     private boolean mMessageViewed;
@@ -29,12 +38,12 @@ public class Message {
 
     public Message(String content, String sender, long timeReceived, String otherUserId) {
         text = content;
-        from_id = sender;
+        fromId = sender;
         date = timeReceived;
         mMessagePreview = text.length() > MESSAGE_PREVIEW_LENGTH ?
                 text.substring(0, MESSAGE_PREVIEW_LENGTH) : text;
         mMessageViewed = false;
-        to_id = otherUserId;
+        toId = otherUserId;
     }
 
 
@@ -49,16 +58,16 @@ public class Message {
 
     @Override
     public String toString() {
-        return "Sender: " + from_id + "\nReceiver: " + to_id + "\nTime Received: " + getTimeReceived()
+        return "Sender: " + fromId + "\nReceiver: " + toId + "\nTime Received: " + getTimeReceived()
                 + "\nMessage: " + text + "\n";
     }
 
-    public String getMessage_id() {
-        return message_id;
+    public String getMessageId() {
+        return messageId;
     }
 
-    public void setMessage_id(String message_id) {
-        this.message_id = message_id;
+    public void setMessageId(String messageId) {
+        this.messageId = messageId;
     }
 
     public String getText() {
@@ -69,12 +78,12 @@ public class Message {
         this.text = text;
     }
 
-    public String getFrom_id() {
-        return from_id;
+    public String getFromId() {
+        return fromId;
     }
 
-    public void setFrom_id(String from_id) {
-        this.from_id = from_id;
+    public void setFromId(String fromId) {
+        this.fromId = fromId;
     }
 
     public long getDate() {
@@ -85,12 +94,12 @@ public class Message {
         this.date = date;
     }
 
-    public String getTo_id() {
-        return to_id;
+    public String getToId() {
+        return toId;
     }
 
-    public void setTo_id(String to_id) {
-        this.to_id = to_id;
+    public void setToId(String toId) {
+        this.toId = toId;
     }
 
     public boolean wasMessageViewed() {
