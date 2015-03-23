@@ -1,4 +1,4 @@
-package com.gamr.gamr.ServerRepresentations;
+package com.gamr.gamr.Server;
 
 import com.google.gson.annotations.SerializedName;
 
