@@ -17,6 +17,7 @@ import com.gamr.gamr.R;
 import com.gamr.gamr.Server.Message;
 import com.gamr.gamr.Server.User;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -78,7 +79,9 @@ public class MessagesFragment extends Fragment {
      */
     public List<Message> getCurrentMessages() {
         // TODO We need to integrate this with the server
-        return User.sUser.getMostRecentMessagesList();
+        List<Message> tempList = new ArrayList<Message>();
+        tempList.add(new Message("Test", "test", 10L, "Test"));
+        return tempList;
     }
 
 
