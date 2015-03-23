@@ -1,6 +1,9 @@
 package com.gamr.gamr.Server;
 
+import android.content.Context;
 import android.os.AsyncTask;
+
+import com.gamr.gamr.ConversationActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,7 +21,7 @@ public class ConversationList {
         mOtherUserID = otherUserID;
         mMessageList = new ArrayList<Message>();
         mMostRecentMessage = null;
-        updateConversation();
+        updateConversation(null);
     }
 
     /**
@@ -46,16 +49,9 @@ public class ConversationList {
      * This method will update the conversation by getting the conversation's most recent changes
      * from the server.
      */
-    public void updateConversation() {
+    public void updateConversation(Context context) {
         // TODO Ping the server for information on this
-        synchronized (mOtherUserID) {
-            new UpdateTask().execute();
-            try {
-                mOtherUserID.wait();
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-        }
+        new UpdateTask(context).execute();
     }
 
     private void getDemoConversation() {
@@ -65,15 +61,26 @@ public class ConversationList {
         mMessageList.add(mMostRecentMessage);
     }
 
-    private class UpdateTask extends AsyncTask<Void, Void, Void> {
+    private class UpdateTask extends AsyncTask<Void, Void, List<Message>> {
+        private Context mContext;
+
+        public UpdateTask(Context context) {
+            mContext = context;
+        }
 
         @Override
-        protected Void doInBackground(Void ... params) {
-            synchronized (mOtherUserID) {
-                mMessageList = Server.getConversation("d49f9b92-b927-11e4-847c-8bb5e9000002", "d49f9b92-b927-11e4-847c-8bb5e9000003");
-                mOtherUserID.notify();
+        protected List<Message> doInBackground(Void ... params) {
+            return Server.getConversation("d49f9b92-b927-11e4-847c-8bb5e9000002", "d49f9b92-b927-11e4-847c-8bb5e9000003");
+        }
+
+        @Override
+        protected void onPostExecute(List<Message> messages) {
+            mMessageList = messages;
+            if (mContext != null) {
+                ConversationActivity.ConversationAdapter adapter = ((ConversationActivity) mContext).mAdapter;
+                adapter.clear();
+                adapter.addAll(messages);
             }
-            return null;
         }
     }
 }

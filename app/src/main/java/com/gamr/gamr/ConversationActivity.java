@@ -26,7 +26,7 @@ import java.util.List;
 public class ConversationActivity extends ActionBarActivity {
     public static final String SENDER_KEY = "MESSAGE_SENDER";
     private List<Message> mMessageList;
-    private ConversationAdapter mAdapter;
+    public ConversationAdapter mAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,8 +46,8 @@ public class ConversationActivity extends ActionBarActivity {
 
         if (mAdapter == null) {
             // We then create the adapter based on that list and attach it to the view
-            final ConversationAdapter adapter = new ConversationAdapter(this, mMessageList);
-            messagesListView.setAdapter(adapter);
+            mAdapter = new ConversationAdapter(this, mMessageList);
+            messagesListView.setAdapter(mAdapter);
         }
     }
 
@@ -57,7 +57,7 @@ public class ConversationActivity extends ActionBarActivity {
     private List<Message> getConversation(String user) {
         // TODO This needs to be changed to correctly get a conversation
         ConversationList conversationList = User.sUser.getConversation(user);
-        conversationList.updateConversation();
+        conversationList.updateConversation(this);
         return conversationList.getMessageList();
     }
 
