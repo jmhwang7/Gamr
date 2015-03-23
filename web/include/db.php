@@ -16,6 +16,10 @@ class DBMySQLi {
     function insertId() {
         return $this->link->insert_id;
     }
+
+    function affectedRows() {
+        return $this->link->affected_rows;
+    }
     
     function query($query) {
         $result = $this->link->query($query);

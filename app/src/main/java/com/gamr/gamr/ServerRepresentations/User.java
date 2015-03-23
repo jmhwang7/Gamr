@@ -44,6 +44,11 @@ public class User {
     }
 
     /**
+     * Gets user's id.
+     */
+    public String getAndroidID() { return mAndroidID; }
+
+    /**
      * Gets a map of all the conversations between this user and other users. The keys are the user
      * ID's and the values are the actual conversations
      */
