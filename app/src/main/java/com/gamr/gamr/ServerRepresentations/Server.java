@@ -1,5 +1,7 @@
 package com.gamr.gamr.ServerRepresentations;
 
+import android.net.Uri;
+
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
@@ -164,12 +166,15 @@ public class Server {
     }
 
     private static URL createUrl(String function, Map<String, String> params) throws MalformedURLException {
-        StringBuilder url = new StringBuilder(BASE_URL).append(function).append("?");
-        for (Map.Entry each : params.entrySet()) {
+
+        Uri.Builder builder = Uri.parse(BASE_URL).buildUpon().appendPath(function);
+        for (Map.Entry<String, String> each : params.entrySet()) {
             if (!each.getKey().equals("body")) {
-                url.append(each.getKey()).append("=").append(each.getValue()).append("&");
+                builder.appendQueryParameter(each.getKey(), each.getValue());
             }
         }
-        return new URL(url.toString());
+        Uri uri = builder.build();
+        return new URL(uri.toString());
+
     }
 }
