@@ -13,9 +13,9 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import com.gamr.gamr.ServerRepresentations.ConversationList;
-import com.gamr.gamr.ServerRepresentations.Message;
-import com.gamr.gamr.ServerRepresentations.User;
+import com.gamr.gamr.Server.ConversationList;
+import com.gamr.gamr.Server.Message;
+import com.gamr.gamr.Server.User;
 
 import java.util.List;
 

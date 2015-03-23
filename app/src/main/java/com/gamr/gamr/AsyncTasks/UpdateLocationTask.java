@@ -2,8 +2,8 @@ package com.gamr.gamr.AsyncTasks;
 
 import android.os.AsyncTask;
 
-import com.gamr.gamr.ServerRepresentations.Server;
-import com.gamr.gamr.ServerRepresentations.User;
+import com.gamr.gamr.Server.Server;
+import com.gamr.gamr.Server.User;
 
 /**
  * Created by Jennifer on 3/6/15.

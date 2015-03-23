@@ -1,4 +1,4 @@
-package com.gamr.gamr.ServerRepresentations;
+package com.gamr.gamr.Server;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -23,7 +23,6 @@ public class User {
         // and retrieve their "generated" profile
         if (checkIfUserExists()) {
             retrieveProfile();
-            (new HTTPServerCommunication()).getMessages();
         } else {
             generateProfile();
         }

@@ -14,8 +14,8 @@ import android.widget.TextView;
 
 import com.gamr.gamr.ConversationActivity;
 import com.gamr.gamr.R;
-import com.gamr.gamr.ServerRepresentations.Message;
-import com.gamr.gamr.ServerRepresentations.User;
+import com.gamr.gamr.Server.Message;
+import com.gamr.gamr.Server.User;
 
 import java.util.List;
 

@@ -1,4 +1,4 @@
-package com.gamr.gamr.ServerRepresentations;
+package com.gamr.gamr.Server;
 
 import java.util.ArrayList;
 import java.util.List;
