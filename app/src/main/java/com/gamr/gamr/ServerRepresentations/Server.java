@@ -30,6 +30,7 @@ public class Server {
     private static final String GET_MESSAGE_FUNCTION = "get_messages";
     private static final String SEND_MESSAGE_FUNCTION = "send_message";
     private static final String GET_MATCHES_FUNCTION = "match";
+    private static final String UPDATE_LOCATION_FUNCTION = "update_location";
 
 //    public static void main(String[] args) {
 //        int messageId = sendMessage("d49f9b92-b927-11e4-847c-8bb5e9000003", "d49f9b92-b927-11e4-847c-8bb5e9000002", "Yay");
@@ -110,6 +111,30 @@ public class Server {
     }
 
     /**
+     * Updates location of the user
+     * @param userId app user
+     * @param  double latitude of user's location
+     * @param double longitude of user's location
+     * @return boolean indicating whether location update was successful
+     */
+    public static boolean updateLocation(String userId, double latitude, double longitude) {
+        //Params to put
+        Map<String, String> params = new HashMap<>();
+        params.put("user_id", userId);
+        params.put("lat", Double.toString(latitude));
+        params.put("lon", Double.toString(longitude));
+
+        try {
+            String response = put(UPDATE_LOCATION_FUNCTION, params);
+            UpdateResponse deserialized = new Gson().fromJson(response, UpdateResponse.class);
+            return deserialized.getAffectedRows() >= 0;
+        } catch (IOException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    /**
      * Performs HTTP get for the function provided and the given parameters
      * @param function API endpoint for the URL
      * @param params Map of parameters to append to the URL
@@ -152,6 +177,22 @@ public class Server {
         post.write(text.toString());
         post.close();
 
+        return readResponseStream(connection.getInputStream());
+    }
+
+    /**
+     * Performs HTTP put for the function provided and the given parameters
+     * @param function API endpoint for the URL
+     * @param params Map of parameters to append to the URL
+     * @return the server response
+     * @throws IOException
+     */
+    private static String put(String function, Map<String, String> params) throws IOException {
+        URL url = createUrl(function, params);
+        HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+        connection.setRequestMethod("PUT");
+
+        connection.connect();
         return readResponseStream(connection.getInputStream());
     }
 

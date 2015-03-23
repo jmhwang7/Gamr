@@ -12,6 +12,7 @@ import com.gamr.gamr.ServerRepresentations.User;
 
 public class SplashScreenActivity extends Activity {
     private static final int SPLASH_TIME = 1500;
+    private static final String LOG_TAG = SplashScreenActivity.class.getSimpleName();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

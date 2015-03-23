@@ -163,8 +163,7 @@ public class FindGamesActivity extends ActionBarActivity
         Location location = LocationServices.FusedLocationApi.getLastLocation(
                 mGoogleApiClient);
         if (location != null) {
-            UpdateLocationTask locationTask = new UpdateLocationTask();
-            locationTask.execute(location.getLatitude(), location.getLongitude());
+            new UpdateLocationTask().execute(location.getLatitude(), location.getLongitude());
         }
     }
 
