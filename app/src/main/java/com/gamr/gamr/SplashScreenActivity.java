@@ -1,42 +1,43 @@
 package com.gamr.gamr;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
+import android.os.Handler;
+import android.telephony.TelephonyManager;
+
+import com.gamr.gamr.Server.User;
 
 
 public class SplashScreenActivity extends Activity {
+    private static final int SPLASH_TIME = 1500;
+    private static final String LOG_TAG = SplashScreenActivity.class.getSimpleName();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        // Sets the activity to fullscreen with no settings bar
-        /*requestWindowFeature(Window.FEATURE_NO_TITLE);
-        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
-                WindowManager.LayoutParams.FLAG_FULLSCREEN);*/
+        createUser();
 
         setContentView(R.layout.activity_splash_screen);
+
+        // This handler will start the activity after the specified time
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                Intent intent = new Intent(SplashScreenActivity.this, FindGamesActivity.class);
+                startActivity(intent);
+                finish();
+            }
+        }, SPLASH_TIME);
     }
 
     /**
-     * Used to handle the various button events for starting a search
-     * @param v Button clicked by user
+     * Creates the user for the entire application.
      */
-    public void buttonListener(View v) {
-
-        switch (v.getId()) {
-            case R.id.lol_button:
-                // If the user wants to start a league search
-                Intent intent = new Intent(this, GameProfileActivity.class);
-                startActivity(intent);
-                finish();
-            break;
-
-
-            default:
-
-            break;
-        }
+    private void createUser() {
+        TelephonyManager manager = (TelephonyManager) getSystemService(Context.TELEPHONY_SERVICE);
+        User.instantiateUser(manager.getDeviceId() );
     }
 }

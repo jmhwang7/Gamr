@@ -14,8 +14,10 @@ import android.widget.TextView;
 
 import com.gamr.gamr.ConversationActivity;
 import com.gamr.gamr.R;
-import com.gamr.gamr.ServerRepresentations.Message;
+import com.gamr.gamr.Server.Message;
+import com.gamr.gamr.Server.User;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -77,7 +79,9 @@ public class MessagesFragment extends Fragment {
      */
     public List<Message> getCurrentMessages() {
         // TODO We need to integrate this with the server
-        return Message.getSampleMessageArrayList();
+        List<Message> tempList = new ArrayList<Message>();
+        tempList.add(new Message("Test", "test", 10L, "Test"));
+        return tempList;
     }
 
 
@@ -96,7 +100,7 @@ public class MessagesFragment extends Fragment {
 
             Intent intent = new Intent(getActivity(), ConversationActivity.class);
             intent.putExtra(ConversationActivity.SENDER_KEY,
-                    mMessages.get(position).getMessageSender());
+                    mMessages.get(position).getToId());
             startActivity(intent);
         }
     }
@@ -125,7 +129,7 @@ public class MessagesFragment extends Fragment {
 
             Message message = mMessages.get(position);
             previewText.setText(message.getMessagePreview());
-            senderText.setText(message.getMessageSender());
+            senderText.setText(message.getFromId());
             timeReceivedText.setText(message.getTimeReceived());
 
             // Sets the color if it hasn't been viewed yet

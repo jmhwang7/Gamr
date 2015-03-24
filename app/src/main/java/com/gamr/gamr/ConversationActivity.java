@@ -13,7 +13,9 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import com.gamr.gamr.ServerRepresentations.Message;
+import com.gamr.gamr.Server.ConversationList;
+import com.gamr.gamr.Server.Message;
+import com.gamr.gamr.Server.User;
 
 import java.util.List;
 
@@ -24,7 +26,7 @@ import java.util.List;
 public class ConversationActivity extends ActionBarActivity {
     public static final String SENDER_KEY = "MESSAGE_SENDER";
     private List<Message> mMessageList;
-    private ConversationAdapter mAdapter;
+    public ConversationAdapter mAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,8 +46,8 @@ public class ConversationActivity extends ActionBarActivity {
 
         if (mAdapter == null) {
             // We then create the adapter based on that list and attach it to the view
-            final ConversationAdapter adapter = new ConversationAdapter(this, mMessageList);
-            messagesListView.setAdapter(adapter);
+            mAdapter = new ConversationAdapter(this, mMessageList);
+            messagesListView.setAdapter(mAdapter);
         }
     }
 
@@ -54,7 +56,9 @@ public class ConversationActivity extends ActionBarActivity {
      */
     private List<Message> getConversation(String user) {
         // TODO This needs to be changed to correctly get a conversation
-        return Message.getSampleConversation(user);
+        ConversationList conversationList = User.sUser.getConversation(user);
+        conversationList.updateConversation(this);
+        return conversationList.getMessageList();
     }
 
 
@@ -110,11 +114,11 @@ public class ConversationActivity extends ActionBarActivity {
             String messageString;
 
             // This sets it to be right justified
-            if (message.getMessageSender().equals(Message.RECEIVER_USER_NAME)) {
+            if (message.getFromId().equals(Message.RECEIVER_USER_NAME)) {
                 messageText.setGravity(Gravity.END);
-                messageString = message.getMessageContent() + " : " + message.getMessageSender();
+                messageString = message.getText() + " : " + message.getFromId();
             } else {
-                messageString = message.getMessageSender() + " : " + message.getMessageContent();
+                messageString = message.getFromId() + " : " + message.getText();
             }
 
             messageText.setText(messageString);
