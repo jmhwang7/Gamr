@@ -18,6 +18,11 @@ $functions = array(
                 'default' => false,
                 'type' => 'boolean',
             ),
+            'count' => array(
+                'required' => false,
+                'default' => 10,
+                'type' => 'int'
+            )
         )
     ),
     'get_messages' => array(

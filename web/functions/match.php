@@ -14,7 +14,9 @@ END $$
 DELIMITER ;
 
 */
-function match($db, $user_id, $use_location, $use_games) {
+function match($db, $user_id, $use_location, $use_games, $count) {
+    global $LOL_RANKS;
+    
     if(!$use_location && !$use_games) {
         outputError('Either use_location or use_games must be specified', 400);
     }
@@ -27,35 +29,65 @@ function match($db, $user_id, $use_location, $use_games) {
     $userLat = $user['lat'];
     $userLon = $user['lon'];
     
+    // Look up their game fields
+    $userFields = array();
+    $userFieldsResult = $db->query('SELECT field_id, field_value FROM user_game_fields WHERE user_id="'.$user_id.'"');
+    while($row = $userFieldsResult->fetch_assoc()) {
+        $userFields[$row['field_id']] = $row['field_value'];
+    }
+    
     // Set up query depending on parameters
-    $whereClause = '';
     $havingClause = '';
-    if($use_location) {
-        $havingClause .= ' distance < 200';
+    if($use_location && $use_games) {
+        $havingClause .= ' distance < '.MAX_DISTANCE;
+        $order = 'score DESC';
+    } else if($use_location) {
+        $havingClause .= ' distance < '.MAX_DISTANCE;
+        $order = 'distance_score DESC';
+    } else if($use_games) {
+        $order = 'game_score DESC';        
     }
-    if($use_games) {
-        // TODO add game matching logic here
-        $whereClause .= '';
-    }
-
-    $result = $db->query('SELECT id, lat, lon, 
-    get_distance_in_miles_between_geo_locations("'.$userLat.'", "'.$userLon.'", lat, lon) AS distance
-    FROM users
-    WHERE id != "'.$user_id.'"
-    '.$whereClause.'
-    '.($havingClause == '' ? '' : 'HAVING'.$havingClause).'
-    ORDER BY distance ASC
+        
+    $result = $db->query('SELECT username, id, distance,
+    1 - distance / '.MAX_DISTANCE.' AS distance_score, 
+    AVG(game_field_score) AS game_score,
+    (1 - distance / '.MAX_DISTANCE.') * AVG(game_field_score) AS score,
+    role, rank, gamemode
+    FROM
+    (
+        SELECT username, id, lat, lon, field_id, field_value,
+        get_distance_in_miles_between_geo_locations("'.$userLat.'", "'.$userLon.'", lat, lon) AS distance,
+        if(field_id = '.FIELD_LOL_ROLE.', if(field_value = "'.$userFields[FIELD_LOL_ROLE].'", 0, 1), 
+            if(field_id = '.FIELD_LOL_RANK.', (1-ABS(field_value - '.$userFields[FIELD_LOL_RANK].')*0.5), 
+                if(field_id = '.FIELD_LOL_GAMEMODE.', if(field_value = "'.$userFields[FIELD_LOL_GAMEMODE].'", 1, 0), NULL)
+            )
+        ) AS game_field_score,
+        (SELECT field_value FROM user_game_fields WHERE user_id=id AND field_id = '.FIELD_LOL_RANK.') AS rank,
+        (SELECT field_value FROM user_game_fields WHERE user_id=id AND field_id = '.FIELD_LOL_ROLE.') AS role,
+        (SELECT field_value FROM user_game_fields WHERE user_id=id AND field_id = '.FIELD_LOL_GAMEMODE.') AS gamemode
+        FROM users LEFT JOIN user_game_fields ON users.id=user_game_fields.user_id
+        WHERE id != "'.$user_id.'"
+        '.($havingClause == '' ? '' : 'HAVING'.$havingClause).'
+    ) AS data
+    GROUP BY id
+    HAVING game_score >= 0
+    ORDER BY '.$order.'
+    LIMIT '.$count.'
    ');
 
 
    $users = array();
     while($row = $result->fetch_assoc()) {
-        $users[] = $row;
+        $users[] = array(
+            'id' => $row['id'],
+            'username' => $row['username'],
+            'distance' => $row['distance'],
+            'role' => $row['role'],
+            'rank' => $LOL_RANKS[$row['rank']],
+            'gamemode' => $row['gamemode']
+        );
     }
 
-     $response = array(
-        'matches' => $users
-     );
-    outputResponse($response);
+    outputResponse($users);
 }
 ?>

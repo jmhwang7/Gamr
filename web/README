@@ -17,13 +17,18 @@ Parameters:
 user_id         uuid            required
 use_location    boolean         optional
 use_games       boolean         optional
+count           int             optional
 
 Returns:
-matches: array
+array
     id: uuid
-    lat: decimal
-    lon: decimal
+    username: string
     distance: decimal (miles)
+    
+    (LoL-specific attributes)
+    role: string
+    rank: string
+    gamemode: string
     
     
 send_message - Sends a message to another user.

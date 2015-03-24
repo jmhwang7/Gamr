@@ -19,8 +19,11 @@ class DBMySQLi {
     
     function query($query) {
         $result = $this->link->query($query);
-        if($this->link->errno) {
-            outputError('Database errorL '.$this->link->error);
+            if(isset($_GET['debug_sql'])) {
+                echo 'SQL: '.$query."\n";
+            }
+            if($this->link->errno) {
+            outputError('Database error: '.$this->link->error);
         }
         return $result;
     }
