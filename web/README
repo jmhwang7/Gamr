@@ -50,5 +50,7 @@ messages: array
     id: int
     from_id: uuid
     to_id: uuid
+    from_username: string
+    to_username: string
     date: int (timestamp)
     text: string
