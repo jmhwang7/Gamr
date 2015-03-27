@@ -49,7 +49,8 @@ public class ConversationList {
      * from the server.
      */
     public void updateConversation(Context context, String otherUser) {
-        new UpdateTask(context).execute(otherUser);
+        UpdateTask task = new UpdateTask(context);
+        task.execute(otherUser);
     }
 
 

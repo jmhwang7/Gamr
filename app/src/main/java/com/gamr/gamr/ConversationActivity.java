@@ -60,7 +60,13 @@ public class ConversationActivity extends ActionBarActivity {
      */
     private List<Message> getConversation(String user) {
         ConversationList conversationList = User.sUser.getConversation(user);
+
+        Log.d(LOG_TAG, "Before updateConversation");
         conversationList.updateConversation(this, user);
+        Log.d(LOG_TAG, "After updateConversation");
+
+        Log.d(LOG_TAG, "Message list size : " + conversationList.getMessageList().size());
+
         return conversationList.getMessageList();
     }
 
@@ -90,9 +96,17 @@ public class ConversationActivity extends ActionBarActivity {
     public void sendMessage(View v) {
         TextView textView = (TextView) findViewById(R.id.messageTextBox);
 
+        if (textView.getText().equals("")) {
+            return;
+        }
+
         new SendMessageTask().execute(mOtherUser, textView.getText().toString());
 
         textView.setText("");
+
+        Log.d(LOG_TAG, "Before getConversation");
+        mMessageList = getConversation(mOtherUser);
+        Log.d(LOG_TAG, "After getConversation");
 
         findViewById(R.id.messageLayout).invalidate();
     }
@@ -116,11 +130,12 @@ public class ConversationActivity extends ActionBarActivity {
 
             TextView messageText = (TextView) rowView.findViewById(R.id.messageContent);
 
-            Message message = mMessageList.get(mMessageList.size() - 1 - position);
+            Message message = getItem(getCount() - 1 - position);
+            //Message message = mMessageList.get(mMessageList.size() - 1 - position);
             String messageString;
 
             // This sets it to be right justified
-            if (message.getFromId().equals(Message.RECEIVER_USER_NAME)) {
+            if (message.getFromId().equals(User.sUser.getAndroidID())) {
                 messageText.setGravity(Gravity.END);
                 messageString = message.getText() + " : " + message.getFromId();
             } else {
@@ -128,8 +143,6 @@ public class ConversationActivity extends ActionBarActivity {
             }
 
             messageText.setText(messageString);
-            Log.d(LOG_TAG, "Conversation size : " + mMessageList.size());
-
             return rowView;
         }
     }
