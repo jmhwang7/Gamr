@@ -3,7 +3,6 @@ package com.gamr.gamr;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -45,7 +44,6 @@ public class ConversationActivity extends ActionBarActivity {
         if (mMessageList == null) {
             mOtherUser = getIntent().getExtras().getString(SENDER_KEY);
             mMessageList = getConversation(mOtherUser);
-            Log.d(LOG_TAG, "User : " + User.sUser.getAndroidID() + "\n" + " Other User : " + mOtherUser);
         }
 
         if (mAdapter == null) {
@@ -61,11 +59,7 @@ public class ConversationActivity extends ActionBarActivity {
     private List<Message> getConversation(String user) {
         ConversationList conversationList = User.sUser.getConversation(user);
 
-        Log.d(LOG_TAG, "Before updateConversation");
         conversationList.updateConversation(this, user);
-        Log.d(LOG_TAG, "After updateConversation");
-
-        Log.d(LOG_TAG, "Message list size : " + conversationList.getMessageList().size());
 
         return conversationList.getMessageList();
     }
@@ -85,10 +79,20 @@ public class ConversationActivity extends ActionBarActivity {
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
+        switch (id) {
+            case R.id.action_settings:
+                return true;
+
+            case R.id.action_refresh_message:
+                getConversation(mOtherUser);
+                return true;
+        }
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
             return true;
         }
+
+
 
         return super.onOptionsItemSelected(item);
     }
@@ -104,9 +108,7 @@ public class ConversationActivity extends ActionBarActivity {
 
         textView.setText("");
 
-        Log.d(LOG_TAG, "Before getConversation");
         mMessageList = getConversation(mOtherUser);
-        Log.d(LOG_TAG, "After getConversation");
 
         findViewById(R.id.messageLayout).invalidate();
     }
