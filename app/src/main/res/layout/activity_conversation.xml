@@ -12,8 +12,11 @@
         android:id="@+id/conversationListView"
         android:layout_centerHorizontal="true"
         android:stackFromBottom="true"
+        android:transcriptMode="alwaysScroll"
         android:divider="@android:color/transparent"
-        android:dividerHeight="10.0sp"/>
+        android:dividerHeight="10.0sp"
+        android:paddingBottom="10px"
+        android:layout_above="@+id/messageLayout" />
 
     <LinearLayout
         android:orientation="horizontal"
@@ -21,6 +24,13 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:id="@+id/messageLayout">
+
+        <LinearLayout android:focusable="true"
+            android:focusableInTouchMode="true"
+            android:layout_width="0px"
+            android:layout_height="0px" >
+            <requestFocus/>
+        </LinearLayout>
 
         <Button
             android:layout_width="wrap_content"

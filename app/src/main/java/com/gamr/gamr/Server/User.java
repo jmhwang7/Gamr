@@ -72,7 +72,7 @@ public class User {
      * Returns the conversation for the given user.
      */
     public ConversationList getConversation(String user) {
-        return new ConversationList("test");
+        return new ConversationList(user);
     }
 
     /**
@@ -96,11 +96,12 @@ public class User {
         // TODO Remove this method
         mConversationMap = new HashMap<String, ConversationList>();
 
-        ConversationList testList = new ConversationList("1010");
+        ConversationList testList = new ConversationList("d49f9b92-b927-11e4-847c-8bb5e9000003");
 
         mConversationMap.put(testList.getOtherUserID(), testList);
 
-        mProfileName = "Test Profile Name";
+        mProfileName = "d49f9b92-b927-11e4-847c-8bb5e9000002";
+        mAndroidID = "d49f9b92-b927-11e4-847c-8bb5e9000002";
     }
 
     /**
