@@ -25,7 +25,7 @@ $functions = array(
             )
         )
     ),
-    'get_messages' => array(
+    'match_response' => array(
         'params' => array(
             'user_id' => array(
                 'required' => true,
@@ -33,6 +33,23 @@ $functions = array(
             ),
             'other_user_id' => array(
                 'required' => true,
+                'type' => 'uuid',
+            ),
+            'matched' => array(
+                'required' => true,
+                'type' => 'boolean',
+            )
+        )
+    ),
+    'get_messages' => array(
+        'params' => array(
+            'user_id' => array(
+                'required' => true,
+                'type' => 'uuid',
+            ),
+            'other_user_id' => array(
+                'required' => false,
+                'default' => null,
                 'type' => 'uuid',
             ),
             'before' => array(
