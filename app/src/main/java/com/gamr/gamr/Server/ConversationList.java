@@ -63,7 +63,7 @@ public class ConversationList {
 
         @Override
         protected List<Message> doInBackground(String ... params) {
-            return Server.getConversation(User.sUser.getAndroidID(), params[0]);
+            return Server.getConversation(User.sUser.getAccountID(), params[0]);
         }
 
         @Override

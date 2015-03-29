@@ -53,7 +53,11 @@ public class Server {
     public static List<Message> getConversation(String userId, String otherUserId) {
         Map<String, String> params = new HashMap<>();
         params.put("user_id", userId);
-        params.put("other_user_id", otherUserId);
+
+        if (otherUserId != null) {
+            params.put("other_user_id", otherUserId);
+        }
+        
         try {
             String response = get(GET_MESSAGE_FUNCTION, params);
             List<Message> conversation = new Gson().fromJson(response, new TypeToken<List<Message>>() {}.getType());
@@ -134,7 +138,6 @@ public class Server {
             e.printStackTrace();
         }
     }
-
     /**
      * Gets a list of Matches for the specified user
      * @param userId user to get matches for

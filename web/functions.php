@@ -49,6 +49,7 @@ $functions = array(
             ),
             'other_user_id' => array(
                 'required' => false,
+                'default' => null,
                 'type' => 'uuid',
             ),
             'before' => array(
@@ -109,40 +110,35 @@ $functions = array(
                 'default' => null,
                 'type' => 'string',
             ),
-            'games' => array(
+            'game' => array(
                 'required' => false,
                 'default' => null,
-                'type' => 'array',
-                'typeDetails' => 'int'
+                'type' => 'int',
             ),
-            'in_game_names' => array(
+            'in_game_name' => array(
                 'required' => false,
                 'default' => null,
-                'type' => 'array',
-                'typeDetails' => 'string'
+                'type' => 'string',
             ),
         )
     ),
-    'update_game_fields' => array(
+    'update_game_field' => array(
         'params' => array(
             'user_id' => array(
                 'required' => true,
                 'type' => 'uuid',
             ),
-            'games' => array(
+            'game' => array(
                 'required' => true,
-                'type' => 'array',
-                'typeDetails' => 'int'
+                'type' => 'int'
             ),
-            'fields' => array(
+            'field' => array(
                 'required' => true,
-                'type' => 'array',
-                'typeDetails' => 'int'
-            ),        
-            'values' => array(
+                'type' => 'int'
+            ),
+            'value' => array(
                 'required' => true,
-                'type' => 'array',
-                'typeDetails' => 'any'
+                'type' => 'any'
             )
         )
     )
