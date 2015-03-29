@@ -30,18 +30,13 @@ public class Server {
 
     // Endpoints
     private static final String GET_MESSAGE_FUNCTION = "get_messages";
-    private static final String SEND_MESSAGE_FUNCTION = "send_message";
     private static final String GET_MATCHES_FUNCTION = "match";
-    private static final String UPDATE_LOCATION_FUNCTION = "update_location";
     private static final String GET_PROFILE_FUNCTION = "get_profile";
+    private static final String SEND_MESSAGE_FUNCTION = "send_message";
+    private static final String UPDATE_LOCATION_FUNCTION = "update_location";
     private static final String UPDATE_PROFILE_FUNCTION = "update_profile";
     private static final String UPDATE_GAME_FIELD_FUNCTION = "update_game_field";
-
-    public static void main(String[] args){
-        Server.updateSummonerName("tdcornish@att.net", "TheGreatOne");
-        Profile profile = Server.getProfile("tdcornish@att.net");
-        System.out.println(profile);
-    }
+    private static final String RESPOND_TO_MATCH_FUNCTION = "match_response";
 
     /**
      * Get a list of messages between two users
@@ -65,6 +60,22 @@ public class Server {
             //If request fails, return empty message list. Probably a better way to handle this but needs discussion
             e.printStackTrace();
             return new ArrayList<>();
+        }
+    }
+
+    public static boolean respondToMatch(String userId, String otherUserId, boolean accepted){
+        Map<String, String> params = new HashMap<>();
+        params.put("user_id", userId);
+        params.put("other_user_id", otherUserId);
+        Map<String, String> body = new HashMap<>();
+        body.put("matched", Boolean.toString(accepted));
+
+        try {
+            String response = post(RESPOND_TO_MATCH_FUNCTION, params, body);
+            return new Gson().fromJson(response, Boolean.class);
+        } catch (IOException e) {
+            e.printStackTrace();
+            return false;
         }
     }
 
@@ -177,6 +188,7 @@ public class Server {
             e.printStackTrace();
         }
     }
+
     /**
      * Gets a list of Matches for the specified user
      * @param userId user to get matches for
