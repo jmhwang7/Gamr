@@ -168,7 +168,7 @@ public class MessagesFragment extends Fragment {
 
         @Override
         protected List<Message> doInBackground(Void ... params) {
-            return Server.getConversation(User.sUser.getAndroidID(), null);
+            return Server.getConversation(User.sUser.getAccountID(), null);
         }
 
         @Override
