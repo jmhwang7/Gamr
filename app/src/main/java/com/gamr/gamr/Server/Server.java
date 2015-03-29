@@ -38,10 +38,9 @@ public class Server {
     private static final String UPDATE_GAME_FIELD_FUNCTION = "update_game_field";
 
     public static void main(String[] args){
-        Server.updateLeagueGameModes("d49f9b92-b927-11e4-847c-8bb5e9000004", Arrays.asList("Normal Draft", "ARAM"));
-        Profile profile = Server.getProfile("d49f9b92-b927-11e4-847c-8bb5e9000004");
+        Server.updateSummonerName("tdcornish@att.net", "TheGreatOne");
+        Profile profile = Server.getProfile("tdcornish@att.net");
         System.out.println(profile);
-        System.out.println(profile.getLeagueProfile());
     }
 
     /**
@@ -69,6 +68,19 @@ public class Server {
         }
     }
 
+    public static void createUser(String userId, String username){
+        Map<String, String> params = new HashMap<>();
+        params.put("user_id", userId);
+        Map<String, String> body = new HashMap<>();
+        body.put("username", username);
+
+        try{
+            post(UPDATE_PROFILE_FUNCTION, params, body);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
     public static Profile getProfile(String userId){
         Map<String, String> params = new HashMap<>();
         params.put("user_id", userId);
@@ -79,6 +91,33 @@ public class Server {
         } catch (IOException e) {
             e.printStackTrace();
             return null;
+        }
+    }
+
+    public static void updateUsername(String userId, String newUsername){
+        Map<String, String> params = new HashMap<>();
+        params.put("user_id", userId);
+        Map<String, String> body = new HashMap<>();
+        body.put("username", newUsername);
+
+        try{
+            post(UPDATE_PROFILE_FUNCTION, params, body);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void updateSummonerName(String userId, String newSummonerName){
+        Map<String, String> params = new HashMap<>();
+        params.put("user_id", userId);
+        params.put("game", "1");
+        Map<String, String> body = new HashMap<>();
+        body.put("in_game_name", newSummonerName);
+
+        try{
+            post(UPDATE_PROFILE_FUNCTION, params, body);
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 
@@ -97,7 +136,7 @@ public class Server {
         body.put("value", list);
 
         try{
-            String response = post(UPDATE_GAME_FIELD_FUNCTION, params, body);
+            post(UPDATE_GAME_FIELD_FUNCTION, params, body);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -112,7 +151,7 @@ public class Server {
         body.put("value", rank);
 
         try{
-            String response = post(UPDATE_GAME_FIELD_FUNCTION, params, body);
+            post(UPDATE_GAME_FIELD_FUNCTION, params, body);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -133,7 +172,7 @@ public class Server {
         body.put("value", list);
 
         try{
-            String response = post(UPDATE_GAME_FIELD_FUNCTION, params, body);
+            post(UPDATE_GAME_FIELD_FUNCTION, params, body);
         } catch (IOException e) {
             e.printStackTrace();
         }
