@@ -11,9 +11,11 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
+import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -37,8 +39,9 @@ public class Server {
     private static final String UPDATE_GAME_FIELD_FUNCTION = "update_game_field";
     private static final String RESPOND_TO_MATCH_FUNCTION = "match_response";
 
-//    public static void main(String[] args){
-//    }
+    public static void main(String[] args){
+        Server.sendMessage("testuser1@gmail.com", "antoniobrese@gmail.com", "Sup bro");
+    }
 
     /**
      * Get a list of messages between two users
@@ -243,7 +246,11 @@ public class Server {
 
         //Params to put in the body of the message,
         Map<String, String> body = new HashMap<>();
-        params.put("text", text);
+        try {
+            params.put("text", URLEncoder.encode(text, "UTF-8"));
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
 
         try {
             String response = post(SEND_MESSAGE_FUNCTION, params, body);
