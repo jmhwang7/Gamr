@@ -64,11 +64,14 @@ function match($db, $user_id, $use_location, $use_games, $count) {
         ) AS game_field_score,
         (SELECT field_value FROM user_game_fields WHERE user_id=id AND field_id = '.FIELD_LOL_RANK.') AS rank,
         (SELECT field_value FROM user_game_fields WHERE user_id=id AND field_id = '.FIELD_LOL_ROLE.') AS role,
-        (SELECT field_value FROM user_game_fields WHERE user_id=id AND field_id = '.FIELD_LOL_GAMEMODE.') AS gamemode
+        (SELECT field_value FROM user_game_fields WHERE user_id=id AND field_id = '.FIELD_LOL_GAMEMODE.') AS gamemode,
+        (SELECT COUNT(*) FROM matches WHERE user_id="d49f9b92-b927-11e4-847c-8bb5e9000005" AND other_user_id=id) AS user_matched_or_passed,
+        (SELECT COUNT(*) FROM matches WHERE user_id=id AND other_user_id="d49f9b92-b927-11e4-847c-8bb5e9000005" AND matched=0) AS other_passed
         FROM users LEFT JOIN user_game_fields ON users.id=user_game_fields.user_id
         WHERE id != "'.$user_id.'"
         '.($havingClause == '' ? '' : 'HAVING'.$havingClause).'
     ) AS data
+    WHERE user_matched_or_passed=0 AND other_passed=0
     GROUP BY id
     HAVING game_score >= 0
     ORDER BY '.$order.'
