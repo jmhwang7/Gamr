@@ -18,7 +18,7 @@ function get_profile($db, $user_id) {
         if($row['game_id'] == GAME_LOL && $row['field_id'] == FIELD_LOL_RANK) {
             $row['field_value'] = $LOL_RANKS[$row['field_value']];
         }
-        $output[$row['game_id']][$row['field_id']] = $row['field_value'];
+        $output[$row['game_id']][$row['field_id']] = explode(',', $row['field_value']);
     }
     
     outputResponse($output);

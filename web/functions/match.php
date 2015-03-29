@@ -32,9 +32,22 @@ function match($db, $user_id, $use_location, $use_games, $count) {
     // Look up their game fields
     $userFields = array();
     $userFieldsResult = $db->query('SELECT field_id, field_value FROM user_game_fields WHERE user_id="'.$user_id.'"');
+    
+    $userFieldsQuery = array();
     while($row = $userFieldsResult->fetch_assoc()) {
         $userFields[$row['field_id']] = $row['field_value'];
+        $userFieldsQuery[$row['field_id']] = '(';
+        $values = explode(',', $row['field_value']);
+        for($i = 0; $i < count($values); $i++) {
+            $userFieldsQuery[$row['field_id']] .= 'FIND_IN_SET("'.$db->escapeString($values[$i]).'", field_value)';
+            if($i < count($values)-1) {
+                $userFieldsQuery[$row['field_id']] .= ' OR ';
+            }
+        }
+        $userFieldsQuery[$row['field_id']] .= ')';
     }
+    
+    print_r($userFieldsQuery);
     
     // Set up query depending on parameters
     $havingClause = '';
@@ -57,9 +70,9 @@ function match($db, $user_id, $use_location, $use_games, $count) {
     (
         SELECT username, id, lat, lon, field_id, field_value,
         get_distance_in_miles_between_geo_locations("'.$userLat.'", "'.$userLon.'", lat, lon) AS distance,
-        if(field_id = '.FIELD_LOL_ROLE.', if(field_value = "'.$userFields[FIELD_LOL_ROLE].'", 0, 1), 
+        if(field_id = '.FIELD_LOL_ROLE.', if('.$userFieldsQuery[FIELD_LOL_ROLE].', 0, 1), 
             if(field_id = '.FIELD_LOL_RANK.', (1-ABS(field_value - '.$userFields[FIELD_LOL_RANK].')*0.5), 
-                if(field_id = '.FIELD_LOL_GAMEMODE.', if(field_value = "'.$userFields[FIELD_LOL_GAMEMODE].'", 1, 0), NULL)
+                if(field_id = '.FIELD_LOL_GAMEMODE.', if('.$userFieldsQuery[FIELD_LOL_GAMEMODE].', 1, 0), NULL)
             )
         ) AS game_field_score,
         (SELECT field_value FROM user_game_fields WHERE user_id=id AND field_id = '.FIELD_LOL_RANK.') AS rank,
