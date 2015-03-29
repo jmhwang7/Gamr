@@ -61,6 +61,7 @@ public class CreateUserActivity extends ActionBarActivity implements View.OnClic
                 User.sUser.generateProfile();
                 Intent intent = new Intent(CreateUserActivity.this, FindGamesActivity.class);
                 startActivity(intent);
+                finish();
                 break;
         }
     }
