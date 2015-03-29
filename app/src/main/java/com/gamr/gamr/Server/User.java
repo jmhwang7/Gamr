@@ -1,5 +1,9 @@
 package com.gamr.gamr.Server;
 
+import android.content.Context;
+
+import com.gamr.gamr.Utils.AccountUtils;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -11,30 +15,27 @@ import java.util.Map;
 public class User {
     public static User sUser;
 
-    private String mAndroidID;
+    private String mAccountID;
     private String mProfileName;
     private Map<String, ConversationList> mConversationMap;
     private List<String> mGames;
 
-    private User(String androidID) {
-        mAndroidID = androidID;
-
-        // We need to check if the user exists on our server already. If they do, we should pull the
-        // data from the server, otherwise we need to create a new profile for them on the server
-        // and retrieve their "generated" profile
-        if (checkIfUserExists()) {
-            retrieveProfile();
-        } else {
-            generateProfile();
+    private User(Context context) {
+        if ((mAccountID = AccountUtils.getAccountID(context)) != null) {
+            retrieveProfile(context);
         }
     }
 
     /**
      * This creates the static user variable that can be used by the rest of the program
      */
-    public static void instantiateUser(String androidID) {
-        sUser = new User(androidID);
-    }
+    public static void instantiateUser(Context context) { sUser = new User(context); }
+
+
+    /**
+     * Sets the profile name for the user
+     */
+    public void setProfileName(String profileName) { mProfileName = profileName; }
 
     /**
      * Gets the profile name for the user
@@ -46,7 +47,17 @@ public class User {
     /**
      * Gets user's id.
      */
-    public String getAndroidID() { return mAndroidID; }
+    public String getAccountID() { return mAccountID; }
+
+    /**
+     * Sets user's id.
+     */
+    public void setAccountID(String accountID) { mAccountID = accountID; }
+
+    /**
+     * Returns whether user exists on server
+     */
+    public boolean isUserGenerated() { return mAccountID != null; }
 
     /**
      * Gets a map of all the conversations between this user and other users. The keys are the user
@@ -79,14 +90,16 @@ public class User {
     /**
      * Generates a profile for the user on the server
      */
-    private void generateProfile() {
+    public void generateProfile() {
         // TODO Implement this method
     }
 
     /**
      * This method pings the server to retrieve the information for the given android ID
      */
-    private void retrieveProfile() {
+    private void retrieveProfile(Context context) {
+        mAccountID = AccountUtils.getAccountID(context);
+        mProfileName = AccountUtils.getProfileName(context);
         // TODO Implement the server profile retrieval
 
         // TODO remove this method call
@@ -102,9 +115,9 @@ public class User {
         mConversationMap.put(testList.getOtherUserID(), testList);
 
         mProfileName = "d49f9b92-b927-11e4-847c-8bb5e9000002";
-        mAndroidID = "d49f9b92-b927-11e4-847c-8bb5e9000002";
-
+        mAccountID = "d49f9b92-b927-11e4-847c-8bb5e9000002";
         mGames = new ArrayList<String>();
+
     }
 
     public List<String> getGames() {
