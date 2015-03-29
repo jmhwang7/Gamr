@@ -49,6 +49,7 @@ $functions = array(
             ),
             'other_user_id' => array(
                 'required' => false,
+                'default' => null,
                 'type' => 'uuid',
             ),
             'before' => array(
