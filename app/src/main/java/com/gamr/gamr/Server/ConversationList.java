@@ -21,7 +21,6 @@ public class ConversationList {
         mOtherUserID = otherUserID;
         mMessageList = new ArrayList<Message>();
         mMostRecentMessage = null;
-        updateConversation(null);
     }
 
     /**
@@ -49,19 +48,13 @@ public class ConversationList {
      * This method will update the conversation by getting the conversation's most recent changes
      * from the server.
      */
-    public void updateConversation(Context context) {
-        // TODO Ping the server for information on this
-        new UpdateTask(context).execute();
+    public void updateConversation(Context context, String otherUser) {
+        UpdateTask task = new UpdateTask(context);
+        task.execute(otherUser);
     }
 
-    private void getDemoConversation() {
-        mMostRecentMessage = new Message("This is simply a test message", "SenderTest", 1425261066,
-                mOtherUserID);
-        mMessageList = new ArrayList<Message>();
-        mMessageList.add(mMostRecentMessage);
-    }
 
-    private class UpdateTask extends AsyncTask<Void, Void, List<Message>> {
+    private class UpdateTask extends AsyncTask<String, Void, List<Message>> {
         private Context mContext;
 
         public UpdateTask(Context context) {
@@ -69,8 +62,8 @@ public class ConversationList {
         }
 
         @Override
-        protected List<Message> doInBackground(Void ... params) {
-            return Server.getConversation("d49f9b92-b927-11e4-847c-8bb5e9000002", "d49f9b92-b927-11e4-847c-8bb5e9000003");
+        protected List<Message> doInBackground(String ... params) {
+            return Server.getConversation(User.sUser.getAndroidID(), params[0]);
         }
 
         @Override

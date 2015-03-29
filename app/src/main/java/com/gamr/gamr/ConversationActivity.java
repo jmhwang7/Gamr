@@ -13,6 +13,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.gamr.gamr.AsyncTasks.SendMessageTask;
 import com.gamr.gamr.Server.ConversationList;
 import com.gamr.gamr.Server.Message;
 import com.gamr.gamr.Server.User;
@@ -25,6 +26,9 @@ import java.util.List;
  */
 public class ConversationActivity extends ActionBarActivity {
     public static final String SENDER_KEY = "MESSAGE_SENDER";
+    public static final String LOG_TAG = ConversationActivity.class.getSimpleName();
+
+    private String mOtherUser;
     private List<Message> mMessageList;
     public ConversationAdapter mAdapter;
 
@@ -33,15 +37,13 @@ public class ConversationActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_conversation);
 
-
         // First we find the list view
         final ListView messagesListView = (ListView) findViewById(R.id.conversationListView);
 
         // From there we will populate our list with our current messages
         if (mMessageList == null) {
-            // TODO We should obviously change how the two activities communicate with each other
-            // I am thinking we could have some global object that will track the messaging
-            mMessageList = getConversation(getIntent().getExtras().getString(SENDER_KEY));
+            mOtherUser = getIntent().getExtras().getString(SENDER_KEY);
+            mMessageList = getConversation(mOtherUser);
         }
 
         if (mAdapter == null) {
@@ -55,9 +57,10 @@ public class ConversationActivity extends ActionBarActivity {
      * Gets the current conversation for the two users
      */
     private List<Message> getConversation(String user) {
-        // TODO This needs to be changed to correctly get a conversation
         ConversationList conversationList = User.sUser.getConversation(user);
-        conversationList.updateConversation(this);
+
+        conversationList.updateConversation(this, user);
+
         return conversationList.getMessageList();
     }
 
@@ -76,17 +79,36 @@ public class ConversationActivity extends ActionBarActivity {
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
+        switch (id) {
+            case R.id.action_settings:
+                return true;
+
+            case R.id.action_refresh_message:
+                getConversation(mOtherUser);
+                return true;
+        }
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
             return true;
         }
 
+
+
         return super.onOptionsItemSelected(item);
     }
 
     public void sendMessage(View v) {
-        // TODO Handle the sending of the message here
-        ((TextView) findViewById(R.id.messageTextBox)).setText("");
+        TextView textView = (TextView) findViewById(R.id.messageTextBox);
+
+        if (textView.getText().equals("")) {
+            return;
+        }
+
+        new SendMessageTask().execute(mOtherUser, textView.getText().toString());
+
+        textView.setText("");
+
+        mMessageList = getConversation(mOtherUser);
 
         findViewById(R.id.messageLayout).invalidate();
     }
@@ -110,11 +132,12 @@ public class ConversationActivity extends ActionBarActivity {
 
             TextView messageText = (TextView) rowView.findViewById(R.id.messageContent);
 
-            Message message = mMessageList.get(position);
+            Message message = getItem(getCount() - 1 - position);
+            //Message message = mMessageList.get(mMessageList.size() - 1 - position);
             String messageString;
 
             // This sets it to be right justified
-            if (message.getFromId().equals(Message.RECEIVER_USER_NAME)) {
+            if (message.getFromId().equals(User.sUser.getAndroidID())) {
                 messageText.setGravity(Gravity.END);
                 messageString = message.getText() + " : " + message.getFromId();
             } else {
@@ -122,7 +145,6 @@ public class ConversationActivity extends ActionBarActivity {
             }
 
             messageText.setText(messageString);
-
             return rowView;
         }
     }
