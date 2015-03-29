@@ -3,6 +3,7 @@ package com.gamr.gamr.Server;
 import android.net.Uri;
 
 import com.google.gson.Gson;
+import com.google.gson.JsonParser;
 import com.google.gson.reflect.TypeToken;
 
 import java.io.BufferedReader;
@@ -31,10 +32,12 @@ public class Server {
     private static final String SEND_MESSAGE_FUNCTION = "send_message";
     private static final String GET_MATCHES_FUNCTION = "match";
     private static final String UPDATE_LOCATION_FUNCTION = "update_location";
+    private static final String GET_PROFILE_FUNCTION = "get_profile";
 
     public static void main(String[] args){
-        List<Match> matches = Server.getMatches("d49f9b92-b927-11e4-847c-8bb5e9000002", true, true);
-        System.out.println(matches.get(0));
+        Profile profile = Server.getProfile("d49f9b92-b927-11e4-847c-8bb5e9000004");
+        System.out.println(profile);
+        System.out.println(profile.getLeagueProfile());
     }
 
     /**
@@ -55,6 +58,19 @@ public class Server {
             //If request fails, return empty message list. Probably a better way to handle this but needs discussion
             e.printStackTrace();
             return new ArrayList<>();
+        }
+    }
+
+    public static Profile getProfile(String userId){
+        Map<String, String> params = new HashMap<>();
+        params.put("user_id", userId);
+        try{
+            String response = get(GET_PROFILE_FUNCTION, params);
+            Profile profile = new Gson().fromJson(response, Profile.class);
+            return profile;
+        } catch (IOException e) {
+            e.printStackTrace();
+            return null;
         }
     }
 

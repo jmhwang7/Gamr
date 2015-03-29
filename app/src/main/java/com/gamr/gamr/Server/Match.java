@@ -77,6 +77,7 @@ public class Match {
 
     @Override
     public String toString() {
-        return "Match's ID " + matchId + "\n" + "Distance from user: " + distance;
+        return "Match's ID " + matchId + "\n" + "Distance from user: " + distance + "\n" + "Rank: " + rank
+                + "\n" + "Role: " + role;
     }
 }
