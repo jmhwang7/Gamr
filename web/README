@@ -14,14 +14,14 @@ include/ contains helper methods only.
 
 >> match - Returns information on matching users. Either use_location, use_games or both can be specified.
 Parameters:
-user_id         uuid            required
+user_id         email            required
 use_location    boolean         optional
 use_games       boolean         optional
 count           int             optional
 
 Returns:
 array
-    id: uuid
+    id: email
     username: string
     distance: decimal (miles)
     
@@ -31,9 +31,18 @@ array
     gamemode: string
     
     
+>> match_response - Pass / match a user
+user_id         email            required
+other_user_id   email            required
+matched         boolean         required
+
+Returns:
+array
+    both_matched: boolean
+    
 >> send_message - Sends a message to another user.
-user_id         uuid            required
-other_user_id   uuid            required
+user_id         email            required
+other_user_id   email            required
 text            string          required
 
 Returns:
@@ -41,15 +50,15 @@ message_id: int
 
 
 >> get_messages - Finds messages between two users. Leave out other_user_id to request the most recent message from every user.
-user_id         uuid            required
-other_user_id   uuid            optional
+user_id         email            required
+other_user_id   email            optional
 before          int (timestamp) optional
 
 Returns:
 messages: array
     id: int
-    from_id: uuid
-    to_id: uuid
+    from_id: email
+    to_id: email
     from_username: string
     to_username: string
     date: int (timestamp)
@@ -57,13 +66,13 @@ messages: array
     
     
 >> update_location - Updates a user's location
-user_id         uuid            required
+user_id         email            required
 lat             decimal         required
 lon             decimal         required
 
 
 >> get_profile - Gets a user's profile
-user_id         uuid            required
+user_id         email            required
 
 Returns:
 username: string
@@ -85,7 +94,7 @@ Example response:
 
 
 >> update_profile - Updates a user's profile. Include the username parameter, games and in_game_names, or all 3.
-user_id         uuid            required
+user_id         email            required
 username        string          optional
 game           int           optional
 in_game_name   string        optional
@@ -96,7 +105,7 @@ Returns: same as get_profile
 
 
 >> update_game_fields - Updates game-specific fields for a user. The 3 arrays must be the same length, each index corresponds to one entry to be added or updated.
-user_id         uuid            required
+user_id         email            required
 game           int           required
 field          int           required
 value          CSV list           required

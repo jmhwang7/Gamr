@@ -29,8 +29,6 @@ function match_response($db, $user_id, $other_user_id, $matched) {
         }
     }
     
-    outputResponse(array(
-        'both_matched' => $matched && $other_matched
-    ));
+    outputResponse($matched && $other_matched);
 }
 ?>
