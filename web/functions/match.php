@@ -47,8 +47,6 @@ function match($db, $user_id, $use_location, $use_games, $count) {
         $userFieldsQuery[$row['field_id']] .= ')';
     }
     
-    print_r($userFieldsQuery);
-    
     // Set up query depending on parameters
     $havingClause = '';
     if($use_location && $use_games) {
