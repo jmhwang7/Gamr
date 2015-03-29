@@ -4,7 +4,9 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -26,7 +28,7 @@ import java.util.List;
 /**
  * A fragment that shows the current user's messages
  */
-public class MessagesFragment extends Fragment {
+public class MessagesFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener{
     /**
      * The fragment argument representing the section number for this
      * fragment.
@@ -77,6 +79,9 @@ public class MessagesFragment extends Fragment {
         // We also need to attach the on click listener
         messagesListView.setOnItemClickListener(new MessagesListener());
 
+        SwipeRefreshLayout swipeLayout = (SwipeRefreshLayout) mRootView.findViewById(R.id.refreshlayout);
+        swipeLayout.setOnRefreshListener(this);
+
         return mRootView;
     }
 
@@ -99,6 +104,16 @@ public class MessagesFragment extends Fragment {
         return tempList;
     }
 
+    @Override
+    public void onRefresh() {
+        updateConversations();
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                ((SwipeRefreshLayout) mRootView.findViewById(R.id.refreshlayout)).setRefreshing(false);
+            }
+        }, 500);
+    }
 
 
     /**
