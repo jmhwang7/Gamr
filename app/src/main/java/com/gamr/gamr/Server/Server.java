@@ -38,6 +38,11 @@ public class Server {
     private static final String UPDATE_GAME_FIELD_FUNCTION = "update_game_field";
     private static final String RESPOND_TO_MATCH_FUNCTION = "match_response";
 
+    public static void main(String[] args){
+        List<Match> matches = Server.getMatches("test_user_0@test.com", true, true);
+        System.out.println(matches.get(0));
+    }
+
     /**
      * Get a list of messages between two users
      * @param userId first user
