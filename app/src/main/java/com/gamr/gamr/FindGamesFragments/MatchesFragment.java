@@ -1,19 +1,25 @@
 package com.gamr.gamr.FindGamesFragments;
 
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.gamr.gamr.ProfileHandlers.LeagueMatchHandler;
 import com.gamr.gamr.ProfileHandlers.MatchHandler;
 import com.gamr.gamr.R;
+import com.gamr.gamr.Server.Server;
 import com.gamr.gamr.Server.User;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -152,6 +158,106 @@ public class MatchesFragment extends Fragment implements View.OnClickListener{
      * This handle should be used to create the users profile on the server for league
      */
     private void createProfile() {
+        String summonerName = String.valueOf(((EditText) mRootView.findViewById(R.id.summoner_name)).getText());
         User.sUser.getGames().add("League");
+        UpdateSummonerTask summonerTask = new UpdateSummonerTask();
+        summonerTask.execute(summonerName);
+
+        List<String> roles = getRolesList();
+        UpdateRoleTask updateRoleTask = new UpdateRoleTask();
+        updateRoleTask.execute(roles);
+    }
+
+    private List<String> getRolesList() {
+        List<String> roles = new ArrayList<String>();
+
+        if ( ((CheckBox)(mRootView.findViewById(R.id.adCheck))).isChecked() ) {
+            roles.add("AD Carry");
+        }
+
+        if ( ((CheckBox)(mRootView.findViewById(R.id.midCheck))).isChecked() ) {
+            roles.add("Mid");
+        }
+
+        if ( ((CheckBox)(mRootView.findViewById(R.id.jungleCheck))).isChecked() ) {
+            roles.add("Jungler");
+        }
+
+        if ( ((CheckBox)(mRootView.findViewById(R.id.supCheck))).isChecked() ) {
+            roles.add("Support");
+        }
+
+        if ( ((CheckBox)(mRootView.findViewById(R.id.topCheck))).isChecked() ) {
+            roles.add("Top");
+        }
+
+        return roles;
+    }
+
+    private List<String> getModesList() {
+        List<String> roles = new ArrayList<String>();
+
+        if ( ((CheckBox)(mRootView.findViewById(R.id.normalBlind))).isChecked() ) {
+            roles.add("Normal Blind");
+        }
+
+        if ( ((CheckBox)(mRootView.findViewById(R.id.ranked5))).isChecked() ) {
+            roles.add("Ranked 5v5");
+        }
+
+        if ( ((CheckBox)(mRootView.findViewById(R.id.rankedDuo))).isChecked() ) {
+            roles.add("Ranked Duo Queue");
+        }
+
+        if ( ((CheckBox)(mRootView.findViewById(R.id.normalDraft))).isChecked() ) {
+            roles.add("Normal Draft");
+        }
+
+        if ( ((CheckBox)(mRootView.findViewById(R.id.normal3))).isChecked() ) {
+            roles.add("Normal 3v3");
+        }
+
+        if ( ((CheckBox)(mRootView.findViewById(R.id.ranked3))).isChecked() ) {
+            roles.add("Ranked 3v3");
+        }
+
+        if ( ((CheckBox)(mRootView.findViewById(R.id.dominion))).isChecked() ) {
+            roles.add("Dominion");
+        }
+
+        if ( ((CheckBox)(mRootView.findViewById(R.id.aram))).isChecked() ) {
+            roles.add("ARAM");
+        }
+
+        return roles;
+    }
+
+
+    private class UpdateSummonerTask extends AsyncTask<String, Void, Void> {
+
+        @Override
+        protected Void doInBackground(String... params) {
+            Server.updateSummonerName(User.sUser.getAccountID(), params[0]);
+            return null;
+        }
+    }
+
+
+    private class UpdateRoleTask extends AsyncTask<List<String>, Void, Void> {
+
+        @Override
+        protected Void doInBackground(List<String>... params) {
+            Server.updateLeagueRoles(User.sUser.getAccountID(), params[0]);
+            return null;
+        }
+    }
+
+
+    private class ServerTask extends AsyncTask<String, Void, Void> {
+
+        @Override
+        protected Void doInBackground(String... params) {
+            return null;
+        }
     }
 }
