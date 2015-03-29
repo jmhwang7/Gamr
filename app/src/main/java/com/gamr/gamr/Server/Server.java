@@ -32,19 +32,16 @@ public class Server {
     private static final String GET_MATCHES_FUNCTION = "match";
     private static final String UPDATE_LOCATION_FUNCTION = "update_location";
 
-//    public static void main(String[] args) {
-//        int messageId = sendMessage("d49f9b92-b927-11e4-847c-8bb5e9000003", "d49f9b92-b927-11e4-847c-8bb5e9000002", "Yay");
-//        System.out.println(messageId);
-//
-//        List<Message> convo = getConversation("d49f9b92-b927-11e4-847c-8bb5e9000003", "d49f9b92-b927-11e4-847c-8bb5e9000002");
-//        System.out.println(convo.get(0));
-//    }
+    public static void main(String[] args){
+        List<Match> matches = Server.getMatches("d49f9b92-b927-11e4-847c-8bb5e9000002", true, true);
+        System.out.println(matches.get(0));
+    }
 
     /**
      * Get a list of messages between two users
      * @param userId first user
      * @param otherUserId second user
-     * @return
+     * @return a list of messages between users, ordered by date
      */
     public static List<Message> getConversation(String userId, String otherUserId) {
         Map<String, String> params = new HashMap<>();
@@ -57,7 +54,7 @@ public class Server {
         } catch (IOException e) {
             //If request fails, return empty message list. Probably a better way to handle this but needs discussion
             e.printStackTrace();
-            return new ArrayList<Message>();
+            return new ArrayList<>();
         }
     }
 
@@ -79,7 +76,7 @@ public class Server {
             return matches;
         } catch (IOException e) {
             e.printStackTrace();
-            return new ArrayList<Match>();
+            return new ArrayList<>();
         }
     }
 
@@ -113,8 +110,8 @@ public class Server {
     /**
      * Updates location of the user
      * @param userId app user
-     * @param  double latitude of user's location
-     * @param double longitude of user's location
+     * @param latitude latitude of user's location
+     * @param longitude longitude of user's location
      * @return boolean indicating whether location update was successful
      */
     public static boolean updateLocation(String userId, double latitude, double longitude) {
@@ -142,7 +139,7 @@ public class Server {
      * @throws IOException
      */
     private static String get(String function, Map<String, String> params) throws IOException {
-        URL url = createUrl(function, params);
+        URL url = createUrlJava(function, params);
         HttpURLConnection connection = (HttpURLConnection) url.openConnection();
         return readResponseStream(connection.getInputStream());
     }
@@ -156,7 +153,7 @@ public class Server {
      * @throws IOException
      */
     private static String post(String function, Map<String, String> params, Map<String, String> body) throws IOException {
-        URL url = createUrl(function, params);
+        URL url = createUrlJava(function, params);
         HttpURLConnection connection = (HttpURLConnection) url.openConnection();
 
         //Identify as a POST
@@ -188,7 +185,7 @@ public class Server {
      * @throws IOException
      */
     private static String put(String function, Map<String, String> params) throws IOException {
-        URL url = createUrl(function, params);
+        URL url = createUrlJava(function, params);
         HttpURLConnection connection = (HttpURLConnection) url.openConnection();
         connection.setRequestMethod("PUT");
 
@@ -206,8 +203,7 @@ public class Server {
         return response.toString();
     }
 
-    private static URL createUrl(String function, Map<String, String> params) throws MalformedURLException {
-
+    private static URL createUrlAndroid(String function, Map<String, String> params) throws MalformedURLException {
         Uri.Builder builder = Uri.parse(BASE_URL).buildUpon().appendPath(function);
         for (Map.Entry<String, String> each : params.entrySet()) {
             if (!each.getKey().equals("body")) {
@@ -216,6 +212,15 @@ public class Server {
         }
         Uri uri = builder.build();
         return new URL(uri.toString());
+    }
 
+    private static URL createUrlJava(String function, Map<String, String> params) throws MalformedURLException {
+        StringBuilder url = new StringBuilder(BASE_URL).append(function).append("?");
+        for (Map.Entry each : params.entrySet()) {
+            if (!each.getKey().equals("body")) {
+                url.append(each.getKey()).append("=").append(each.getValue()).append("&");
+            }
+        }
+        return new URL(url.toString());
     }
 }
