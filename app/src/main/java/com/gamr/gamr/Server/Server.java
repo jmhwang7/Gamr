@@ -39,8 +39,8 @@ public class Server {
     private static final String RESPOND_TO_MATCH_FUNCTION = "match_response";
 
     public static void main(String[] args){
-        List<Match> matches = Server.getMatches("test_user_0@test.com", true, true);
-        System.out.println(matches.get(0));
+        Profile profile = Server.getProfile("test_user_2@test.com");
+        System.out.println(profile.getLeagueProfile());
     }
 
     /**
@@ -165,6 +165,21 @@ public class Server {
         Map<String, String> body = new HashMap<>();
         body.put("field", "2");
         body.put("value", rank);
+
+        try{
+            post(UPDATE_GAME_FIELD_FUNCTION, params, body);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void updateServer(String userId, String newServer){
+        Map<String, String> params = new HashMap<>();
+        params.put("user_id", userId);
+        params.put("game", "1");
+        Map<String, String> body = new HashMap<>();
+        body.put("field", "4");
+        body.put("value", newServer);
 
         try{
             post(UPDATE_GAME_FIELD_FUNCTION, params, body);
