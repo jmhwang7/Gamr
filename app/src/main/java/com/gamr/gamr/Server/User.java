@@ -2,6 +2,7 @@ package com.gamr.gamr.Server;
 
 import android.content.Context;
 import android.os.AsyncTask;
+import android.util.Log;
 
 import com.gamr.gamr.Utils.AccountUtils;
 
@@ -23,10 +24,12 @@ public class User {
 
     private User(Context context) {
         if ((mAccountID = AccountUtils.getAccountID(context)) != null) {
-            retrieveProfile();
+            //retrieveProfile();
         } else {
-            generateProfile();
+            //generateProfile();
         }
+
+        generateProfile();
     }
 
     /**
@@ -132,12 +135,12 @@ public class User {
 
         @Override
         protected Profile doInBackground(String... params) {
-            Server.getProfile(params[0]);
-            return null;
+            return Server.getProfile(params[0]);
         }
 
         @Override
         protected void onPostExecute(Profile profile) {
+            Log.d("Testing", mAccountID);
             sUser.mProfileName = profile.getUsername();
             sUser.mLeagueProfile = profile.getLeagueProfile();
         }
