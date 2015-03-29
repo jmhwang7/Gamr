@@ -122,26 +122,23 @@ $functions = array(
             ),
         )
     ),
-    'update_game_fields' => array(
+    'update_game_field' => array(
         'params' => array(
             'user_id' => array(
                 'required' => true,
                 'type' => 'uuid',
             ),
-            'games' => array(
+            'game' => array(
                 'required' => true,
-                'type' => 'array',
-                'typeDetails' => 'int'
+                'type' => 'int'
             ),
-            'fields' => array(
+            'field' => array(
                 'required' => true,
-                'type' => 'array',
-                'typeDetails' => 'int'
-            ),        
-            'values' => array(
+                'type' => 'int'
+            ),
+            'value' => array(
                 'required' => true,
-                'type' => 'array',
-                'typeDetails' => 'any'
+                'type' => 'any'
             )
         )
     )
