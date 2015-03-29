@@ -40,7 +40,4 @@ public class AccountUtils {
         return PreferenceManager.getDefaultSharedPreferences(context)
                 .getBoolean(INITIAL_USER_KEY, true);
     }
-
-
-
 }
