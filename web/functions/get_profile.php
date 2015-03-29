@@ -11,7 +11,6 @@ function get_profile($db, $user_id) {
     while($row = $result->fetch_assoc()) {
         $output['games'][$row['game_id']] = array(
             'in_game_name' => $row['in_game_name'],
-            'game_fields' => array()
         );
     }
 
@@ -20,7 +19,7 @@ function get_profile($db, $user_id) {
         if($row['game_id'] == GAME_LOL && $row['field_id'] == FIELD_LOL_RANK) {
             $row['field_value'] = $LOL_RANKS[$row['field_value']];
         }
-        $output['games'][$row['game_id']]['game_fields'][$row['field_id']] = $row['field_value'];
+        $output['games'][$row['game_id']][$row['field_id']] = $row['field_value'];
     }
     
     outputResponse($output);
