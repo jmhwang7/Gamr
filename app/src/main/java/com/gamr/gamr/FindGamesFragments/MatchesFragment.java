@@ -12,6 +12,7 @@ import android.widget.TextView;
 import com.gamr.gamr.ProfileHandlers.LeagueMatchHandler;
 import com.gamr.gamr.ProfileHandlers.MatchHandler;
 import com.gamr.gamr.R;
+import com.gamr.gamr.Server.User;
 
 import java.util.Map;
 
@@ -53,6 +54,12 @@ public class MatchesFragment extends Fragment implements View.OnClickListener{
         ((Button) mRootView.findViewById(R.id.match_button)).setOnClickListener(this);
         ((Button) mRootView.findViewById(R.id.findMatchesButton)).setOnClickListener(this);
         ((Button) mRootView.findViewById(R.id.new_search_button)).setOnClickListener(this);
+        ((Button) mRootView.findViewById(R.id.createProfileButton)).setOnClickListener(this);
+
+        if (!User.sUser.getGames().contains("League")) {
+            mRootView.findViewById(R.id.matchesFormLayout).setVisibility(View.INVISIBLE);
+            mRootView.findViewById(R.id.createProfileLayout).setVisibility(View.VISIBLE);
+        }
 
         updateTextFields();
         return mRootView;
@@ -131,6 +138,20 @@ public class MatchesFragment extends Fragment implements View.OnClickListener{
                 mRootView.findViewById(R.id.matchScreenLayout).setVisibility(View.INVISIBLE);
                 mRootView.postInvalidate();
                 break;
+
+            case R.id.createProfileButton:
+                mRootView.findViewById(R.id.matchesFormLayout).setVisibility(View.VISIBLE);
+                mRootView.findViewById(R.id.createProfileLayout).setVisibility(View.INVISIBLE);
+                createProfile();
+                mRootView.postInvalidate();
+                break;
         }
+    }
+
+    /**
+     * This handle should be used to create the users profile on the server for league
+     */
+    private void createProfile() {
+        User.sUser.getGames().add("League");
     }
 }
