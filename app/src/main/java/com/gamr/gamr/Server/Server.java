@@ -15,6 +15,7 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -33,8 +34,11 @@ public class Server {
     private static final String GET_MATCHES_FUNCTION = "match";
     private static final String UPDATE_LOCATION_FUNCTION = "update_location";
     private static final String GET_PROFILE_FUNCTION = "get_profile";
+    private static final String UPDATE_PROFILE_FUNCTION = "update_profile";
+    private static final String UPDATE_GAME_FIELD_FUNCTION = "update_game_field";
 
     public static void main(String[] args){
+        Server.updateLeagueGameModes("d49f9b92-b927-11e4-847c-8bb5e9000004", Arrays.asList("Normal Draft", "ARAM"));
         Profile profile = Server.getProfile("d49f9b92-b927-11e4-847c-8bb5e9000004");
         System.out.println(profile);
         System.out.println(profile.getLeagueProfile());
@@ -71,6 +75,63 @@ public class Server {
         } catch (IOException e) {
             e.printStackTrace();
             return null;
+        }
+    }
+
+    public static void updateLeagueRoles(String userId, List<String> roles){
+        Map<String, String> params = new HashMap<>();
+        params.put("user_id", userId);
+        params.put("game", "1");
+        Map<String, String> body = new HashMap<>();
+        StringBuilder rolesList = new StringBuilder();
+        for(String each : roles){
+            rolesList.append(each).append(",");
+        }
+        body.put("field", "1");
+        String list = rolesList.toString();
+        list = list.substring(0, list.length()-1);
+        body.put("value", list);
+
+        try{
+            String response = post(UPDATE_GAME_FIELD_FUNCTION, params, body);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void updateLeagueRank(String userId, String rank){
+        Map<String, String> params = new HashMap<>();
+        params.put("user_id", userId);
+        params.put("game", "1");
+        Map<String, String> body = new HashMap<>();
+        body.put("field", "2");
+        body.put("value", rank);
+
+        try{
+            String response = post(UPDATE_GAME_FIELD_FUNCTION, params, body);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void updateLeagueGameModes(String userId, List<String> modes){
+        Map<String, String> params = new HashMap<>();
+        params.put("user_id", userId);
+        params.put("game", "1");
+        Map<String, String> body = new HashMap<>();
+        StringBuilder modeList = new StringBuilder();
+        for(String each : modes){
+            modeList.append(each).append(",");
+        }
+        body.put("field", "3");
+        String list = modeList.toString();
+        list = list.substring(0, list.length()-1);
+        body.put("value", list);
+
+        try{
+            String response = post(UPDATE_GAME_FIELD_FUNCTION, params, body);
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 
@@ -134,11 +195,12 @@ public class Server {
         //Params to put
         Map<String, String> params = new HashMap<>();
         params.put("user_id", userId);
-        params.put("lat", Double.toString(latitude));
-        params.put("lon", Double.toString(longitude));
+        Map<String, String> body = new HashMap<>();
+        body.put("lat", Double.toString(latitude));
+        body.put("lon", Double.toString(longitude));
 
         try {
-            String response = put(UPDATE_LOCATION_FUNCTION, params);
+            String response = post(UPDATE_LOCATION_FUNCTION, params, body);
             UpdateResponse deserialized = new Gson().fromJson(response, UpdateResponse.class);
             return deserialized.getAffectedRows() >= 0;
         } catch (IOException e) {
@@ -193,22 +255,6 @@ public class Server {
         return readResponseStream(connection.getInputStream());
     }
 
-    /**
-     * Performs HTTP put for the function provided and the given parameters
-     * @param function API endpoint for the URL
-     * @param params Map of parameters to append to the URL
-     * @return the server response
-     * @throws IOException
-     */
-    private static String put(String function, Map<String, String> params) throws IOException {
-        URL url = createUrlJava(function, params);
-        HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-        connection.setRequestMethod("PUT");
-
-        connection.connect();
-        return readResponseStream(connection.getInputStream());
-    }
-
     private static String readResponseStream(InputStream responseStream) throws IOException {
         BufferedReader responseReader = new BufferedReader(new InputStreamReader(responseStream));
         StringBuilder response = new StringBuilder();
@@ -237,6 +283,7 @@ public class Server {
                 url.append(each.getKey()).append("=").append(each.getValue()).append("&");
             }
         }
+        System.out.println(url.toString());
         return new URL(url.toString());
     }
 }

@@ -12,20 +12,20 @@ public class LeagueProfile {
     private String summonerName;
 
     @SerializedName("1")
-    private String rank;
+    private List<String> roles;
 
     @SerializedName("2")
-    private String roles;
+    private List<String> rank;
 
     @SerializedName("3")
-    private String gameModes;
+    private List<String> gameModes;
 
     public LeagueProfile(){}
 
     @Override
     public String toString(){
         return "Summoner Name: " + summonerName + "\n"
-                + "Rank: " + rank + "\n"
+                + "Rank: " + rank.get(0) + "\n"
                 + "Roles: " + roles + "\n"
                 + "Modes: " + gameModes;
     }
@@ -39,26 +39,26 @@ public class LeagueProfile {
     }
 
     public String getRank() {
-        return rank;
+        return rank.get(0);
     }
 
-    public void setRank(String rank) {
+    public void setRank(List<String> rank) {
         this.rank = rank;
     }
 
-    public String getRoles() {
+    public List<String> getRoles() {
         return roles;
     }
 
-    public void setRoles(String roles) {
+    public void setRoles(List<String> roles) {
         this.roles = roles;
     }
 
-    public String getGameModes() {
+    public List<String> getGameModes() {
         return gameModes;
     }
 
-    public void setGameModes(String gameModes) {
+    public void setGameModes(List<String> gameModes) {
         this.gameModes = gameModes;
     }
 }
