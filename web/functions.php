@@ -6,7 +6,7 @@ $functions = array(
         'params' => array(
             'user_id' => array(
                 'required' => true,
-                'type' => 'uuid',
+                'type' => 'user_id',
             ),
             'use_location' => array(
                 'required' => false,
@@ -29,11 +29,11 @@ $functions = array(
         'params' => array(
             'user_id' => array(
                 'required' => true,
-                'type' => 'uuid',
+                'type' => 'user_id',
             ),
             'other_user_id' => array(
                 'required' => true,
-                'type' => 'uuid',
+                'type' => 'user_id',
             ),
             'matched' => array(
                 'required' => true,
@@ -45,12 +45,12 @@ $functions = array(
         'params' => array(
             'user_id' => array(
                 'required' => true,
-                'type' => 'uuid',
+                'type' => 'user_id',
             ),
             'other_user_id' => array(
                 'required' => false,
                 'default' => null,
-                'type' => 'uuid',
+                'type' => 'user_id',
             ),
             'before' => array(
                 'required' => false,
@@ -63,11 +63,11 @@ $functions = array(
         'params' => array(
             'user_id' => array(
                 'required' => true,
-                'type' => 'uuid',
+                'type' => 'user_id',
             ),
             'other_user_id' => array(
                 'required' => true,
-                'type' => 'uuid',
+                'type' => 'user_id',
             ),
             'text' => array(
                 'required' => true,
@@ -79,7 +79,7 @@ $functions = array(
         'params' => array(
             'user_id' => array(
                 'required' => true,
-                'type' => 'uuid',
+                'type' => 'user_id',
             ),
             'lat' => array(
                 'required' => true,
@@ -95,7 +95,7 @@ $functions = array(
         'params' => array(
             'user_id' => array(
                 'required' => true,
-                'type' => 'uuid',
+                'type' => 'user_id',
             ),
         )
     ),
@@ -103,7 +103,7 @@ $functions = array(
         'params' => array(
             'user_id' => array(
                 'required' => true,
-                'type' => 'uuid',
+                'type' => 'user_id',
             ),
             'username' => array(
                 'required' => false,
@@ -126,7 +126,7 @@ $functions = array(
         'params' => array(
             'user_id' => array(
                 'required' => true,
-                'type' => 'uuid',
+                'type' => 'user_id',
             ),
             'game' => array(
                 'required' => true,
