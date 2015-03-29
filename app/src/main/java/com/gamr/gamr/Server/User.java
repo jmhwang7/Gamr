@@ -1,11 +1,11 @@
 package com.gamr.gamr.Server;
 
 import android.content.Context;
+import android.os.AsyncTask;
 
 import com.gamr.gamr.Utils.AccountUtils;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -19,10 +19,13 @@ public class User {
     private String mProfileName;
     private Map<String, ConversationList> mConversationMap;
     private List<String> mGames = new ArrayList<String>();
+    private LeagueProfile mLeagueProfile;
 
     private User(Context context) {
         if ((mAccountID = AccountUtils.getAccountID(context)) != null) {
-            retrieveProfile(context);
+            retrieveProfile();
+        } else {
+            generateProfile();
         }
     }
 
@@ -91,32 +94,16 @@ public class User {
      * Generates a profile for the user on the server
      */
     public void generateProfile() {
-        // TODO Implement this method
+        CreateUserTask task = new CreateUserTask();
+        task.execute(mAccountID, mProfileName);
     }
 
     /**
      * This method pings the server to retrieve the information for the given android ID
      */
-    private void retrieveProfile(Context context) {
-        mAccountID = AccountUtils.getAccountID(context);
-        mProfileName = AccountUtils.getProfileName(context);
-        // TODO Implement the server profile retrieval
-
-        // TODO remove this method call
-        generateTestProfile();
-    }
-
-    private void generateTestProfile() {
-        // TODO Remove this method
-        mConversationMap = new HashMap<String, ConversationList>();
-
-        ConversationList testList = new ConversationList("d49f9b92-b927-11e4-847c-8bb5e9000003");
-
-        mConversationMap.put(testList.getOtherUserID(), testList);
-
-        mProfileName = "d49f9b92-b927-11e4-847c-8bb5e9000002";
-        mAccountID = "d49f9b92-b927-11e4-847c-8bb5e9000002";
-
+    private void retrieveProfile() {
+        GetUserTask task = new GetUserTask();
+        task.execute(mAccountID);
     }
 
     public List<String> getGames() {
@@ -131,5 +118,28 @@ public class User {
 
         // TODO Remove this, it always returns true
         return true;
+    }
+
+    private class CreateUserTask extends AsyncTask<String, Void, Void> {
+        @Override
+        protected Void doInBackground(String... params) {
+            Server.createUser(params[0], params[1]);
+            return null;
+        }
+    }
+
+    private class GetUserTask extends AsyncTask<String, Void, Profile> {
+
+        @Override
+        protected Profile doInBackground(String... params) {
+            Server.getProfile(params[0]);
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Profile profile) {
+            sUser.mProfileName = profile.getUsername();
+            sUser.mLeagueProfile = profile.getLeagueProfile();
+        }
     }
 }

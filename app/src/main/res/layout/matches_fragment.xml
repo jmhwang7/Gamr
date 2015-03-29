@@ -68,28 +68,28 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Ranked 3v3"
-                        android:id="@+id/checkBox8"
+                        android:id="@+id/ranked3"
                         android:checked="false" />
 
                     <CheckBox
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Normal Blind"
-                        android:id="@+id/checkBox9"
+                        android:id="@+id/normalBlind"
                         android:checked="false" />
 
                     <CheckBox
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Dominion"
-                        android:id="@+id/checkBox12"
+                        android:id="@+id/dominion"
                         android:checked="false" />
 
                     <CheckBox
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Aram"
-                        android:id="@+id/checkBox13"
+                        android:id="@+id/aram"
                         android:checked="false" />
                 </LinearLayout>
 
@@ -107,28 +107,28 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Ranked Duo"
-                        android:id="@+id/checkBox6"
+                        android:id="@+id/rankedDuo"
                         android:checked="false" />
 
                     <CheckBox
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Ranked 5v5"
-                        android:id="@+id/checkBox7"
+                        android:id="@+id/ranked5"
                         android:checked="false" />
 
                     <CheckBox
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Normal Draft"
-                        android:id="@+id/checkBox10"
+                        android:id="@+id/normalDraft"
                         android:checked="false" />
 
                     <CheckBox
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Normal 3v3"
-                        android:id="@+id/checkBox11"
+                        android:id="@+id/normal3"
                         android:checked="false" />
                 </LinearLayout>
 
@@ -349,7 +349,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Top"
-                    android:id="@+id/checkBox5"
+                    android:id="@+id/topCheck"
                     android:checked="false" />
 
                 <LinearLayout
@@ -361,7 +361,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Mid"
-                    android:id="@+id/checkBox2"
+                    android:id="@+id/midCheck"
                     android:checked="false" />
 
                 <LinearLayout
@@ -373,7 +373,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Jungle"
-                    android:id="@+id/checkBox3"
+                    android:id="@+id/jungleCheck"
                     android:checked="false" />
 
             </LinearLayout>
@@ -392,7 +392,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="AD Carry"
-                    android:id="@+id/checkBox"
+                    android:id="@+id/adCheck"
                     android:checked="false" />
 
                 <LinearLayout
@@ -404,7 +404,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Support"
-                    android:id="@+id/checkBox4"
+                    android:id="@+id/supCheck"
                     android:checked="false" />
 
                 <LinearLayout
