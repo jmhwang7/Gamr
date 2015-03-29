@@ -25,7 +25,7 @@ $functions = array(
             )
         )
     ),
-    'get_messages' => array(
+    'match_response' => array(
         'params' => array(
             'user_id' => array(
                 'required' => true,
@@ -33,6 +33,22 @@ $functions = array(
             ),
             'other_user_id' => array(
                 'required' => true,
+                'type' => 'uuid',
+            ),
+            'matched' => array(
+                'required' => true,
+                'type' => 'boolean',
+            )
+        )
+    ),
+    'get_messages' => array(
+        'params' => array(
+            'user_id' => array(
+                'required' => true,
+                'type' => 'uuid',
+            ),
+            'other_user_id' => array(
+                'required' => false,
                 'type' => 'uuid',
             ),
             'before' => array(
@@ -71,6 +87,60 @@ $functions = array(
             'lon' => array(
                 'required' => true,
                 'type' => 'decimal',
+            )
+        )
+    ),
+    'get_profile' => array(
+        'params' => array(
+            'user_id' => array(
+                'required' => true,
+                'type' => 'uuid',
+            ),
+        )
+    ),
+    'update_profile' => array(
+        'params' => array(
+            'user_id' => array(
+                'required' => true,
+                'type' => 'uuid',
+            ),
+            'username' => array(
+                'required' => false,
+                'default' => null,
+                'type' => 'string',
+            ),
+            'game' => array(
+                'required' => false,
+                'default' => null,
+                'type' => 'int',
+            ),
+            'in_game_name' => array(
+                'required' => false,
+                'default' => null,
+                'type' => 'string',
+            ),
+        )
+    ),
+    'update_game_fields' => array(
+        'params' => array(
+            'user_id' => array(
+                'required' => true,
+                'type' => 'uuid',
+            ),
+            'games' => array(
+                'required' => true,
+                'type' => 'array',
+                'typeDetails' => 'int'
+            ),
+            'fields' => array(
+                'required' => true,
+                'type' => 'array',
+                'typeDetails' => 'int'
+            ),        
+            'values' => array(
+                'required' => true,
+                'type' => 'array',
+                'typeDetails' => 'any'
             )
         )
     )

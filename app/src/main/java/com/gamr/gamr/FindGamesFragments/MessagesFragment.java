@@ -15,7 +15,6 @@ import android.widget.TextView;
 import com.gamr.gamr.ConversationActivity;
 import com.gamr.gamr.R;
 import com.gamr.gamr.Server.Message;
-import com.gamr.gamr.Server.User;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -80,7 +79,7 @@ public class MessagesFragment extends Fragment {
     public List<Message> getCurrentMessages() {
         // TODO We need to integrate this with the server
         List<Message> tempList = new ArrayList<Message>();
-        tempList.add(new Message("Test", "test", 10L, "Test"));
+        tempList.add(new Message("Test", "d49f9b92-b927-11e4-847c-8bb5e9000002", 10L, "d49f9b92-b927-11e4-847c-8bb5e9000003"));
         return tempList;
     }
 

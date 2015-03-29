@@ -5,6 +5,7 @@ define('DB_PASSWORD', 'team56');
 define('DB_NAME', 'gamr');
 
 define('MAX_DISTANCE', 200);
+define('GAME_LOL', 1);
 define('FIELD_LOL_ROLE', 1);
 define('FIELD_LOL_RANK', 2);
 define('FIELD_LOL_GAMEMODE', 3);

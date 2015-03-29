@@ -26,12 +26,23 @@ function validateDataType($value, $type, $typeDetails) {
             }
         case 'boolean':
             return $value === 'true' || $value === 'false';
-        case 'string':
-            return $value !== '';
         case 'int':
             return is_numeric($value) && intval($value) == $value;
         case 'decimal':
             return is_numeric($value);
+        case 'array':
+            $array = json_decode($value);
+            if($array === false)
+                return false;
+            else {
+                foreach($array as $e) {
+                    if(!validateDataType($e, $typeDetails, null))
+                        return false;
+                }
+                return true;
+            }
+        default:
+            return true;
     }
 }
 
@@ -44,6 +55,12 @@ function convertDataType($value, $type, $typeDetails) {
             return intval($value);
         case 'decimal':
             return floatval($value);
+        case 'array':
+            $array = json_decode($value);
+            for($i = 0; $i < count($array); $i++) {
+                $array[$i] = convertDataType($array[$i], $typeDetails, null);
+            }
+            return $array;
         default:
             return $value;
     }
