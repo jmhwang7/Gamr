@@ -40,6 +40,16 @@ class DBMySQLi {
         }
         return $result->fetch_assoc();
     }
+    
+    // Shortcut to query one value from the database
+    function queryResult($query) {
+        $result = $this->query($query);
+        if($result->num_rows == 0) {
+            return null;
+        }
+        $row = $result->fetch_array();
+        return $row[0];
+    }
 }
 $db = new DBMySQLi();
 ?>
