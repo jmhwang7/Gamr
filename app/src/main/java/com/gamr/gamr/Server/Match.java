@@ -2,6 +2,8 @@ package com.gamr.gamr.Server;
 
 import com.google.gson.annotations.SerializedName;
 
+import java.util.List;
+
 /**
  * Created by Thomas on 3/21/2015.
  */
@@ -13,16 +15,17 @@ public class Match {
     private String username;
 
     @SerializedName("role")
-    private String role;
+    private List<String> role;
 
     @SerializedName("rank")
-    private String rank;
+    private List<String> rank;
+
+    @SerializedName("gamemode")
+    private List<String> gameMode;
 
     @SerializedName("distance")
     private double distance;
 
-    @SerializedName("gamemode")
-    private String gameMode;
 
     public Match() {
     }
@@ -43,27 +46,27 @@ public class Match {
         this.username = username;
     }
 
-    public String getRole() {
+    public List<String> getRole() {
         return role;
     }
 
-    public void setRole(String role) {
+    public void setRole(List<String> role) {
         this.role = role;
     }
 
     public String getRank() {
-        return rank;
+        return rank.get(0);
     }
 
-    public void setRank(String rank) {
+    public void setRank(List<String> rank) {
         this.rank = rank;
     }
 
-    public String getGameMode() {
+    public List<String> getGameMode() {
         return gameMode;
     }
 
-    public void setGameMode(String gameMode) {
+    public void setGameMode(List<String> gameMode) {
         this.gameMode = gameMode;
     }
 
@@ -77,7 +80,7 @@ public class Match {
 
     @Override
     public String toString() {
-        return "Match's ID " + matchId + "\n" + "Distance from user: " + distance + "\n" + "Rank: " + rank
+        return "Match's ID " + matchId + "\n" + "Distance from user: " + distance + "\n" + "Rank: " + rank.get(0)
                 + "\n" + "Role: " + role;
     }
 }
