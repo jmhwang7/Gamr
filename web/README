@@ -12,7 +12,7 @@ include/ contains helper methods only.
 
 === API Reference ===
 
-match - Returns information on matching users. Either use_location, use_games or both can be specified.
+>> match - Returns information on matching users. Either use_location, use_games or both can be specified.
 Parameters:
 user_id         uuid            required
 use_location    boolean         optional
@@ -31,7 +31,7 @@ array
     gamemode: string
     
     
-send_message - Sends a message to another user.
+>> send_message - Sends a message to another user.
 user_id         uuid            required
 other_user_id   uuid            required
 text            string          required
@@ -40,9 +40,9 @@ Returns:
 message_id: int
 
 
-get_messages - Finds messages between two users.
+>> get_messages - Finds messages between two users. Leave out other_user_id to request the most recent message from every user.
 user_id         uuid            required
-other_user_id   uuid            required
+other_user_id   uuid            optional
 before          int (timestamp) optional
 
 Returns:
@@ -54,3 +54,56 @@ messages: array
     to_username: string
     date: int (timestamp)
     text: string
+    
+    
+>> update_location - Updates a user's location
+user_id         uuid            required
+lat             decimal         required
+lon             decimal         required
+
+
+>> get_profile - Gets a user's profile
+user_id         uuid            required
+
+Returns:
+username: string
+games: array
+    in_game_name: string
+    game_fields: array
+        
+Example response:
+{
+    "username": "Test User 9",
+    "games": {
+        "1": {
+            "in_game_name": "TestUser_9",
+            "game_fields": {
+                "1": "Jungler",
+                "2": "Platinum",
+                "3": "Ranked 3v3"
+            }
+        }
+    }
+}
+
+
+>> update_profile - Updates a user's profile. Include the username parameter, games and in_game_names, or all 3.
+user_id         uuid            required
+username        string          optional
+games           int[]           optional    array of game IDs that the user plays
+in_game_names   string[]        optional    in game names corresponding to those names
+Example request:
+http://gamr.buildism.net/api1/update_profile?user_id=d49f9b92-b927-11e4-847c-8bb5e9000002&username=George%20Burdell&games=[1]&in_game_names=[%22GeorgeBurdell_2%22]
+
+Returns: same as get_profile
+
+
+>> update_game_fields - Updates game-specific fields for a user. The 3 arrays must be the same length, each index corresponds to one entry to be added or updated.
+user_id         uuid            required
+games           int[]           required
+fields          int[]           required
+values          any[]           required
+Example request: (sets the user's LoL rank (field id 2) to 5 (Diamond))
+http://gamr.buildism.net/api1/update_game_fields?user_id=d49f9b92-b927-11e4-847c-8bb5e9000002&games=[1]&fields=[2]&values=[5]
+
+Returns: same as get_profile
