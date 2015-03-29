@@ -25,7 +25,7 @@ public class SplashScreenActivity extends Activity {
             @Override
             public void run() {
                 Intent intent;
-                if (isUserGenerated) {
+                if (!isUserGenerated) {
                     intent = new Intent(SplashScreenActivity.this, FindGamesActivity.class);
                 }
                 else {

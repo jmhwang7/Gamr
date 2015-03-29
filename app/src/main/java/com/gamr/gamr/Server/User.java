@@ -21,15 +21,16 @@ public class User {
     private Map<String, ConversationList> mConversationMap;
     private List<String> mGames = new ArrayList<String>();
     private LeagueProfile mLeagueProfile;
+    private boolean mIsGenerated;
 
     private User(Context context) {
         if ((mAccountID = AccountUtils.getAccountID(context)) != null) {
-            //retrieveProfile();
+            retrieveProfile();
+            mIsGenerated = false;
         } else {
-            //generateProfile();
+            mIsGenerated = true;
+            generateProfile();
         }
-
-        generateProfile();
     }
 
     /**
@@ -63,7 +64,7 @@ public class User {
     /**
      * Returns whether user exists on server
      */
-    public boolean isUserGenerated() { return mAccountID != null; }
+    public boolean isUserGenerated() { return mIsGenerated; }
 
     /**
      * Gets a map of all the conversations between this user and other users. The keys are the user
