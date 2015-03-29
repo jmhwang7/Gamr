@@ -14,6 +14,7 @@ public class User {
     private String mAndroidID;
     private String mProfileName;
     private Map<String, ConversationList> mConversationMap;
+    private List<String> mGames;
 
     private User(String androidID) {
         mAndroidID = androidID;
@@ -102,6 +103,12 @@ public class User {
 
         mProfileName = "d49f9b92-b927-11e4-847c-8bb5e9000002";
         mAndroidID = "d49f9b92-b927-11e4-847c-8bb5e9000002";
+
+        mGames = new ArrayList<String>();
+    }
+
+    public List<String> getGames() {
+        return mGames;
     }
 
     /**
