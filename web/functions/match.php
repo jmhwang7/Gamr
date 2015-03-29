@@ -46,6 +46,10 @@ function match($db, $user_id, $use_location, $use_games, $count) {
         }
         $userFieldsQuery[$row['field_id']] .= ')';
     }
+    if(count($userFields) != 3) {
+        $use_games = false;
+        $use_location = true;
+    }
     
     // Set up query depending on parameters
     $havingClause = '';
@@ -68,11 +72,11 @@ function match($db, $user_id, $use_location, $use_games, $count) {
     (
         SELECT username, id, lat, lon, field_id, field_value,
         get_distance_in_miles_between_geo_locations("'.$userLat.'", "'.$userLon.'", lat, lon) AS distance,
-        if(field_id = '.FIELD_LOL_ROLE.', if('.$userFieldsQuery[FIELD_LOL_ROLE].', 0, 1), 
+        '.($use_games ? 'if(field_id = '.FIELD_LOL_ROLE.', if('.$userFieldsQuery[FIELD_LOL_ROLE].', 0, 1), 
             if(field_id = '.FIELD_LOL_RANK.', (1-ABS(field_value - '.$userFields[FIELD_LOL_RANK].')*0.5), 
                 if(field_id = '.FIELD_LOL_GAMEMODE.', if('.$userFieldsQuery[FIELD_LOL_GAMEMODE].', 1, 0), NULL)
             )
-        ) AS game_field_score,
+        )' : '1').' AS game_field_score,
         (SELECT field_value FROM user_game_fields WHERE user_id=id AND field_id = '.FIELD_LOL_RANK.') AS rank,
         (SELECT field_value FROM user_game_fields WHERE user_id=id AND field_id = '.FIELD_LOL_ROLE.') AS role,
         (SELECT field_value FROM user_game_fields WHERE user_id=id AND field_id = '.FIELD_LOL_GAMEMODE.') AS gamemode,
