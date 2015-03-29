@@ -109,17 +109,15 @@ $functions = array(
                 'default' => null,
                 'type' => 'string',
             ),
-            'games' => array(
+            'game' => array(
                 'required' => false,
                 'default' => null,
-                'type' => 'array',
-                'typeDetails' => 'int'
+                'type' => 'int',
             ),
-            'in_game_names' => array(
+            'in_game_name' => array(
                 'required' => false,
                 'default' => null,
-                'type' => 'array',
-                'typeDetails' => 'string'
+                'type' => 'string',
             ),
         )
     ),
