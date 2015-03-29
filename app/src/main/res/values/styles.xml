@@ -1,6 +1,6 @@
 <resources>
     <color name="BasicBackgroundColor">#DFE2DB</color>
-    <color name="ActionBarColor">#DFE2DB</color>
+    <color name="ActionBarColor">#FF0000</color>
     <color name="TextColor">#000000</color>
     <color name="TabTextColor">#000000</color>
     <color name="NewMessageBackground">#7a9bd0dd</color>
@@ -15,13 +15,9 @@
         <item name="android:actionBarStyle">@style/BasicTheme.ActionBar</item>
     </style>
 
-    <style name="BasicTheme.ActionBar" parent="Theme.AppCompat.Light.DarkActionBar">
+    <style name="BasicTheme.ActionBar" parent="@style/Widget.AppCompat.Light.ActionBar.Solid.Inverse">
         <item name="android:background">@color/ActionBarColor</item>
-        <item name="android:actionBarTabTextStyle">@style/BasicTheme.ActionBar.TextStyle</item>
-    </style>
-
-    <style name="BasicTheme.ActionBar.TextStyle" parent="Theme.AppCompat.Light.DarkActionBar">
-        <item name="android:textColor">@color/TabTextColor</item>
+        <item name="background">@color/ActionBarColor</item>
     </style>
 
     <style name="LargeTextTheme" parent="@android:style/TextAppearance.Large">

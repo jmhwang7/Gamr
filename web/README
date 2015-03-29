@@ -67,22 +67,19 @@ user_id         uuid            required
 
 Returns:
 username: string
-games: array
+[game_1]: array
     in_game_name: string
-    game_fields: array
-        
+    [game_field_1]: array
+    [..]
+[..]        
 Example response:
 {
     "username": "Test User 9",
-    "games": {
-        "1": {
-            "in_game_name": "TestUser_9",
-            "game_fields": {
-                "1": "Jungler",
-                "2": "Platinum",
-                "3": "Ranked 3v3"
-            }
-        }
+    "1": {
+        "in_game_name": "TestUser_9",
+        "1": ["Jungler"],
+        "2": ["Platinum"],
+        "3": ["Ranked 3v3"]
     }
 }
 
@@ -90,20 +87,20 @@ Example response:
 >> update_profile - Updates a user's profile. Include the username parameter, games and in_game_names, or all 3.
 user_id         uuid            required
 username        string          optional
-games           int[]           optional    array of game IDs that the user plays
-in_game_names   string[]        optional    in game names corresponding to those names
+game           int           optional
+in_game_name   string        optional
 Example request:
-http://gamr.buildism.net/api1/update_profile?user_id=d49f9b92-b927-11e4-847c-8bb5e9000002&username=George%20Burdell&games=[1]&in_game_names=[%22GeorgeBurdell_2%22]
+http://gamr.buildism.net/api1/update_profile?user_id=d49f9b92-b927-11e4-847c-8bb5e9000002&username=George%20Burdell&game=1&in_game_name=GeorgeBurdell
 
 Returns: same as get_profile
 
 
 >> update_game_fields - Updates game-specific fields for a user. The 3 arrays must be the same length, each index corresponds to one entry to be added or updated.
 user_id         uuid            required
-games           int[]           required
-fields          int[]           required
-values          any[]           required
+game           int           required
+field          int           required
+value          CSV list           required
 Example request: (sets the user's LoL rank (field id 2) to 5 (Diamond))
-http://gamr.buildism.net/api1/update_game_fields?user_id=d49f9b92-b927-11e4-847c-8bb5e9000002&games=[1]&fields=[2]&values=[5]
+http://gamr.buildism.net/api1/update_game_field?user_id=d49f9b92-b927-11e4-847c-8bb5e9000002&game=1&field=2&value=Challenger
 
 Returns: same as get_profile

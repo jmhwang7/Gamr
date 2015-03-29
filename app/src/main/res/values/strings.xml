@@ -17,6 +17,8 @@
     <string name="registration_create">Create Account</string>
     <string name="title_activity_league_profile">LeagueProfileActivity</string>
 
+    <string name="create_profile_string">Create Profile</string>
+
     <!-- These are the strings for the League profile activity -->
     <string name="default_tag_string">Choose a tag name</string>
     <string name="default_profile_string">Enter your summoner name</string>
@@ -65,5 +67,6 @@
 
     <!-- These strings are for the conversation activity -->
     <string name="send_message_string">Send</string>
+    <string name="title_activity_create_user">CreateUserActivity</string>
 
 </resources>

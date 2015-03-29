@@ -1,5 +1,5 @@
 <?php
-function update_profile($db, $user_id, $username, $games, $in_game_names) {
+function update_profile($db, $user_id, $username, $game, $in_game_name) {
     $exists = $db->query('SELECT id FROM users WHERE id="'.$user_id.'" LIMIT 1')->num_rows;
     if(!$exists) {
         if($username != null) {
@@ -11,11 +11,9 @@ function update_profile($db, $user_id, $username, $games, $in_game_names) {
             $db->query('UPDATE users SET username="'.($db->escapeString($username)).'" WHERE id="'.$user_id.'"');
     }
     
-    if($games != null && $in_game_names != null) {
+    if($game != null && $in_game_name != null) {
         $db->query('DELETE FROM user_games WHERE user_id="'.$user_id.'"');
-        for($i = 0; $i < count($games); $i++) {
-            $db->query('INSERT INTO user_games(user_id, game_id, in_game_name) VALUES("'.$user_id.'", "'.$games[$i].'", "'.$in_game_names[$i].'")');
-        }
+        $db->query('INSERT INTO user_games(user_id, game_id, in_game_name) VALUES("'.$user_id.'", "'.$game.'", "'.$in_game_name.'")');
     }
     
     require('get_profile.php');
