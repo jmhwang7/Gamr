@@ -13,7 +13,7 @@ public class SendMessageTask extends AsyncTask<String, Void, Void> {
 
     @Override
     protected Void doInBackground(String... params) {
-        Server.sendMessage(User.sUser.getAndroidID(), params[0], params[1]);
+        Server.sendMessage(User.sUser.getAccountID(), params[0], params[1]);
         return null;
     }
 }

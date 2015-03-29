@@ -2,8 +2,10 @@ package com.gamr.gamr.FindGamesFragments;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,6 +17,8 @@ import android.widget.TextView;
 import com.gamr.gamr.ConversationActivity;
 import com.gamr.gamr.R;
 import com.gamr.gamr.Server.Message;
+import com.gamr.gamr.Server.Server;
+import com.gamr.gamr.Server.User;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -56,6 +60,9 @@ public class MessagesFragment extends Fragment {
         // First we find the list view
         final ListView messagesListView = (ListView) mRootView.findViewById(R.id.messagesListView);
 
+        updateConversations();
+
+        /*
         // From there we will populate our list with our current messages
         if (mMessages == null) {
             mMessages = getCurrentMessages();
@@ -65,7 +72,7 @@ public class MessagesFragment extends Fragment {
             // We then create the adapter based on that list and attach it to the view
             final MessagesAdapter adapter = new MessagesAdapter(mRootView.getContext(), mMessages);
             messagesListView.setAdapter(adapter);
-        }
+        } */
 
         // We also need to attach the on click listener
         messagesListView.setOnItemClickListener(new MessagesListener());
@@ -74,10 +81,19 @@ public class MessagesFragment extends Fragment {
     }
 
     /**
+     * Updates the conversations for the user
+     */
+    public void updateConversations() {
+        GetConversationsTask task = new GetConversationsTask(getActivity());
+        task.execute();
+    }
+
+    /**
      * Retrieves the current messages.
      */
     public List<Message> getCurrentMessages() {
         // TODO We need to integrate this with the server
+        User.sUser.getMostRecentMessagesList();
         List<Message> tempList = new ArrayList<Message>();
         tempList.add(new Message("Test", "d49f9b92-b927-11e4-847c-8bb5e9000002", 10L, "d49f9b92-b927-11e4-847c-8bb5e9000003"));
         return tempList;
@@ -99,7 +115,8 @@ public class MessagesFragment extends Fragment {
 
             Intent intent = new Intent(getActivity(), ConversationActivity.class);
             intent.putExtra(ConversationActivity.SENDER_KEY,
-                    mMessages.get(position).getToId());
+                    mMessages.get(position).getFromId());
+
             startActivity(intent);
         }
     }
@@ -126,7 +143,7 @@ public class MessagesFragment extends Fragment {
             TextView senderText = (TextView) rowView.findViewById(R.id.messageSenderText);
             TextView timeReceivedText = (TextView) rowView.findViewById(R.id.messageTimeText);
 
-            Message message = mMessages.get(position);
+            Message message = this.getItem(position);
             previewText.setText(message.getMessagePreview());
             senderText.setText(message.getFromId());
             timeReceivedText.setText(message.getTimeReceived());
@@ -139,6 +156,30 @@ public class MessagesFragment extends Fragment {
             }
 
             return rowView;
+        }
+    }
+
+    private class GetConversationsTask extends AsyncTask<Void, Void, List<Message>> {
+        private Context mContext;
+
+        public GetConversationsTask(Context context) {
+            mContext = context;
+        }
+
+        @Override
+        protected List<Message> doInBackground(Void ... params) {
+            return Server.getConversation(User.sUser.getAccountID(), null);
+        }
+
+        @Override
+        protected void onPostExecute(List<Message> messages) {
+            if (mContext != null) {
+                mMessages = messages;
+                Log.d("Testing", "Size : " + messages.size());
+                mAdapter = new MessagesAdapter(this.mContext, messages);
+                final ListView messagesListView = (ListView) mRootView.findViewById(R.id.messagesListView);
+                messagesListView.setAdapter(mAdapter);
+            }
         }
     }
 }

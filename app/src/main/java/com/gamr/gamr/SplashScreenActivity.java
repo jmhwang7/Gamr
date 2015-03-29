@@ -1,11 +1,9 @@
 package com.gamr.gamr;
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
-import android.telephony.TelephonyManager;
 
 import com.gamr.gamr.Server.User;
 
@@ -18,7 +16,7 @@ public class SplashScreenActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        createUser();
+        final boolean isUserGenerated = createUser();
 
         setContentView(R.layout.activity_splash_screen);
 
@@ -26,7 +24,13 @@ public class SplashScreenActivity extends Activity {
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                Intent intent = new Intent(SplashScreenActivity.this, FindGamesActivity.class);
+                Intent intent;
+                if (isUserGenerated) {
+                    intent = new Intent(SplashScreenActivity.this, FindGamesActivity.class);
+                }
+                else {
+                    intent = new Intent(SplashScreenActivity.this, CreateUserActivity.class);
+                }
                 startActivity(intent);
                 finish();
             }
@@ -34,10 +38,10 @@ public class SplashScreenActivity extends Activity {
     }
 
     /**
-     * Creates the user for the entire application.
+     * Creates the user for the entire application and returns whether user has been generated.
      */
-    private void createUser() {
-        TelephonyManager manager = (TelephonyManager) getSystemService(Context.TELEPHONY_SERVICE);
-        User.instantiateUser(manager.getDeviceId() );
+    private boolean createUser() {
+        User.instantiateUser(this);
+        return User.sUser.isUserGenerated();
     }
 }
