@@ -3,6 +3,7 @@ package com.gamr.gamr.FindGamesFragments;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,6 +16,7 @@ import android.widget.TextView;
 import com.gamr.gamr.ProfileHandlers.LeagueMatchHandler;
 import com.gamr.gamr.ProfileHandlers.MatchHandler;
 import com.gamr.gamr.R;
+import com.gamr.gamr.Server.Match;
 import com.gamr.gamr.Server.Server;
 import com.gamr.gamr.Server.User;
 
@@ -34,6 +36,7 @@ public class MatchesFragment extends Fragment implements View.OnClickListener{
 
     private MatchHandler mMatchHandler;
     private View mRootView;
+    private List<Match> mMatches;
 
     /**
      * Returns a new instance of this fragment for the given section
@@ -49,6 +52,7 @@ public class MatchesFragment extends Fragment implements View.OnClickListener{
 
     public MatchesFragment() {
         mMatchHandler = new LeagueMatchHandler();
+        mMatches = null;
     }
 
     @Override
@@ -75,16 +79,15 @@ public class MatchesFragment extends Fragment implements View.OnClickListener{
      * Used to update the text fields for the given profile.
      */
     private void updateTextFields() {
-        Map<String, String> profileMap = mMatchHandler.getNextMatch();
-        if (profileMap != null) {
+        if (mMatches != null) {
+            Match match = mMatches.get(0);
             ((TextView) mRootView.findViewById(R.id.matchScreenSummonerName)).setText(
-                    profileMap.get(LeagueMatchHandler.SUMMONER_NAME_KEY));
-            ((TextView) mRootView.findViewById(R.id.role)).setText(
-                    profileMap.get(LeagueMatchHandler.ROLE_KEY));
-            ((TextView) mRootView.findViewById(R.id.ranking)).setText(
-                    profileMap.get(LeagueMatchHandler.RANK_KEY));
+                    match.getUsername());
 
-            setImageView(profileMap);
+            ((TextView) mRootView.findViewById(R.id.role)).setText(
+                    match.getRole().get(0));
+            ((TextView) mRootView.findViewById(R.id.ranking)).setText(
+                    match.getRank());
         } else {
             ((TextView) mRootView.findViewById(R.id.matchScreenSummonerName)).setText("No summoner");
             ((TextView) mRootView.findViewById(R.id.role)).setText("N/A");
@@ -119,13 +122,13 @@ public class MatchesFragment extends Fragment implements View.OnClickListener{
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.match_button:
-                mMatchHandler.matchProfile();
+                passCall(true);
                 updateTextFields();
                 mRootView.postInvalidate();
                 break;
 
             case R.id.pass_button:
-                mMatchHandler.passProfile();
+                passCall(false);
                 updateTextFields();
                 mRootView.postInvalidate();
                 break;
@@ -134,6 +137,7 @@ public class MatchesFragment extends Fragment implements View.OnClickListener{
                 // If we are switching the forms, we need to make one visible and one not visible
                 mRootView.findViewById(R.id.matchesFormLayout).setVisibility(View.INVISIBLE);
                 mRootView.findViewById(R.id.matchScreenLayout).setVisibility(View.VISIBLE);
+                newSearch();
                 updateTextFields();
                 mRootView.postInvalidate();
                 break;
@@ -152,6 +156,21 @@ public class MatchesFragment extends Fragment implements View.OnClickListener{
                 mRootView.postInvalidate();
                 break;
         }
+    }
+
+    private void passCall(boolean isMatch) {
+        MatchTask task = new MatchTask();
+        task.execute(isMatch);
+        updateTextFields();
+    }
+
+    private void newSearch() {
+        List<String> modes = getModesList();
+        UpdateModesTask task = new UpdateModesTask();
+        task.execute(modes);
+
+        SearchTask searchTask = new SearchTask();
+        searchTask.execute();
     }
 
     /**
@@ -253,11 +272,47 @@ public class MatchesFragment extends Fragment implements View.OnClickListener{
     }
 
 
-    private class ServerTask extends AsyncTask<String, Void, Void> {
+    private class UpdateModesTask extends AsyncTask<List<String>, Void, Void> {
 
         @Override
-        protected Void doInBackground(String... params) {
+        protected Void doInBackground(List<String>... params) {
+            Server.updateLeagueGameModes(User.sUser.getAccountID(), params[0]);
             return null;
+        }
+    }
+
+
+    private class SearchTask extends AsyncTask<Void, Void, List<Match>> {
+
+        @Override
+        protected List<Match> doInBackground(Void... params) {
+            return Server.getMatches(User.sUser.getAccountID(), true, true);
+        }
+
+        @Override
+        protected void onPostExecute(List<Match> matches) {
+            if (matches != null) {
+                Log.d("Testing", "Testing1");
+                mMatches = matches;
+                updateTextFields();
+            }
+        }
+    }
+
+
+    private class MatchTask extends AsyncTask<Boolean, Void, Void> {
+
+        @Override
+        protected Void doInBackground(Boolean... params) {
+            Server.respondToMatch(User.sUser.getAccountID(), mMatches.get(0).getMatchId(), params[0]);
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void aVoid) {
+            Match m = mMatches.remove(0);
+            Log.d("Testing", m.getUsername());
+            updateTextFields();
         }
     }
 }

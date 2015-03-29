@@ -26,7 +26,6 @@ import java.util.Map;
 public class Server {
     // Base URL
     public static final String BASE_URL = "http://gamr.buildism.net/api1/";
-    private static final String LOG_TAG = Server.class.getSimpleName();
 
     // Endpoints
     private static final String GET_MESSAGE_FUNCTION = "get_messages";
@@ -38,10 +37,8 @@ public class Server {
     private static final String UPDATE_GAME_FIELD_FUNCTION = "update_game_field";
     private static final String RESPOND_TO_MATCH_FUNCTION = "match_response";
 
-    public static void main(String[] args){
-        Profile profile = Server.getProfile("test_user_2@test.com");
-        System.out.println(profile.getLeagueProfile());
-    }
+//    public static void main(String[] args){
+//    }
 
     /**
      * Get a list of messages between two users

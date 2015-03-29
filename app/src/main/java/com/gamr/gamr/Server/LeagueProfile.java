@@ -44,7 +44,12 @@ public class LeagueProfile {
     }
 
     public String getRank() {
-        return rank.get(0);
+        if(rank != null){
+            return rank.get(0);
+        }
+        else{
+            return "";
+        }
     }
 
     public void setRank(List<String> rank) {
@@ -68,7 +73,12 @@ public class LeagueProfile {
     }
 
     public String getServer() {
-        return server.get(0);
+        if(server != null){
+            return server.get(0);
+        }
+        else{
+            return "";
+        }
     }
 
     public void setServer(List<String> server) {
