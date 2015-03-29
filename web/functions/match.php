@@ -96,9 +96,9 @@ function match($db, $user_id, $use_location, $use_games, $count) {
             'id' => $row['id'],
             'username' => $row['username'],
             'distance' => $row['distance'],
-            'role' => $row['role'],
-            'rank' => $LOL_RANKS[$row['rank']],
-            'gamemode' => $row['gamemode']
+            'role' => explode(',', $row['role']),
+            'rank' => array($LOL_RANKS[$row['rank']]),
+            'gamemode' => explode(',', $row['gamemode'])
         );
     }
 
