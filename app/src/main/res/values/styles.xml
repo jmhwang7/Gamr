@@ -1,8 +1,8 @@
 <resources>
-    <color name="BasicBackgroundColor">#DFE2DB</color>
-    <color name="ActionBarColor">#DFE2DB</color>
+    <color name="BasicBackgroundColor">#ECEFF1</color>
+    <color name="ActionBarColor">#2196F3</color>
     <color name="TextColor">#000000</color>
-    <color name="TabTextColor">#000000</color>
+    <color name="TabTextColor">#2196F3</color>
     <color name="NewMessageBackground">#7a9bd0dd</color>
     <color name="DividerColor">#000000</color>
     <color name="TransparentColor">#00000000</color>
@@ -10,17 +10,17 @@
     <style name="BasicTheme" parent="Theme.AppCompat.Light">
         <!-- Basic background drawing -->
         <item name="android:background">@color/BasicBackgroundColor</item>
-        <item name="android:windowNoTitle">true</item>
         <item name="android:textColor">@color/TextColor</item>
-        <item name="android:actionBarStyle">@style/BasicTheme.ActionBar</item>
+        <item name="android:actionBarTabStyle">@style/BasicTheme.ActionBar</item>
     </style>
 
-    <style name="BasicTheme.ActionBar" parent="Theme.AppCompat.Light.DarkActionBar">
-        <item name="android:background">@color/ActionBarColor</item>
+    <style name="BasicTheme.ActionBar" parent="@android:style/Widget.Holo.ActionBar">
+        <item name="background">@color/ActionBarColor</item>
+        <item name="android:actionMenuTextColor">#ff0000</item>
         <item name="android:actionBarTabTextStyle">@style/BasicTheme.ActionBar.TextStyle</item>
     </style>
 
-    <style name="BasicTheme.ActionBar.TextStyle" parent="Theme.AppCompat.Light.DarkActionBar">
+    <style name="BasicTheme.ActionBar.TextStyle">
         <item name="android:textColor">@color/TabTextColor</item>
     </style>
 
