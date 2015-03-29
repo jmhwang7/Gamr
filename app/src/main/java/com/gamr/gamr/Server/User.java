@@ -18,7 +18,7 @@ public class User {
     private String mAccountID;
     private String mProfileName;
     private Map<String, ConversationList> mConversationMap;
-    private List<String> mGames;
+    private List<String> mGames = new ArrayList<String>();
 
     private User(Context context) {
         if ((mAccountID = AccountUtils.getAccountID(context)) != null) {
@@ -116,7 +116,6 @@ public class User {
 
         mProfileName = "d49f9b92-b927-11e4-847c-8bb5e9000002";
         mAccountID = "d49f9b92-b927-11e4-847c-8bb5e9000002";
-        mGames = new ArrayList<String>();
 
     }
 
