@@ -49,7 +49,6 @@ $functions = array(
             ),
             'other_user_id' => array(
                 'required' => false,
-                'default' => null,
                 'type' => 'uuid',
             ),
             'before' => array(
@@ -88,6 +87,62 @@ $functions = array(
             'lon' => array(
                 'required' => true,
                 'type' => 'decimal',
+            )
+        )
+    ),
+    'get_profile' => array(
+        'params' => array(
+            'user_id' => array(
+                'required' => true,
+                'type' => 'uuid',
+            ),
+        )
+    ),
+    'update_profile' => array(
+        'params' => array(
+            'user_id' => array(
+                'required' => true,
+                'type' => 'uuid',
+            ),
+            'username' => array(
+                'required' => false,
+                'default' => null,
+                'type' => 'string',
+            ),
+            'games' => array(
+                'required' => false,
+                'default' => null,
+                'type' => 'array',
+                'typeDetails' => 'int'
+            ),
+            'in_game_names' => array(
+                'required' => false,
+                'default' => null,
+                'type' => 'array',
+                'typeDetails' => 'string'
+            ),
+        )
+    ),
+    'update_game_fields' => array(
+        'params' => array(
+            'user_id' => array(
+                'required' => true,
+                'type' => 'uuid',
+            ),
+            'games' => array(
+                'required' => true,
+                'type' => 'array',
+                'typeDetails' => 'int'
+            ),
+            'fields' => array(
+                'required' => true,
+                'type' => 'array',
+                'typeDetails' => 'int'
+            ),        
+            'values' => array(
+                'required' => true,
+                'type' => 'array',
+                'typeDetails' => 'any'
             )
         )
     )
