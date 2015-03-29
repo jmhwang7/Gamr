@@ -24,8 +24,14 @@ public class Message {
     @SerializedName("to_id")
     private String toId;
 
+    @SerializedName("to_username")
+    private String toUsername;
+
     @SerializedName("from_id")
     private String fromId;
+
+    @SerializedName("from_username")
+    private String fromUsername;
 
     @SerializedName("date")
     private long date;
@@ -58,7 +64,7 @@ public class Message {
 
     @Override
     public String toString() {
-        return "Sender: " + fromId + "\nReceiver: " + toId + "\nTime Received: " + getTimeReceived()
+        return "Sender: " + fromUsername + "\nReceiver: " + toUsername + "\nTime Received: " + getTimeReceived()
                 + "\nMessage: " + text + "\n";
     }
 
@@ -100,6 +106,22 @@ public class Message {
 
     public void setToId(String toId) {
         this.toId = toId;
+    }
+
+    public String getToUsername() {
+        return toUsername;
+    }
+
+    public void setToUsername(String toUsername) {
+        this.toUsername = toUsername;
+    }
+
+    public String getFromUsername() {
+        return fromUsername;
+    }
+
+    public void setFromUsername(String fromUsername) {
+        this.fromUsername = fromUsername;
     }
 
     public boolean wasMessageViewed() {

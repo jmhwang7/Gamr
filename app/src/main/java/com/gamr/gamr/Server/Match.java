@@ -9,12 +9,20 @@ public class Match {
     @SerializedName("id")
     private String matchId;
 
-    @SerializedName("lon")
-    private double longitude;
-    @SerializedName("lat")
-    private double latitude;
+    @SerializedName("username")
+    private String username;
 
+    @SerializedName("role")
+    private String role;
+
+    @SerializedName("rank")
+    private String rank;
+
+    @SerializedName("distance")
     private double distance;
+
+    @SerializedName("gamemode")
+    private String gameMode;
 
     public Match() {
     }
@@ -27,20 +35,36 @@ public class Match {
         this.matchId = matchId;
     }
 
-    public double getLongitude() {
-        return longitude;
+    public String getUsername() {
+        return username;
     }
 
-    public void setLongitude(double longitude) {
-        this.longitude = longitude;
+    public void setUsername(String username) {
+        this.username = username;
     }
 
-    public double getLatitude() {
-        return latitude;
+    public String getRole() {
+        return role;
     }
 
-    public void setLatitude(double latitude) {
-        this.latitude = latitude;
+    public void setRole(String role) {
+        this.role = role;
+    }
+
+    public String getRank() {
+        return rank;
+    }
+
+    public void setRank(String rank) {
+        this.rank = rank;
+    }
+
+    public String getGameMode() {
+        return gameMode;
+    }
+
+    public void setGameMode(String gameMode) {
+        this.gameMode = gameMode;
     }
 
     public double getDistance() {
@@ -53,6 +77,7 @@ public class Match {
 
     @Override
     public String toString() {
-        return "Match's ID " + matchId + "\n" + "Distance from user: " + distance;
+        return "Match's ID " + matchId + "\n" + "Distance from user: " + distance + "\n" + "Rank: " + rank
+                + "\n" + "Role: " + role;
     }
 }
