@@ -79,7 +79,7 @@ public class MatchesFragment extends Fragment implements View.OnClickListener{
      * Used to update the text fields for the given profile.
      */
     private void updateTextFields() {
-        if (mMatches != null) {
+        if (mMatches != null && mMatches.size() != 0) {
             Match match = mMatches.get(0);
             ((TextView) mRootView.findViewById(R.id.matchScreenSummonerName)).setText(
                     match.getUsername());
