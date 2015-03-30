@@ -11,6 +11,7 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -212,6 +213,11 @@ public class MatchesFragment extends Fragment implements View.OnClickListener{
         List<String> roles = getRolesList();
         UpdateRoleTask updateRoleTask = new UpdateRoleTask();
         updateRoleTask.execute(roles);
+
+        Spinner spinner = (Spinner) mRootView.findViewById(R.id.serverSpinner);
+        String selectedServer = spinner.getSelectedItem().toString();
+        UpdateServerTask updateServerTask = new UpdateServerTask();
+        updateServerTask.execute(selectedServer);
     }
 
     private List<String> getRolesList() {
@@ -304,6 +310,14 @@ public class MatchesFragment extends Fragment implements View.OnClickListener{
         @Override
         protected Void doInBackground(List<String>... params) {
             Server.updateLeagueGameModes(User.sUser.getAccountID(), params[0]);
+            return null;
+        }
+    }
+
+    private class UpdateServerTask extends AsyncTask<String, Void, Void> {
+        @Override
+        protected Void doInBackground(String... params) {
+            Server.updateServer(User.sUser.getAccountID(), params[0]);
             return null;
         }
     }
