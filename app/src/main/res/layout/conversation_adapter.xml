@@ -17,7 +17,7 @@
         style="@style/MediumTextTheme"
         android:id="@+id/messageContent"
         android:width="0dip"
-        android:background="#00000000"
+        android:background="@drawable/messages_back"
         android:layout_weight="1" />
 
     <ImageView
