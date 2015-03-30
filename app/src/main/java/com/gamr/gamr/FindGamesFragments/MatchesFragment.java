@@ -12,6 +12,7 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.gamr.gamr.ProfileHandlers.LeagueMatchHandler;
 import com.gamr.gamr.ProfileHandlers.MatchHandler;
@@ -134,6 +135,10 @@ public class MatchesFragment extends Fragment implements View.OnClickListener{
                 break;
 
             case R.id.findMatchesButton:
+                if (!findMatchesFieldsFilled()) {
+                    Toast.makeText(getActivity(), "Please fill out all fields", Toast.LENGTH_LONG).show();
+                    break;
+                }
                 // If we are switching the forms, we need to make one visible and one not visible
                 mRootView.findViewById(R.id.matchesFormLayout).setVisibility(View.INVISIBLE);
                 mRootView.findViewById(R.id.matchScreenLayout).setVisibility(View.VISIBLE);
@@ -150,6 +155,10 @@ public class MatchesFragment extends Fragment implements View.OnClickListener{
                 break;
 
             case R.id.createProfileButton:
+                if (!profileFieldsFilled()) {
+                    Toast.makeText(getActivity(), "Please fill out all fields", Toast.LENGTH_LONG).show();
+                    break;
+                }
                 mRootView.findViewById(R.id.matchesFormLayout).setVisibility(View.VISIBLE);
                 mRootView.findViewById(R.id.createProfileLayout).setVisibility(View.INVISIBLE);
                 createProfile();
@@ -157,6 +166,24 @@ public class MatchesFragment extends Fragment implements View.OnClickListener{
                 break;
         }
     }
+
+
+    private boolean findMatchesFieldsFilled() {
+        return (getModesList().size() != 0);
+    }
+
+
+    private boolean profileFieldsFilled() {
+        if (String.valueOf(((EditText) mRootView.findViewById(R.id.summoner_name)).getText()).trim().equals("")) {
+            return false;
+        }
+
+        if (getRolesList().size() == 0) {
+            return false;
+        }
+        return true;
+    }
+
 
     private void passCall(boolean isMatch) {
         MatchTask task = new MatchTask();

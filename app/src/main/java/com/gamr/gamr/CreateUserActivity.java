@@ -57,6 +57,12 @@ public class CreateUserActivity extends ActionBarActivity implements View.OnClic
         switch (v.getId()) {
             case R.id.findMatchesButton:
                 String tagName = ((EditText)findViewById(R.id.choose_tag_name)).getText().toString();
+
+                if (tagName.trim().equals("")) {
+                    Toast.makeText(this, "Please put a tag name", Toast.LENGTH_LONG).show();
+                    break;
+                }
+
                 AccountUtils.setProfileName(this, tagName);
                 User.sUser.generateProfile();
                 Intent intent = new Intent(CreateUserActivity.this, FindGamesActivity.class);
