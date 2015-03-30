@@ -10,6 +10,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -138,10 +139,12 @@ public class ConversationActivity extends ActionBarActivity {
 
             // This sets it to be right justified
             if (message.getFromId().equals(User.sUser.getAccountID())) {
-                messageText.setGravity(Gravity.END);
-                messageString = message.getText() + " : " + message.getFromId();
+                ((ImageView) (rowView.findViewById(R.id.leftProfileView))).setVisibility(View.INVISIBLE);
+                messageText.setGravity(Gravity.RIGHT);
+                messageString = ": " + message.getFromUsername() + "\n" + message.getText();
             } else {
-                messageString = message.getFromId() + " : " + message.getText();
+                ((ImageView) (rowView.findViewById(R.id.rightProfileView))).setVisibility(View.INVISIBLE);
+                messageString = message.getFromUsername() + " :\n" + message.getText();
             }
 
             messageText.setText(messageString);
