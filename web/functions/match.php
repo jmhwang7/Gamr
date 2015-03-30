@@ -46,7 +46,7 @@ function match($db, $user_id, $use_location, $use_games, $count) {
         }
         $userFieldsQuery[$row['field_id']] .= ')';
     }
-    if(count($userFields) != 3) {
+    if(count($userFields) != 4) {
         $use_games = false;
         $use_location = true;
     }
@@ -101,7 +101,7 @@ function match($db, $user_id, $use_location, $use_games, $count) {
             'username' => $row['username'],
             'distance' => $row['distance'],
             'role' => explode(',', $row['role']),
-            'rank' => array($LOL_RANKS[$row['rank']]),
+            'rank' => array(isset($row['rank']) ? $LOL_RANKS[$row['rank']] : ''),
             'gamemode' => explode(',', $row['gamemode'])
         );
     }
