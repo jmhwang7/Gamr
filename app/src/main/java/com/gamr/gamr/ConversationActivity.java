@@ -139,9 +139,9 @@ public class ConversationActivity extends ActionBarActivity {
             // This sets it to be right justified
             if (message.getFromId().equals(User.sUser.getAccountID())) {
                 messageText.setGravity(Gravity.END);
-                messageString = message.getText() + " : " + message.getFromId();
+                messageString = ": " + message.getFromUsername() + "\n" + message.getText();
             } else {
-                messageString = message.getFromId() + " : " + message.getText();
+                messageString = message.getFromUsername() + " :\n" + message.getText();
             }
 
             messageText.setText(messageString);
