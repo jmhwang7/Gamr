@@ -2,7 +2,6 @@ package com.gamr.gamr.Server;
 
 import android.content.Context;
 import android.os.AsyncTask;
-import android.util.Log;
 
 import com.gamr.gamr.Utils.AccountUtils;
 
@@ -141,9 +140,11 @@ public class User {
 
         @Override
         protected void onPostExecute(Profile profile) {
-            Log.d("Testing", mAccountID);
-            sUser.mProfileName = profile.getUsername();
-            sUser.mLeagueProfile = profile.getLeagueProfile();
+            if (profile != null) {
+                sUser.mProfileName = profile.getUsername();
+                sUser.mLeagueProfile = profile.getLeagueProfile();
+                sUser.mGames.add("League");
+            }
         }
     }
 }

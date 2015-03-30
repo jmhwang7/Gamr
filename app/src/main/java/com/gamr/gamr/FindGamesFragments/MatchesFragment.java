@@ -304,15 +304,18 @@ public class MatchesFragment extends Fragment implements View.OnClickListener{
 
         @Override
         protected Void doInBackground(Boolean... params) {
-            Server.respondToMatch(User.sUser.getAccountID(), mMatches.get(0).getMatchId(), params[0]);
+            if (mMatches != null && mMatches.size() != 0) {
+                Server.respondToMatch(User.sUser.getAccountID(), mMatches.get(0).getMatchId(), params[0]);
+            }
             return null;
         }
 
         @Override
         protected void onPostExecute(Void aVoid) {
-            Match m = mMatches.remove(0);
-            Log.d("Testing", m.getUsername());
-            updateTextFields();
+            if (mMatches != null && mMatches.size() > 0) {
+                Match m = mMatches.remove(0);
+                updateTextFields();
+            }
         }
     }
 }
