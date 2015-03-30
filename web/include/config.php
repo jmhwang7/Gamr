@@ -1,9 +1,5 @@
 <?php
-define('DB_HOST', 'localhost');
-define('DB_USERNAME', 'gamr');
-define('DB_PASSWORD', 'team56');
-define('DB_NAME', 'gamr');
-
+require('config.private.php');
 define('MAX_DISTANCE', 200);
 define('GAME_LOL', 1);
 define('FIELD_LOL_ROLE', 1);
