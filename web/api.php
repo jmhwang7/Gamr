@@ -9,6 +9,7 @@ require('include/input.php');
 require('include/response.php');
 require('include/errorHandler.php');
 require('include/db.php');
+require('include/riotApi.php');
 require('functions.php');
 
 if(!paramIsSet('version') || !is_numeric(param('version'))) {
