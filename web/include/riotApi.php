@@ -1,5 +1,4 @@
 <?php
-require('config.php');
 function riotQuery($region, $path) {
     $url = 'https://'.$region.'.api.pvp.net/api/lol/'.$region.'/'.$path.'?api_key='.RIOT_API_KEY;
 
