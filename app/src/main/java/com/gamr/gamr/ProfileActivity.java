@@ -7,6 +7,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
@@ -73,6 +74,11 @@ public class ProfileActivity extends ActionBarActivity implements View.OnClickLi
             ((TextView) findViewById(R.id.tagNameText)).setText(User.sUser.getProfileName());
 
             updateButtons();
+        } else {
+            ((EditText) findViewById(R.id.tagNameText)).setFocusable(false);
+            ((EditText) findViewById(R.id.tagNameText)).setFocusableInTouchMode(false);
+            ((EditText) findViewById(R.id.tagNameText)).setCursorVisible(false);
+            ((EditText) findViewById(R.id.tagNameText)).setClickable(false);
         }
     }
 
@@ -113,33 +119,42 @@ public class ProfileActivity extends ActionBarActivity implements View.OnClickLi
     @Override
     public void onBackPressed()
     {
-        // We need to update the profile on the server
-        List<String> roles = new ArrayList<String>();
+        if (mIsUser) {
+            // We need to update the profile on the server
+            List<String> roles = new ArrayList<String>();
 
-        if (mButtonsClicked[0]) {
-            roles.add(LeagueProfile.TOP);
+            if (mButtonsClicked[0]) {
+                roles.add(LeagueProfile.TOP);
+            }
+
+            if (mButtonsClicked[1]) {
+                roles.add(LeagueProfile.SUPPORT);
+            }
+
+            if (mButtonsClicked[2]) {
+                roles.add(LeagueProfile.MID);
+            }
+
+            if (mButtonsClicked[3]) {
+                roles.add(LeagueProfile.JUNGLER);
+            }
+
+            if (mButtonsClicked[4]) {
+                roles.add(LeagueProfile.ADCARRY);
+            }
+
+            UpdateRoleTask updateRoleTask = new UpdateRoleTask();
+            updateRoleTask.execute(roles);
+
+            User.sUser.getLeagueProfile().setRoles(roles);
+
+            String tagName = ((EditText) findViewById(R.id.tagNameText)).getText().toString();
+
+            UpdateTagNameTask updateTagNameTask = new UpdateTagNameTask();
+            updateTagNameTask.execute(tagName);
+
+            User.sUser.setProfileName(tagName);
         }
-
-        if (mButtonsClicked[1]) {
-            roles.add(LeagueProfile.SUPPORT);
-        }
-
-        if (mButtonsClicked[2]) {
-            roles.add(LeagueProfile.MID);
-        }
-
-        if (mButtonsClicked[3]) {
-            roles.add(LeagueProfile.JUNGLER);
-        }
-
-        if (mButtonsClicked[4]) {
-            roles.add(LeagueProfile.ADCARRY);
-        }
-
-        UpdateRoleTask updateRoleTask = new UpdateRoleTask();
-        updateRoleTask.execute(roles);
-
-        User.sUser.getLeagueProfile().setRoles(roles);
 
         finish();
     }
@@ -183,6 +198,15 @@ public class ProfileActivity extends ActionBarActivity implements View.OnClickLi
         @Override
         protected Void doInBackground(List<String>... params) {
             Server.updateLeagueRoles(User.sUser.getAccountID(), params[0]);
+            return null;
+        }
+    }
+
+    private class UpdateTagNameTask extends AsyncTask<String, Void, Void> {
+
+        @Override
+        protected Void doInBackground(String... params) {
+            Server.updateUsername(User.sUser.getAccountID(), params[0]);
             return null;
         }
     }

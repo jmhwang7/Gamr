@@ -1,6 +1,7 @@
 package com.gamr.gamr;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.view.Gravity;
@@ -91,9 +92,12 @@ public class ConversationActivity extends ActionBarActivity {
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
             return true;
+        } else if (id == R.id.action_profile) {
+            Intent intent = new Intent(ConversationActivity.this, ProfileActivity.class);
+            intent.putExtra(ProfileActivity.PROFILE_NAME_KEY, User.sUser.getProfileName());
+            startActivity(intent);
+            return true;
         }
-
-
 
         return super.onOptionsItemSelected(item);
     }
