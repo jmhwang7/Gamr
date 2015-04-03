@@ -94,7 +94,7 @@ public class ConversationActivity extends ActionBarActivity {
             return true;
         } else if (id == R.id.action_profile) {
             Intent intent = new Intent(ConversationActivity.this, ProfileActivity.class);
-            intent.putExtra(ProfileActivity.PROFILE_NAME_KEY, User.sUser.getProfileName());
+            intent.putExtra(ProfileActivity.PROFILE_NAME_KEY, mOtherUser);
             startActivity(intent);
             return true;
         }

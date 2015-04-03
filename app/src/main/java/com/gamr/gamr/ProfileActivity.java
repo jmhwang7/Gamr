@@ -12,6 +12,7 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.gamr.gamr.Server.LeagueProfile;
+import com.gamr.gamr.Server.Profile;
 import com.gamr.gamr.Server.Server;
 import com.gamr.gamr.Server.User;
 
@@ -208,6 +209,19 @@ public class ProfileActivity extends ActionBarActivity implements View.OnClickLi
         protected Void doInBackground(String... params) {
             Server.updateUsername(User.sUser.getAccountID(), params[0]);
             return null;
+        }
+    }
+
+    private class GetProfileTask extends AsyncTask<String, Void, Profile> {
+
+        @Override
+        protected Profile doInBackground(String... params) {
+            return Server.getProfile(params[0]);
+        }
+
+        @Override
+        protected void onPostExecute(Profile p) {
+            ((EditText) findViewById(R.id.tagNameText)).setText(p.getUsername());
         }
     }
 }
