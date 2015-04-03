@@ -73,6 +73,7 @@ public class ProfileActivity extends ActionBarActivity implements View.OnClickLi
             }
 
             ((TextView) findViewById(R.id.tagNameText)).setText(User.sUser.getProfileName());
+            ((TextView) findViewById(R.id.summonerNameText)).setText(User.sUser.getLeagueProfile().getSummonerName());
 
             updateButtons();
         } else {
