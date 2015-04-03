@@ -27,9 +27,11 @@ public class SplashScreenActivity extends Activity {
                 Intent intent;
                 if (!isUserGenerated) {
                     intent = new Intent(SplashScreenActivity.this, FindGamesActivity.class);
+                    //intent = new Intent(SplashScreenActivity.this, ProfileActivity.class);
                 }
                 else {
                     intent = new Intent(SplashScreenActivity.this, CreateUserActivity.class);
+                    //intent = new Intent(SplashScreenActivity.this, ProfileActivity.class);
                 }
                 startActivity(intent);
                 finish();

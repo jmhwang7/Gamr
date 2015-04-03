@@ -21,6 +21,7 @@ import com.gamr.gamr.AsyncTasks.UpdateLocationTask;
 import com.gamr.gamr.FindGamesFragments.MatchesFragment;
 import com.gamr.gamr.FindGamesFragments.MessagesFragment;
 import com.gamr.gamr.FindGamesFragments.NearYouFragment;
+import com.gamr.gamr.Server.User;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.google.android.gms.common.api.GoogleApiClient;
@@ -127,6 +128,9 @@ public class FindGamesActivity extends ActionBarActivity
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
+            Intent intent = new Intent(FindGamesActivity.this, ProfileActivity.class);
+            intent.putExtra(ProfileActivity.PROFILE_NAME_KEY, User.sUser.getProfileName());
+            startActivity(intent);
             return true;
         }
 

@@ -8,6 +8,12 @@ import java.util.List;
  * Created by Thomas on 3/29/2015.
  */
 public class LeagueProfile {
+    public static final String SUPPORT = "Support";
+    public static final String MID = "Mid";
+    public static final String JUNGLER = "Jungler";
+    public static final String TOP = "Top";
+    public static final String ADCARRY = "AD Carry";
+
     @SerializedName("in_game_name")
     private String summonerName;
 
