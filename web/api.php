@@ -49,6 +49,13 @@ foreach($functionParams as $param => $paramDef) {
     }
 }
 
+// Log request
+if(DEBUG) {
+    $message = '['.date(DATE_RFC2822).', '.$_SERVER['REMOTE_ADDR'].'] '.$function.' -> '.print_r($_REQUEST, true);
+    file_put_contents('request.log', $message."\n", FILE_APPEND);
+
+}
+
 // Call the function
 require('functions/'.$function.'.php');
 call_user_func_array($function, $callParams);
