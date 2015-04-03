@@ -158,22 +158,7 @@ public class Server {
         }
     }
 
-    public static void updateLeagueRank(String userId, String rank){
-        Map<String, String> params = new HashMap<>();
-        params.put("user_id", userId);
-        params.put("game", "1");
-        Map<String, String> body = new HashMap<>();
-        body.put("field", "2");
-        body.put("value", rank);
-
-        try{
-            post(UPDATE_GAME_FIELD_FUNCTION, params, body);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-    public static void updateServer(String userId, String newServer){
+    public static void updateLeagueServer(String userId, String newServer){
         Map<String, String> params = new HashMap<>();
         params.put("user_id", userId);
         params.put("game", "1");
