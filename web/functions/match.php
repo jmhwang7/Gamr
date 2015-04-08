@@ -1,19 +1,4 @@
 <?php
-/**
-# Source: http://zcentric.com/2010/03/11/calculate-distance-in-mysql-with-latitude-and-longitude/comment-page-1/#comment-783
-# Sample usage: select get_distance_in_miles_between_geo_locations(-34.017330, 22.809500, latitude, longitude) as distance_from_input from places;
-DELIMITER $$
-
-DROP FUNCTION IF EXISTS `get_distance_in_miles_between_geo_locations` $$
-CREATE FUNCTION get_distance_in_miles_between_geo_locations(geo1_latitude decimal(10,6), geo1_longitude decimal(10,6), geo2_latitude decimal(10,6), geo2_longitude decimal(10,6)) 
-returns decimal(10,3) DETERMINISTIC
-BEGIN
-  return ((ACOS(SIN(geo1_latitude * PI() / 180) * SIN(geo2_latitude * PI() / 180) + COS(geo1_latitude * PI() / 180) * COS(geo2_latitude * PI() / 180) * COS((geo1_longitude - geo2_longitude) * PI() / 180)) * 180 / PI()) * 60 * 1.1515);
-END $$
-
-DELIMITER ;
-
-*/
 function match($db, $user_id, $use_location, $use_games, $count) {
     global $LOL_RANKS;
     
@@ -35,16 +20,22 @@ function match($db, $user_id, $use_location, $use_games, $count) {
     
     $userFieldsQuery = array();
     while($row = $userFieldsResult->fetch_assoc()) {
-        $userFields[$row['field_id']] = $row['field_value'];
-        $userFieldsQuery[$row['field_id']] = '(';
-        $values = explode(',', $row['field_value']);
+        $field = $row['field_id'];
+        $value = $row['field_value'];
+        $userFields[$field] = $value;
+        $userFieldsQuery[$field] = '(';
+        $values = explode(',', $value);
         for($i = 0; $i < count($values); $i++) {
-            $userFieldsQuery[$row['field_id']] .= 'FIND_IN_SET("'.$db->escapeString($values[$i]).'", field_value)';
+            if($field == FIELD_LOL_GAMEMODE) { // Game mode: at least 1 must match
+                $userFieldsQuery[$field] .= 'FIND_IN_SET("'.$db->escapeString($values[$i]).'", field_value)';
+            } else if($field == FIELD_LOL_ROLE) {// Role: at least 1 must be different
+                $userFieldsQuery[$field] .= '!FIND_IN_SET("'.$db->escapeString($values[$i]).'", field_value)';                
+            }
             if($i < count($values)-1) {
-                $userFieldsQuery[$row['field_id']] .= ' OR ';
+                $userFieldsQuery[$field] .= ' OR ';
             }
         }
-        $userFieldsQuery[$row['field_id']] .= ')';
+        $userFieldsQuery[$field] .= ')';
     }
     if(count($userFields) != 4) {
         $use_games = false;
@@ -72,8 +63,8 @@ function match($db, $user_id, $use_location, $use_games, $count) {
     (
         SELECT username, id, lat, lon, field_id, field_value,
         get_distance_in_miles_between_geo_locations("'.$userLat.'", "'.$userLon.'", lat, lon) AS distance,
-        '.($use_games ? 'if(field_id = '.FIELD_LOL_ROLE.', if('.$userFieldsQuery[FIELD_LOL_ROLE].', 0, 1), 
-            if(field_id = '.FIELD_LOL_RANK.', (1-ABS(field_value - '.$userFields[FIELD_LOL_RANK].')*0.5), 
+        '.($use_games ? 'if(field_id = '.FIELD_LOL_ROLE.', if('.$userFieldsQuery[FIELD_LOL_ROLE].', 1, 0), 
+            if(field_id = '.FIELD_LOL_RANK.', '.($userFields[FIELD_LOL_RANK] == 0 ? 0.5 : '(1-ABS(field_value - '.$userFields[FIELD_LOL_RANK].')*0.5)').', 
                 if(field_id = '.FIELD_LOL_GAMEMODE.', if('.$userFieldsQuery[FIELD_LOL_GAMEMODE].', 1, 0), NULL)
             )
         )' : '1').' AS game_field_score,
