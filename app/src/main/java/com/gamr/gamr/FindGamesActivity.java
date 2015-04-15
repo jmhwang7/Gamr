@@ -14,6 +14,7 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
@@ -21,18 +22,28 @@ import com.gamr.gamr.AsyncTasks.UpdateLocationTask;
 import com.gamr.gamr.FindGamesFragments.MatchesFragment;
 import com.gamr.gamr.FindGamesFragments.MessagesFragment;
 import com.gamr.gamr.FindGamesFragments.NearYouFragment;
+import com.gamr.gamr.Utils.GCMUtils;
+import com.gamr.gamr.Utils.GooglePlayUtils;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.gcm.GoogleCloudMessaging;
 import com.google.android.gms.location.LocationServices;
 
 import java.util.Locale;
+import java.util.concurrent.atomic.AtomicInteger;
 
 
 public class FindGamesActivity extends ActionBarActivity
     implements GoogleApiClient.ConnectionCallbacks,
         GoogleApiClient.OnConnectionFailedListener{
     private static final String LOG_TAG = FindGamesActivity.class.getSimpleName();
+    public static final String EXTRA_MESSAGE = "message";
+
+    public GoogleCloudMessaging gcm;
+    String regid;
+    AtomicInteger msgId = new AtomicInteger();
+
     private static final int REQUEST_RESOLVE_ERROR = 1001;
     private static final String DIALOG_ERROR = "dialog_error";
     private boolean mResolvingError = false;
@@ -109,6 +120,19 @@ public class FindGamesActivity extends ActionBarActivity
                     .newTab().setText(TAB_NAMES[i])
                     .setTabListener(tabListener));
         }
+
+        if (GooglePlayUtils.checkPlayServices(this)) {
+            gcm = GoogleCloudMessaging.getInstance(this);
+            regid = GCMUtils.getRegistrationId(this);
+
+            if (regid.isEmpty()) {
+                GCMUtils.registerInBackground(this);
+            }
+
+        }
+        else {
+            Log.i(LOG_TAG, "No valid Google Play Services APk found.");
+        }
     }
 
     @Override
@@ -131,6 +155,12 @@ public class FindGamesActivity extends ActionBarActivity
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        GooglePlayUtils.checkPlayServices(this);
     }
 
     @Override
