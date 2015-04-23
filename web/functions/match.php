@@ -1,5 +1,5 @@
 <?php
-function match($db, $user_id, $use_location, $use_games, $count) {
+function match($db, $gcpm, $user_id, $use_location, $use_games, $count) {
     global $LOL_RANKS;
     
     if(!$use_location && !$use_games) {
