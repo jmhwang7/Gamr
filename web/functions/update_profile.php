@@ -1,5 +1,5 @@
 <?php
-function update_profile($db, $user_id, $username, $game, $in_game_name) {
+function update_profile($db, $gcpm, $user_id, $username, $game, $in_game_name) {
     $exists = $db->query('SELECT id FROM users WHERE id="'.$user_id.'" LIMIT 1')->num_rows;
     if(!$exists) {
         if($username != null) {

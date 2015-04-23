@@ -10,7 +10,11 @@ require('include/response.php');
 require('include/errorHandler.php');
 require('include/db.php');
 require('include/riotApi.php');
+require('include/GCMPushMessage.php');
 require('functions.php');
+
+$apiKey = "AIzaSyDYPI0hABUTsSoFUuxZLI3cH2PKc5Ncpuo";
+$gcpm = new GCMPushMessage($apiKey);
 
 if(!paramIsSet('version') || !is_numeric(param('version'))) {
     outputError('API version not specified', 400);
@@ -30,7 +34,7 @@ if(!isset($functions[$function])) {
 // Validate all of the parameters
 $functionDef = $functions[$function];
 $functionParams = $functionDef['params'];
-$callParams = array($db); // An indexed array of parameters that will be passed to the function
+$callParams = array($db, $gcpm); // An indexed array of parameters that will be passed to the function
 foreach($functionParams as $param => $paramDef) {
     if(!paramIsSet($param)) {
         if($paramDef['required']) {

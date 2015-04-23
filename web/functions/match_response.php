@@ -1,5 +1,5 @@
 <?php
-function match_response($db, $user_id, $other_user_id, $matched) {
+function match_response($db, $gcpm, $user_id, $other_user_id, $matched) {
     if($user_id == $other_user_id) {
         outputError('Can\'t match with yourself', 400);
     }

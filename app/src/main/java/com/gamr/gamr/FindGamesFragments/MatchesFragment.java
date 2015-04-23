@@ -308,7 +308,6 @@ public class MatchesFragment extends Fragment implements View.OnClickListener{
         }
     }
 
-
     private class SearchTask extends AsyncTask<Void, Void, List<Match>> {
 
         @Override
