@@ -141,6 +141,18 @@ $functions = array(
                 'type' => 'any'
             )
         )
+    ),
+    'update_gcm_device_id' => array(
+        'params' => array(
+            'user_id' => array(
+                'required' => true,
+                'type' => 'user_id'
+            ),
+            'gcm_device_id' => array(
+                'required' => true,
+                'type' => 'string'
+            )
+        )
     )
 );
 
