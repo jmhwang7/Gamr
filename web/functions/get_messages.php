@@ -1,5 +1,5 @@
 <?php
-function get_messages($db, $user_id, $other_user_id, $before) {
+function get_messages($db, $gcpm, $user_id, $other_user_id, $before) {
     $id_map = array();
     if($other_user_id != null) {
         $result = $db->query('SELECT * FROM messages WHERE ((from_id="'.$user_id.'" AND to_id="'.$other_user_id.'") OR (to_id="'.$user_id.'" AND from_id="'.$other_user_id.'"))'.($before == null ? '' : ' AND date < "'.$before.'"').' ORDER BY date DESC');

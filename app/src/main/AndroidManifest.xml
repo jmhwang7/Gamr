@@ -7,12 +7,25 @@
     
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="com.gamr.gamr.permission.C2D_MESSAGE"/>
 
     <application
         android:allowBackup="true"
         android:icon="@drawable/gamrlauncherv1"
         android:label="@string/app_name"
         android:theme="@style/BasicTheme" >
+
+        <receiver
+            android:name=".GcmBroadcastReceiver"
+            android:permission="com.google.android.c2dm.permission.SEND" >
+            <intent-filter>
+                <action android:name="com.google.android.c2dm.intent.RECEIVE" />
+                <category android:name="com.example.gcm" />
+            </intent-filter>
+        </receiver>
+        <service android:name=".GcmIntentService" />
 
         <!-- Splash screen -->
         <activity
