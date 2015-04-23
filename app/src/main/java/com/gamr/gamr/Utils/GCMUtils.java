@@ -8,6 +8,7 @@ import android.content.pm.PackageManager;
 import android.os.AsyncTask;
 import android.util.Log;
 
+import com.gamr.gamr.AsyncTasks.UpdateGCMDeviceIdTask;
 import com.gamr.gamr.FindGamesActivity;
 import com.google.android.gms.gcm.GoogleCloudMessaging;
 
@@ -87,8 +88,7 @@ public class GCMUtils {
     }
 
     private static void sendRegistrationIdToBackend(String regid) {
-        // TODO: make call to server with registration id.
-        Log.d(LOG_TAG, "Registration Id: " + regid);
+        new UpdateGCMDeviceIdTask().execute(regid);
     }
 
     private static void storeRegistrationId(Context context, String regId) {

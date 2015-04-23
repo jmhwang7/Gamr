@@ -3,7 +3,6 @@ package com.gamr.gamr.Server;
 import android.net.Uri;
 
 import com.google.gson.Gson;
-import com.google.gson.JsonParser;
 import com.google.gson.reflect.TypeToken;
 
 import java.io.BufferedReader;
@@ -17,7 +16,6 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLEncoder;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -37,6 +35,7 @@ public class Server {
     private static final String UPDATE_LOCATION_FUNCTION = "update_location";
     private static final String UPDATE_PROFILE_FUNCTION = "update_profile";
     private static final String UPDATE_GAME_FIELD_FUNCTION = "update_game_field";
+    private static final String UPDATE_GCM_DEVICE_ID_FUNCTION = "update_gcm_device_id";
     private static final String RESPOND_TO_MATCH_FUNCTION = "match_response";
 
     public static void main(String[] args){
@@ -264,6 +263,29 @@ public class Server {
 
         try {
             String response = post(UPDATE_LOCATION_FUNCTION, params, body);
+            UpdateResponse deserialized = new Gson().fromJson(response, UpdateResponse.class);
+            return deserialized.getAffectedRows() >= 0;
+        } catch (IOException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    /**
+     * Updates stored Google Cloud Messaging (GCM) Device ID for the user
+     * @param userId app user
+     * @param gcmId gcm device id returned by google when device was registered
+     * @return boolean indicating whether device id update was successful
+     */
+    public static boolean updateGCMDeviceId(String userId, String gcmId) {
+        //Params to put
+        Map<String, String> params = new HashMap<>();
+        params.put("user_id", userId);
+        Map<String, String> body = new HashMap<>();
+        body.put("gcm_device_id", gcmId);
+
+        try {
+            String response = post(UPDATE_GCM_DEVICE_ID_FUNCTION, params, body);
             UpdateResponse deserialized = new Gson().fromJson(response, UpdateResponse.class);
             return deserialized.getAffectedRows() >= 0;
         } catch (IOException e) {
