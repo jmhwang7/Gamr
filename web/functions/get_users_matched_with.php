@@ -16,3 +16,4 @@ function get_users_matched_with($db, $user_id) {
 	
 	outputResponse($matches)
 }
+?>
