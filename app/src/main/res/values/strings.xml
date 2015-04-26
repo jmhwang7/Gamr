@@ -7,6 +7,7 @@
     <string name="title_section3">Section 3</string>
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
+    <string name="action_profile">Profile</string>
     <string name="action_refresh">Refresh</string>
     <string name="title_activity_splash_screen">SplashScreenActivity</string>
     <string name="splash_screen_greeting">Find friends to play LoL or Smash with Gamr.</string>
@@ -16,7 +17,6 @@
     <string name="registration_password_hint">Choose a Password</string>
     <string name="registration_create">Create Account</string>
     <string name="title_activity_league_profile">LeagueProfileActivity</string>
-
     <string name="create_profile_string">Create Profile</string>
 
     <!-- These are the strings for the League profile activity -->
@@ -68,5 +68,9 @@
     <!-- These strings are for the conversation activity -->
     <string name="send_message_string">Send</string>
     <string name="title_activity_create_user">CreateUserActivity</string>
+    <string name="title_activity_profile">ProfileActivity</string>
 
+    <!-- These strings are for the ProfileActivity -->
+    <string name="tag_name_string">Tag Name</string>
+    <string name="summoner_name_string">Summoner Name</string>
 </resources>
