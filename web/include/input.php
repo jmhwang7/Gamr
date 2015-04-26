@@ -25,7 +25,7 @@ function validateDataType($value, $type, $typeDetails) {
                 outputError('Error validating UUID', 500);
             }
         case 'user_id':
-            return $value != '' && strpos($value, '@') !== FALSE;
+            return $value == 'system' || ($value != '' && strpos($value, '@') !== FALSE);
         case 'boolean':
             return $value === 'true' || $value === 'false';
         case 'int':
@@ -53,6 +53,8 @@ function convertDataType($value, $type, $typeDetails) {
     switch($type) {
         case 'boolean':
             return $value === 'true' ? true : false;
+        case 'user_id':
+            return trim($value);
         case 'int':
             return intval($value);
         case 'decimal':
