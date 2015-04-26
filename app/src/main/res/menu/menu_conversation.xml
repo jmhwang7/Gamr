@@ -7,4 +7,7 @@
         android:icon="@drawable/ic_launcher"
         android:title="@string/action_refresh"
         app:showAsAction="always"  />
+
+    <item android:id="@+id/action_profile" android:title="@string/action_profile"
+        android:orderInCategory="100" app:showAsAction="never" />
 </menu>

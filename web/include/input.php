@@ -53,6 +53,8 @@ function convertDataType($value, $type, $typeDetails) {
     switch($type) {
         case 'boolean':
             return $value === 'true' ? true : false;
+        case 'user_id':
+            return trim($value);
         case 'int':
             return intval($value);
         case 'decimal':
