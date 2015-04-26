@@ -61,6 +61,8 @@ public class MessagesFragment extends Fragment implements SwipeRefreshLayout.OnR
 
         // First we find the list view
         final ListView messagesListView = (ListView) mRootView.findViewById(R.id.messagesListView);
+        final TextView messagesEmptyView = (TextView)mRootView.findViewById(R.id.messagesEmptyView);
+        messagesListView.setEmptyView(messagesEmptyView);
 
         updateConversations();
 
