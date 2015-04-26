@@ -9,7 +9,12 @@ require('include/input.php');
 require('include/response.php');
 require('include/errorHandler.php');
 require('include/db.php');
+require('include/riotApi.php');
+require('include/GCMPushMessage.php');
 require('functions.php');
+
+$apiKey = "AIzaSyDYPI0hABUTsSoFUuxZLI3cH2PKc5Ncpuo";
+$gcpm = new GCMPushMessage($apiKey);
 
 if(!paramIsSet('version') || !is_numeric(param('version'))) {
     outputError('API version not specified', 400);
@@ -29,7 +34,7 @@ if(!isset($functions[$function])) {
 // Validate all of the parameters
 $functionDef = $functions[$function];
 $functionParams = $functionDef['params'];
-$callParams = array($db); // An indexed array of parameters that will be passed to the function
+$callParams = array($db, $gcpm); // An indexed array of parameters that will be passed to the function
 foreach($functionParams as $param => $paramDef) {
     if(!paramIsSet($param)) {
         if($paramDef['required']) {
@@ -46,6 +51,13 @@ foreach($functionParams as $param => $paramDef) {
     } else {
         $callParams[] = convertDataType($value, $paramDef['type'], $value, isset($paramDef['typeDetails']) ? $paramDef['typeDetails'] : null);
     }
+}
+
+// Log request
+if(DEBUG) {
+    $message = '['.date(DATE_RFC2822).', '.$_SERVER['REMOTE_ADDR'].'] '.$function.' -> '.print_r($_REQUEST, true);
+    file_put_contents('request.log', $message."\n", FILE_APPEND);
+
 }
 
 // Call the function

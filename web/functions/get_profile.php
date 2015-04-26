@@ -1,5 +1,5 @@
 <?php
-function get_profile($db, $user_id) {
+function get_profile($db, $gcpm, $user_id) {
     global $LOL_RANKS;
     $output = array();
 

@@ -1,5 +1,5 @@
 <?php
-function update_location($db, $user_id, $lat, $lon) {
+function update_location($db, $gcpm, $user_id, $lat, $lon) {
     $userExists = $db->query('SELECT id FROM users WHERE id="'.$user_id.'"')->num_rows == 1;
     if($userExists) {
         $db->query('UPDATE users
