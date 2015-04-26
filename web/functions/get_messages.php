@@ -12,7 +12,7 @@ function get_messages($db, $gcpm, $user_id, $other_user_id, $before) {
             if($row['from_id'] != 'system')
                 $id_map[$row['from_id']] = $db->queryResult('SELECT username FROM users WHERE id="'.$row['from_id'].'"');
             else
-                $id_map[$row['from_id']] = '';
+                $id_map[$row['from_id']] = 'Gamr';
         }
         if(!isset($id_map[$row['to_id']])) {
             $id_map[$row['to_id']] = $db->queryResult('SELECT username FROM users WHERE id="'.$row['to_id'].'"');
