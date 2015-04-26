@@ -3,7 +3,10 @@ function get_users_matched_with($db, $gcpm, $user_id) {
 	$results = $db->query('SELECT user_id as id, username FROM matches JOIN users ON matches.user_id = users.id WHERE other_user_id = "'.$user_id.'" AND matched = 1');
 	$matches = array();
 	while($row = $results->fetch_assoc()) {
-		$matches[] = $row['id'];
+		$matches[] = array(
+			'id' => $row['id'],
+			'username' => $row['username']
+		);
 	}
 
 	$results = $db->query('SELECT other_user_id as id, username FROM matches JOIN users ON matches.other_user_id = users.id WHERE user_id = "'.$user_id.'" AND matched = 1');
