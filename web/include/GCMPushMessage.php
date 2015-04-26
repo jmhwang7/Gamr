@@ -82,6 +82,7 @@ class GCMPushMessage {
 		
 		// Set the url, number of POST vars, POST data
 		curl_setopt( $ch, CURLOPT_URL, $this->url );
+		curl_setopt($ch, CURLOPT_IPRESOLVE, CURL_IPRESOLVE_V4 );
 		
 		curl_setopt( $ch, CURLOPT_POST, true );
 		curl_setopt( $ch, CURLOPT_HTTPHEADER, $headers);
