@@ -14,6 +14,6 @@ function get_users_matched_with($db, $user_id) {
 	
 	$matches = array_intersect($matches, $other_matches);
 	
-	outputResponse($matches)
+	outputResponse($matches);
 }
 ?>
