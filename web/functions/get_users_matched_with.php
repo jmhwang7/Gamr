@@ -1,5 +1,5 @@
 <?php
-function get_users_matched_with($db, $user_id) {
+function get_users_matched_with($db, $gcpm, $user_id) {
 	$results = $db->query('SELECT user_id FROM matches WHERE other_user_id = "'.$user_id.'" AND matched = 1');
 	$matches = array();
 	while($row = $results->fetch_assoc()) {
