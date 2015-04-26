@@ -67,6 +67,7 @@
 
     <!-- These strings are for the conversation activity -->
     <string name="send_message_string">Send</string>
+    <string name="no_messages">You have no messages.</string>
     <string name="title_activity_create_user">CreateUserActivity</string>
 
 </resources>
