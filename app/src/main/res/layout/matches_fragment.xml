@@ -168,11 +168,12 @@
                 android:layout_height="wrap_content" >
 
 
-                <Button
+                <ImageButton
                     style="?android:attr/buttonStyleSmall"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/pass_string"
+                    android:src="@drawable/passbutton"
+                    android:background="@null"
                     android:id="@+id/pass_button" />
 
                 <Space
@@ -191,11 +192,12 @@
                     android:layout_height="20dp"
                     android:layout_weight="1" />
 
-                <Button
+                <ImageButton
                     style="?android:attr/buttonStyleSmall"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/match_string"
+                    android:src="@drawable/matchbutton"
+                    android:background="@null"
                     android:id="@+id/match_button" />
             </LinearLayout>
 

@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -61,8 +62,8 @@ public class MatchesFragment extends Fragment implements View.OnClickListener{
                              Bundle savedInstanceState) {
         mRootView = inflater.inflate(R.layout.matches_fragment, container, false);
 
-        ((Button) mRootView.findViewById(R.id.pass_button)).setOnClickListener(this);
-        ((Button) mRootView.findViewById(R.id.match_button)).setOnClickListener(this);
+        ((ImageButton) mRootView.findViewById(R.id.pass_button)).setOnClickListener(this);
+        ((ImageButton) mRootView.findViewById(R.id.match_button)).setOnClickListener(this);
         ((Button) mRootView.findViewById(R.id.findMatchesButton)).setOnClickListener(this);
         ((Button) mRootView.findViewById(R.id.new_search_button)).setOnClickListener(this);
         ((Button) mRootView.findViewById(R.id.createProfileButton)).setOnClickListener(this);

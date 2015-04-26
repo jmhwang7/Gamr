@@ -153,7 +153,15 @@ $functions = array(
                 'type' => 'string'
             )
         )
-    )
+    ),
+	'get_users_matched_with' => array(
+		'params' => array(
+			'user_id' => array(
+				'required' => true,
+				'type' => 'user_id'
+			)
+		)		
+	)
 );
 
 ?>
