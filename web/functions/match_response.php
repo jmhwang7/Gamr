@@ -24,7 +24,9 @@ function match_response($db, $gcpm, $user_id, $other_user_id, $matched) {
             $other_matched = $row['matched'];
             if($matched && $other_matched && $updated) {
                 $username = $db->queryResult('SELECT username FROM users WHERE id="'.$user_id.'"');
+                $other_username = $db->queryResult('SELECT username FROM users WHERE id="'.$other_user_id.'"');
                 $db->query('INSERT INTO messages(from_id, to_id, date, text) VALUES("'.$user_id.'", "'.$other_user_id.'", "'.time().'", "'.$username.' matched with you!")');
+                $db->query('INSERT INTO messages(from_id, to_id, date, text) VALUES("'.$other_user_id.'", "'.$user_id.'", "'.time().'", "You matched with '.$other_username.'!")');
             }
         }
     }
