@@ -162,11 +162,13 @@ public class MessagesFragment extends Fragment implements SwipeRefreshLayout.OnR
 
             Message message = this.getItem(position);
             previewText.setText(message.getMessagePreview());
-            senderText.setText(message.getFromId());
+            senderText.setText(message.getFromUsername());
             timeReceivedText.setText(message.getTimeReceived());
 
             // Sets the color if it hasn't been viewed yet
-            if (!message.wasMessageViewed()) {
+            if(message.getFromUsername().equals("Gamr")) {
+                rowView.setBackgroundResource(R.color.SystemMessageBackground);
+            }else if (!message.wasMessageViewed()) {
                 rowView.setBackgroundResource(R.color.NewMessageBackground);
             } else {
                 rowView.setBackgroundResource(R.color.TransparentColor);

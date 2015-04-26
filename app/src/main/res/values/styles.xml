@@ -1,23 +1,31 @@
 <resources>
     <color name="BasicBackgroundColor">#DFE2DB</color>
-    <color name="ActionBarColor">#FF0000</color>
+    <color name="PrimaryColor">#4a2b83</color>
+    <color name="DarkPrimaryColor">#25154b</color>
+    <color name="TextPrimaryColor">#ECECEC</color>
+    <color name="AccentColor">#30498f</color>
     <color name="TextColor">#000000</color>
     <color name="TabTextColor">#000000</color>
     <color name="NewMessageBackground">#7a9bd0dd</color>
+    <color name="SystemMessageBackground">#7ab19bdd</color>
     <color name="DividerColor">#000000</color>
     <color name="TransparentColor">#00000000</color>
 
     <style name="BasicTheme" parent="Theme.AppCompat.Light">
         <!-- Basic background drawing -->
-        <item name="android:background">@color/BasicBackgroundColor</item>
-        <item name="android:windowNoTitle">true</item>
         <item name="android:textColor">@color/TextColor</item>
-        <item name="android:actionBarStyle">@style/BasicTheme.ActionBar</item>
+        <item name="colorPrimary">@color/PrimaryColor</item>
+        <item name="colorPrimaryDark">@color/DarkPrimaryColor</item>
+        <item name="colorAccent">@color/AccentColor</item>
+        <item name="android:buttonStyle">@style/ButtonTheme</item>
+        <item name="android:textColorPrimary">@color/TextPrimaryColor</item>
     </style>
 
-    <style name="BasicTheme.ActionBar" parent="@style/Widget.AppCompat.Light.ActionBar.Solid.Inverse">
-        <item name="android:background">@color/ActionBarColor</item>
-        <item name="background">@color/ActionBarColor</item>
+    <style name="ButtonTheme">
+        <item name="android:background">@color/AccentColor</item>
+        <item name="android:textColor">#FFFFFF</item>
+        <item name="android:gravity">center</item>
+        <item name="android:padding">5dp</item>
     </style>
 
     <style name="LargeTextTheme" parent="@android:style/TextAppearance.Large">
@@ -26,6 +34,11 @@
 
     <style name="MediumTextTheme" parent="@android:style/TextAppearance.Medium">
         <item name="android:textColor">@color/TextColor</item>
+    </style>
+
+    <style name="BoldMediumTextTheme" parent="@android:style/TextAppearance.Medium">
+        <item name="android:textColor">@color/TextColor</item>
+        <item name="android:textStyle">bold</item>
     </style>
 
     <style name="SmallTextTheme" parent="@android:style/TextAppearance.Small">

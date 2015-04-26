@@ -34,14 +34,17 @@
 
         <Button
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="30dp"
             android:text="@string/send_message_string"
             android:id="@+id/sendMessageButton"
             android:onClick="sendMessage"/>
 
         <EditText
             android:layout_width="match_parent"
-            android:layout_height="fill_parent"
+            android:layout_height="50dp"
+            android:textColor="@color/TextColor"
+            android:maxLines="1"
+            android:inputType="text"
             android:id="@+id/messageTextBox" />
 
     </LinearLayout>

@@ -22,12 +22,9 @@ import com.gamr.gamr.AsyncTasks.UpdateLocationTask;
 import com.gamr.gamr.FindGamesFragments.MatchesFragment;
 import com.gamr.gamr.FindGamesFragments.MessagesFragment;
 import com.gamr.gamr.FindGamesFragments.NearYouFragment;
-<<<<<<< HEAD
 import com.gamr.gamr.Server.User;
-=======
 import com.gamr.gamr.Utils.GCMUtils;
 import com.gamr.gamr.Utils.GooglePlayUtils;
->>>>>>> faa04a072e38758bb560eb07299b4b892278b1fd
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.google.android.gms.common.api.GoogleApiClient;

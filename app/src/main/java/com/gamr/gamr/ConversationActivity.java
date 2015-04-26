@@ -135,6 +135,7 @@ public class ConversationActivity extends ActionBarActivity {
                     .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             View rowView = inflater.inflate(R.layout.conversation_adapter, parent, false);
 
+            TextView messageUsername = (TextView) rowView.findViewById(R.id.messageUsername);
             TextView messageText = (TextView) rowView.findViewById(R.id.messageContent);
 
             Message message = getItem(getCount() - 1 - position);
@@ -145,13 +146,12 @@ public class ConversationActivity extends ActionBarActivity {
             if (message.getFromId().equals(User.sUser.getAccountID())) {
                 ((ImageView) (rowView.findViewById(R.id.leftProfileView))).setVisibility(View.INVISIBLE);
                 messageText.setGravity(Gravity.RIGHT);
-                messageString = ": " + message.getFromUsername() + "\n" + message.getText();
             } else {
                 ((ImageView) (rowView.findViewById(R.id.rightProfileView))).setVisibility(View.INVISIBLE);
-                messageString = message.getFromUsername() + " :\n" + message.getText();
-            }
+           }
 
-            messageText.setText(messageString);
+            messageUsername.setText(message.getFromUsername());
+            messageText.setText(message.getText());
             return rowView;
         }
     }

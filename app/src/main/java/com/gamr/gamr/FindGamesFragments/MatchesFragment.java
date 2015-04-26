@@ -90,7 +90,7 @@ public class MatchesFragment extends Fragment implements View.OnClickListener{
             ((TextView) mRootView.findViewById(R.id.ranking)).setText(
                     match.getRank());
         } else {
-            ((TextView) mRootView.findViewById(R.id.matchScreenSummonerName)).setText("No summoner");
+            ((TextView) mRootView.findViewById(R.id.matchScreenSummonerName)).setText("No matches found");
             ((TextView) mRootView.findViewById(R.id.role)).setText("N/A");
             ((TextView) mRootView.findViewById(R.id.ranking)).setText("N/A");
             ((ImageView) mRootView.findViewById(R.id.summoner_icon)).setImageResource(R.drawable.summonericon1);

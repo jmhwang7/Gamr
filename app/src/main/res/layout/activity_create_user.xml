@@ -11,6 +11,9 @@
         <EditText
             android:layout_width="200dp"
             android:layout_height="wrap_content"
+            android:maxLines="1"
+            android:inputType="text"
+            android:textColor="@color/TextColor"
             android:id="@+id/choose_tag_name"
             android:hint="@string/default_tag_string"
             android:paddingBottom="10dp"
