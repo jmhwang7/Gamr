@@ -113,3 +113,9 @@ Example request: (sets the user's LoL rank (field id 2) to 5 (Diamond))
 http://gamr.buildism.net/api1/update_game_field?user_id=d49f9b92-b927-11e4-847c-8bb5e9000002&game=1&field=2&value=Challenger
 
 Returns: same as get_profile
+
+>> get_users_matched_with - Returns an array of users that you have successfully matched with (both of you have accepted).
+user_id		email		required
+
+Example request:
+http://gamr.buildism.net/api1/get_users_matched_with?user_id=tdcornish12@gmail.com

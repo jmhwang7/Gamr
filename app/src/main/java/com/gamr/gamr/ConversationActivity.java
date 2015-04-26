@@ -145,12 +145,11 @@ public class ConversationActivity extends ActionBarActivity {
             if (message.getFromId().equals(User.sUser.getAccountID())) {
                 ((ImageView) (rowView.findViewById(R.id.leftProfileView))).setVisibility(View.INVISIBLE);
                 messageText.setGravity(Gravity.RIGHT);
-                messageString = ": " + message.getFromUsername() + "\n" + message.getText();
             } else {
                 ((ImageView) (rowView.findViewById(R.id.rightProfileView))).setVisibility(View.INVISIBLE);
-                messageString = message.getFromUsername() + " :\n" + message.getText();
             }
 
+            messageString = message.getText();
             messageText.setText(messageString);
             return rowView;
         }
