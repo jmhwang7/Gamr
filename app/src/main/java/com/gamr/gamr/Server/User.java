@@ -113,6 +113,14 @@ public class User {
         return mGames;
     }
 
+
+    /**
+     * Returns the league profile for this user
+     */
+    public LeagueProfile getLeagueProfile() {
+        return mLeagueProfile;
+    }
+
     /**
      * Checks to see if the user is already on the server or not
      */
