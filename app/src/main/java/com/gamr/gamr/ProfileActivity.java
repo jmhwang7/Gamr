@@ -7,9 +7,11 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.gamr.gamr.Server.LeagueProfile;
 import com.gamr.gamr.Server.Profile;
@@ -93,6 +95,7 @@ public class ProfileActivity extends ActionBarActivity implements View.OnClickLi
         ((ImageButton) findViewById(R.id.mageImageButton)).setOnClickListener(this);
         ((ImageButton) findViewById(R.id.adcarryImageButton)).setOnClickListener(this);
         ((ImageButton) findViewById(R.id.junglerImageButton)).setOnClickListener(this);
+        ((Button) findViewById(R.id.saveProfileButton)).setOnClickListener(this);
     }
 
 
@@ -121,6 +124,29 @@ public class ProfileActivity extends ActionBarActivity implements View.OnClickLi
     @Override
     public void onBackPressed()
     {
+        finish();
+    }
+
+
+    public void updateProfile() {
+        boolean anyButtonClicked = mButtonsClicked[0] | mButtonsClicked[1] | mButtonsClicked[2] |
+                mButtonsClicked[3] | mButtonsClicked[4];
+        String tagName = ((EditText) findViewById(R.id.tagNameText)).getText().toString();
+
+        // If no role was picked
+        if (!anyButtonClicked) {
+            Toast.makeText(getApplicationContext(), "Please pick a role",
+                    Toast.LENGTH_LONG).show();
+            return;
+        }
+
+        // If the tagname is empty
+        if (tagName.trim().equals("")) {
+            Toast.makeText(getApplicationContext(), "Please provide a tag name",
+                    Toast.LENGTH_LONG).show();
+            return;
+        }
+
         if (mIsUser) {
             // We need to update the profile on the server
             List<String> roles = new ArrayList<String>();
@@ -150,16 +176,13 @@ public class ProfileActivity extends ActionBarActivity implements View.OnClickLi
 
             User.sUser.getLeagueProfile().setRoles(roles);
 
-            String tagName = ((EditText) findViewById(R.id.tagNameText)).getText().toString();
-
             UpdateTagNameTask updateTagNameTask = new UpdateTagNameTask();
             updateTagNameTask.execute(tagName);
 
             User.sUser.setProfileName(tagName);
         }
-
-        finish();
     }
+
 
     @Override
     public void onClick(View v) {
@@ -182,6 +205,10 @@ public class ProfileActivity extends ActionBarActivity implements View.OnClickLi
 
             case R.id.adcarryImageButton:
                 mButtonsClicked[4] = !mButtonsClicked[4];
+                break;
+
+            case R.id.saveProfileButton:
+                updateProfile();
                 break;
         }
         updateButtons();

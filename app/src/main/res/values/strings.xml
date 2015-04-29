@@ -73,4 +73,5 @@
     <!-- These strings are for the ProfileActivity -->
     <string name="tag_name_string">Tag Name</string>
     <string name="summoner_name_string">Summoner Name</string>
+    <string name="save_profile_string">Save Profile</string>
 </resources>
