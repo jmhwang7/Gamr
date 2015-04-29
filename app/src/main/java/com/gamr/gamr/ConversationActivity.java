@@ -12,7 +12,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.Space;
 import android.widget.TextView;
 
 import com.gamr.gamr.AsyncTasks.SendMessageTask;
@@ -141,12 +143,19 @@ public class ConversationActivity extends ActionBarActivity {
             //Message message = mMessageList.get(mMessageList.size() - 1 - position);
             String messageString;
 
+            LinearLayout.LayoutParams spaceParams = new LinearLayout.LayoutParams(
+                    LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.MATCH_PARENT);
+
+            spaceParams.weight = 0.2f;
+
             // This sets it to be right justified
             if (message.getFromId().equals(User.sUser.getAccountID())) {
                 ((ImageView) (rowView.findViewById(R.id.leftProfileView))).setVisibility(View.INVISIBLE);
                 messageText.setGravity(Gravity.RIGHT);
+                ((Space) rowView.findViewById(R.id.leftConversationSpace)).setLayoutParams(spaceParams);
             } else {
                 ((ImageView) (rowView.findViewById(R.id.rightProfileView))).setVisibility(View.INVISIBLE);
+                ((Space) rowView.findViewById(R.id.rightConversationSpace)).setLayoutParams(spaceParams);
             }
 
             messageString = message.getText();
