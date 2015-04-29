@@ -25,6 +25,7 @@
         android:background="@drawable/messages_back"
         android:ellipsize="none"
         android:scrollHorizontally="false"
+        android:maxLength="30"
         android:layout_weight=".5" />
 
     <Space
