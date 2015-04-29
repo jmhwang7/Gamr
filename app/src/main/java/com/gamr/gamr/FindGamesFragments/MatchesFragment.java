@@ -39,6 +39,7 @@ public class MatchesFragment extends Fragment implements View.OnClickListener{
     private MatchHandler mMatchHandler;
     private View mRootView;
     private List<Match> mMatches;
+    private boolean mSearching;
 
     /**
      * Returns a new instance of this fragment for the given section
@@ -55,6 +56,7 @@ public class MatchesFragment extends Fragment implements View.OnClickListener{
     public MatchesFragment() {
         mMatchHandler = new LeagueMatchHandler();
         mMatches = null;
+        mSearching = false;
     }
 
     @Override
@@ -67,6 +69,16 @@ public class MatchesFragment extends Fragment implements View.OnClickListener{
         ((Button) mRootView.findViewById(R.id.findMatchesButton)).setOnClickListener(this);
         ((Button) mRootView.findViewById(R.id.new_search_button)).setOnClickListener(this);
         ((Button) mRootView.findViewById(R.id.createProfileButton)).setOnClickListener(this);
+
+        if (mSearching) {
+            // If we are switching the forms, we need to make one visible and one not visible
+            mRootView.findViewById(R.id.matchesFormLayout).setVisibility(View.INVISIBLE);
+            mRootView.findViewById(R.id.matchScreenLayout).setVisibility(View.VISIBLE);
+        } else {
+            // Now we will bring back the form instead of the search method
+            mRootView.findViewById(R.id.matchesFormLayout).setVisibility(View.VISIBLE);
+            mRootView.findViewById(R.id.matchScreenLayout).setVisibility(View.INVISIBLE);
+        }
 
         if (!User.sUser.getGames().contains("League")) {
             mRootView.findViewById(R.id.matchesFormLayout).setVisibility(View.INVISIBLE);
@@ -141,6 +153,7 @@ public class MatchesFragment extends Fragment implements View.OnClickListener{
                 // If we are switching the forms, we need to make one visible and one not visible
                 mRootView.findViewById(R.id.matchesFormLayout).setVisibility(View.INVISIBLE);
                 mRootView.findViewById(R.id.matchScreenLayout).setVisibility(View.VISIBLE);
+                mSearching = true;
                 newSearch();
                 updateTextFields();
                 mRootView.postInvalidate();
@@ -150,6 +163,7 @@ public class MatchesFragment extends Fragment implements View.OnClickListener{
                 // Now we will bring back the form instead of the search method
                 mRootView.findViewById(R.id.matchesFormLayout).setVisibility(View.VISIBLE);
                 mRootView.findViewById(R.id.matchScreenLayout).setVisibility(View.INVISIBLE);
+                mSearching = false;
                 mRootView.postInvalidate();
                 break;
 
