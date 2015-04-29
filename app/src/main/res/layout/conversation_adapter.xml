@@ -10,6 +10,11 @@
         android:layout_margin="10dp"
         android:src="@drawable/profilepic" />
 
+    <Space
+        android:layout_width="20px"
+        android:layout_height="20px"
+        android:id="@+id/leftConversationSpace" />
+
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -18,7 +23,15 @@
         android:id="@+id/messageContent"
         android:width="0dip"
         android:background="@drawable/messages_back"
-        android:layout_weight="1" />
+        android:ellipsize="none"
+        android:scrollHorizontally="false"
+        android:maxLength="30"
+        android:layout_weight=".5" />
+
+    <Space
+        android:layout_width="20px"
+        android:layout_height="20px"
+        android:id="@+id/rightConversationSpace" />
 
     <ImageView
         android:layout_width="wrap_content"
