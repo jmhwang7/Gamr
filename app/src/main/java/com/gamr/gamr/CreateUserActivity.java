@@ -14,6 +14,7 @@ import android.widget.Toast;
 import com.gamr.gamr.Server.User;
 import com.gamr.gamr.Utils.AccountUtils;
 import com.gamr.gamr.Utils.GooglePlayUtils;
+import com.gamr.gamr.Utils.LogAndErrors;
 
 
 public class CreateUserActivity extends ActionBarActivity implements View.OnClickListener {
@@ -77,8 +78,7 @@ public class CreateUserActivity extends ActionBarActivity implements View.OnClic
         switch (requestCode) {
             case GooglePlayUtils.REQUEST_CODE_RECOVER_PLAY_SERVICES:
                 if (resultCode == RESULT_CANCELED) {
-                    Toast.makeText(this, "Google Play Services must be installed.",
-                            Toast.LENGTH_SHORT).show();
+                    LogAndErrors.displayToast(this, "Google Play Services must be installed");
                     finish();
                 }
                 return;
@@ -88,8 +88,7 @@ public class CreateUserActivity extends ActionBarActivity implements View.OnClic
                     AccountUtils.setAccountID(this, accountID);
                 }
                 else if (resultCode == RESULT_CANCELED) {
-                    Toast.makeText(this, "This application requires a Google account.",
-                            Toast.LENGTH_SHORT).show();
+                    LogAndErrors.displayToast(this, "This application requires a Google account.");
                     finish();
                 }
                 return;

@@ -13,7 +13,6 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.gamr.gamr.ProfileHandlers.LeagueMatchHandler;
 import com.gamr.gamr.ProfileHandlers.MatchHandler;
@@ -21,6 +20,7 @@ import com.gamr.gamr.R;
 import com.gamr.gamr.Server.Match;
 import com.gamr.gamr.Server.Server;
 import com.gamr.gamr.Server.User;
+import com.gamr.gamr.Utils.LogAndErrors;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -147,7 +147,7 @@ public class MatchesFragment extends Fragment implements View.OnClickListener{
 
             case R.id.findMatchesButton:
                 if (!findMatchesFieldsFilled()) {
-                    Toast.makeText(getActivity(), "Please fill out all fields", Toast.LENGTH_LONG).show();
+                    LogAndErrors.displayToast(this.getActivity(), "Please fill out all fields");
                     break;
                 }
                 // If we are switching the forms, we need to make one visible and one not visible
@@ -169,7 +169,7 @@ public class MatchesFragment extends Fragment implements View.OnClickListener{
 
             case R.id.createProfileButton:
                 if (!profileFieldsFilled()) {
-                    Toast.makeText(getActivity(), "Please fill out all fields", Toast.LENGTH_LONG).show();
+                    LogAndErrors.displayToast(this.getActivity(), "Please fill out all fields");
                     break;
                 }
                 mRootView.findViewById(R.id.matchesFormLayout).setVisibility(View.VISIBLE);
