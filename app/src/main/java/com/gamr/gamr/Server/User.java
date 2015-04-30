@@ -99,6 +99,7 @@ public class User {
     public void generateProfile() {
         CreateUserTask task = new CreateUserTask();
         task.execute(mAccountID, mProfileName);
+        retrieveProfile();
     }
 
     /**
