@@ -102,8 +102,12 @@ public class MatchesFragment extends Fragment implements View.OnClickListener{
                     match.getRole().get(0));
             ((TextView) mRootView.findViewById(R.id.ranking)).setText(
                     match.getRank());
+            ((TextView) mRootView.findViewById(R.id.role)).setVisibility(View.VISIBLE);
+            ((TextView) mRootView.findViewById(R.id.ranking)).setVisibility(View.VISIBLE);
         } else {
             ((TextView) mRootView.findViewById(R.id.matchScreenSummonerName)).setText("There are no summoners near you");
+            ((TextView) mRootView.findViewById(R.id.role)).setVisibility(View.INVISIBLE);
+            ((TextView) mRootView.findViewById(R.id.ranking)).setVisibility(View.INVISIBLE);
             ((ImageView) mRootView.findViewById(R.id.summoner_icon)).setImageResource(R.drawable.summonericon1);
         }
     }
