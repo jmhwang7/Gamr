@@ -102,6 +102,7 @@ function match($db, $gcpm, $user_id, $use_location, $use_games, $count) {
         return $user['username'];
     }
     $other_usernames = array_map("username", $users);
+    array_unshift($other_usernames, count($other_usernames))
     $gcpm->setDevices($user['registration_id']);
     $response = $gcpm->send($messageType, $other_usernames);
 
