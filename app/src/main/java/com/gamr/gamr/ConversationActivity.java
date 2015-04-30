@@ -30,10 +30,13 @@ import java.util.List;
  */
 public class ConversationActivity extends ActionBarActivity {
     public static final String SENDER_KEY = "MESSAGE_SENDER";
+    public static final String OTHER_USERNAME_KEY = "OTHER USERNAME";
+
     public static final String LOG_TAG = ConversationActivity.class.getSimpleName();
 
     private String mOtherUser;
     private List<Message> mMessageList;
+    private String mRealName;
     public ConversationAdapter mAdapter;
 
     @Override
@@ -47,6 +50,7 @@ public class ConversationActivity extends ActionBarActivity {
         // From there we will populate our list with our current messages
         if (mMessageList == null) {
             mOtherUser = getIntent().getExtras().getString(SENDER_KEY);
+            mRealName = getIntent().getExtras().getString(OTHER_USERNAME_KEY);
             mMessageList = getConversation(mOtherUser);
         }
 
@@ -73,6 +77,11 @@ public class ConversationActivity extends ActionBarActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_conversation, menu);
+
+        MenuItem menuItem = menu.findItem(R.id.action_profile);
+
+        menuItem.setTitle("View " + mRealName + "'s profile");
+
         return true;
     }
 
