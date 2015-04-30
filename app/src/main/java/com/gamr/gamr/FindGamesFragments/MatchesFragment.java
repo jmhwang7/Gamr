@@ -300,6 +300,7 @@ public class MatchesFragment extends Fragment implements View.OnClickListener{
         @Override
         protected Void doInBackground(String... params) {
             Server.updateSummonerName(User.sUser.getAccountID(), params[0]);
+            User.sUser.generateProfile();
             return null;
         }
     }
