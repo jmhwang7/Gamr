@@ -7,7 +7,6 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,6 +17,7 @@ import android.widget.TextView;
 
 import com.gamr.gamr.ConversationActivity;
 import com.gamr.gamr.R;
+import com.gamr.gamr.Server.Match;
 import com.gamr.gamr.Server.Message;
 import com.gamr.gamr.Server.Server;
 import com.gamr.gamr.Server.User;
@@ -36,6 +36,7 @@ public class MessagesFragment extends Fragment implements SwipeRefreshLayout.OnR
     private static final String ARG_SECTION_NUMBER = "section_number";
 
     private List<Message> mMessages;
+    private List<Match> mMatches;
     private View mRootView;
     private MessagesAdapter mAdapter;
 
@@ -124,15 +125,17 @@ public class MessagesFragment extends Fragment implements SwipeRefreshLayout.OnR
     public class MessagesListener implements AdapterView.OnItemClickListener {
         @Override
         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+            // TODO We need to update this portion of the code
+
             // Update that we have seen the message
-            mMessages.get(position).setMessageViewed();
+            //mMessages.get(position).setMessageViewed();
 
             // Redraw the entirety of the stuff
             ((ListView) mRootView.findViewById(R.id.messagesListView)).invalidateViews();
 
             Intent intent = new Intent(getActivity(), ConversationActivity.class);
             intent.putExtra(ConversationActivity.SENDER_KEY,
-                    mMessages.get(position).getFromId());
+                    mMatches.get(position).getMatchId());
 
             startActivity(intent);
         }
@@ -141,11 +144,11 @@ public class MessagesFragment extends Fragment implements SwipeRefreshLayout.OnR
     /**
      * An adapter that creates custom views based on messages.
      */
-    public class MessagesAdapter extends ArrayAdapter<Message> {
+    public class MessagesAdapter extends ArrayAdapter<Match> {
         private final Context mContext;
 
-        public MessagesAdapter(Context context, List<Message> messages) {
-            super(context, R.layout.message_adapter, messages);
+        public MessagesAdapter(Context context, List<Match> matches) {
+            super(context, R.layout.message_adapter, matches);
             mContext = context;
         }
 
@@ -156,29 +159,27 @@ public class MessagesFragment extends Fragment implements SwipeRefreshLayout.OnR
             View rowView = inflater.inflate(R.layout.message_adapter, parent, false);
 
             // Once we have the row view, we can populate the various fields depending on the message
-            TextView previewText = (TextView) rowView.findViewById(R.id.messagePreviewText);
             TextView senderText = (TextView) rowView.findViewById(R.id.messageSenderText);
-            TextView timeReceivedText = (TextView) rowView.findViewById(R.id.messageTimeText);
 
-            Message message = this.getItem(position);
-            previewText.setText(message.getMessagePreview());
-            senderText.setText(message.getFromUsername());
-            timeReceivedText.setText(message.getTimeReceived());
+            Match match = this.getItem(position);
+            senderText.setText(match.getUsername());
 
             // Sets the color if it hasn't been viewed yet
-            if(message.getFromUsername().equals("Gamr")) {
+            // TODO Need to do this part accordingly
+            /*
+            if(match.getFromUsername().equals("Gamr")) {
                 rowView.setBackgroundResource(R.color.SystemMessageBackground);
             }else if (!message.wasMessageViewed()) {
                 rowView.setBackgroundResource(R.color.NewMessageBackground);
             } else {
                 rowView.setBackgroundResource(R.color.TransparentColor);
-            }
+            }*/
 
             return rowView;
         }
     }
 
-    private class GetConversationsTask extends AsyncTask<Void, Void, List<Message>> {
+    private class GetConversationsTask extends AsyncTask<Void, Void, List<Match>> {
         private Context mContext;
 
         public GetConversationsTask(Context context) {
@@ -186,16 +187,16 @@ public class MessagesFragment extends Fragment implements SwipeRefreshLayout.OnR
         }
 
         @Override
-        protected List<Message> doInBackground(Void ... params) {
-            return Server.getConversation(User.sUser.getAccountID(), null);
+        protected List<Match> doInBackground(Void ... params) {
+            return Server.getUsersMatchedWith(User.sUser.getAccountID());
         }
 
         @Override
-        protected void onPostExecute(List<Message> messages) {
+        protected void onPostExecute(List<Match> matches) {
             if (mContext != null) {
-                mMessages = messages;
-                Log.d("Testing", "Size : " + messages.size());
-                mAdapter = new MessagesAdapter(this.mContext, messages);
+                //mMessages = messages;
+                mMatches = matches;
+                mAdapter = new MessagesAdapter(this.mContext, matches);
                 final ListView messagesListView = (ListView) mRootView.findViewById(R.id.messagesListView);
                 messagesListView.setAdapter(mAdapter);
             }
