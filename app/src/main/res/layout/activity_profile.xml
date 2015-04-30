@@ -99,34 +99,76 @@
                     android:layout_height="20px"
                     android:layout_weight="1" />
 
-                <ImageButton
+                <LinearLayout
+                    android:orientation="vertical"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/supportImageButton"
-                    android:button="@drawable/supporticon"
-                    android:background="@drawable/supporticon" />
+                    android:layout_height="wrap_content">
+
+                    <ImageButton
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/supportImageButton"
+                        android:button="@drawable/supporticon"
+                        android:background="@drawable/supporticon" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textAppearance="?android:attr/textAppearanceSmall"
+                        android:text="@string/support_string"
+                        android:id="@+id/textView4"
+                        android:layout_gravity="center_horizontal" />
+                </LinearLayout>
 
                 <Space
                     android:layout_width="20px"
                     android:layout_height="20px"
                     android:layout_weight="1" />
 
-                <ImageButton
+                <LinearLayout
+                    android:orientation="vertical"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/mageImageButton"
-                    android:background="@drawable/mageicon" />
+                    android:layout_height="wrap_content">
+
+                    <ImageButton
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/mageImageButton"
+                        android:background="@drawable/mageicon" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textAppearance="?android:attr/textAppearanceSmall"
+                        android:text="@string/mid_string"
+                        android:id="@+id/textView5"
+                        android:layout_gravity="center_horizontal" />
+                </LinearLayout>
 
                 <Space
                     android:layout_width="20px"
                     android:layout_height="20px"
                     android:layout_weight="1" />
 
-                <ImageButton
+                <LinearLayout
+                    android:orientation="vertical"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/tankImageButton"
-                    android:background="@drawable/tankicon" />
+                    android:layout_height="wrap_content">
+
+                    <ImageButton
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/tankImageButton"
+                        android:background="@drawable/tankicon" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textAppearance="?android:attr/textAppearanceSmall"
+                        android:text="@string/top_string"
+                        android:id="@+id/textView6"
+                        android:layout_gravity="center_horizontal" />
+                </LinearLayout>
 
                 <Space
                     android:layout_width="20px"
@@ -145,22 +187,50 @@
                     android:layout_height="20px"
                     android:layout_weight="1" />
 
-                <ImageButton
+                <LinearLayout
+                    android:orientation="vertical"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/adcarryImageButton"
-                    android:background="@drawable/marksmanicon" />
+                    android:layout_height="wrap_content">
+
+                    <ImageButton
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/adcarryImageButton"
+                        android:background="@drawable/marksmanicon" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textAppearance="?android:attr/textAppearanceSmall"
+                        android:text="@string/ad_carry_string"
+                        android:id="@+id/textView7"
+                        android:layout_gravity="center_horizontal" />
+                </LinearLayout>
 
                 <Space
                     android:layout_width="20px"
                     android:layout_height="20px"
                     android:layout_weight=".5" />
 
-                <ImageButton
+                <LinearLayout
+                    android:orientation="vertical"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/junglerImageButton"
-                    android:background="@drawable/fightericon" />
+                    android:layout_height="wrap_content">
+
+                    <ImageButton
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/junglerImageButton"
+                        android:background="@drawable/fightericon" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textAppearance="?android:attr/textAppearanceSmall"
+                        android:text="@string/jungle_string"
+                        android:id="@+id/textView8"
+                        android:layout_gravity="center_horizontal" />
+                </LinearLayout>
 
                 <Space
                     android:layout_width="20px"
