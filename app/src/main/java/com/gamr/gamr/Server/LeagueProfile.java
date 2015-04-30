@@ -5,7 +5,8 @@ import com.google.gson.annotations.SerializedName;
 import java.util.List;
 
 /**
- * Created by Thomas on 3/29/2015.
+ *  Serialization class for a league profile retrieved from the server
+ *  Created by Thomas on 3/29/2015.
  */
 public class LeagueProfile {
     public static final String SUPPORT = "Support";

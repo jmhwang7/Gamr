@@ -8,6 +8,7 @@ import android.support.v4.content.WakefulBroadcastReceiver;
 import android.util.Log;
 
 /**
+ * Receives any broadcast messages from Android
  * Created by Jennifer on 4/24/15.
  */
 public class GCMBroadcastReceiver extends WakefulBroadcastReceiver{

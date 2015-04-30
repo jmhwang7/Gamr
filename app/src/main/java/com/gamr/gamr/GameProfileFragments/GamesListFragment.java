@@ -22,6 +22,9 @@ public class GamesListFragment extends Fragment {
     private ArrayAdapter<String> mGamesAdapter;
     private OnGameSelectedListener mListener;
 
+    /**
+     * Public constructor for the
+     */
     public GamesListFragment() {
         // Required empty public constructor
     }

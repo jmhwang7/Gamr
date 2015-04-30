@@ -15,6 +15,7 @@ import com.google.android.gms.gcm.GoogleCloudMessaging;
 import java.io.IOException;
 
 /**
+ * Utility class for connecting and registering the device with GCM.
  * Created by Jennifer on 4/3/15.
  */
 public class GCMUtils {
@@ -46,11 +47,21 @@ public class GCMUtils {
         return registrationID;
     }
 
+    /**
+     * Private method to retrieve the preferences of the app
+     * @param context
+     * @return
+     */
     private static SharedPreferences getGCMPreferences(Context context) {
         return context.getSharedPreferences(((Activity) context).getClass().getSimpleName(),
                 Context.MODE_PRIVATE);
     }
 
+    /**
+     * Private method that returns the version of the app
+     * @param context
+     * @return
+     */
     private static int getAppVersion(Context context) {
         try {
             PackageInfo packageInfo = context.getPackageManager()
@@ -62,6 +73,10 @@ public class GCMUtils {
         }
     }
 
+    /**
+     * Registers the device with Google's servers.
+     * @param context
+     */
     public static void registerInBackground(Context context) {
         new AsyncTask<Context, Void, Void>() {
             @Override
@@ -87,10 +102,19 @@ public class GCMUtils {
         }.execute(context);
     }
 
+    /**
+     * Updates the server with the user's device id.
+     * @param regid
+     */
     private static void sendRegistrationIdToBackend(String regid) {
         new UpdateGCMDeviceIdTask().execute(regid);
     }
 
+    /**
+     * Stores the user's GCM registration id in local storage.
+     * @param context
+     * @param regId
+     */
     private static void storeRegistrationId(Context context, String regId) {
         final SharedPreferences prefs = getGCMPreferences(context);
         int appVersion = getAppVersion(context);

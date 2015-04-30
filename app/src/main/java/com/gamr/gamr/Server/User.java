@@ -22,6 +22,10 @@ public class User {
     private LeagueProfile mLeagueProfile;
     private boolean mIsGenerated;
 
+    /**
+     * Private constructor for User
+     * @param context
+     */
     private User(Context context) {
         if ((mAccountID = AccountUtils.getAccountID(context)) != null) {
             retrieveProfile();
@@ -131,6 +135,9 @@ public class User {
         return true;
     }
 
+    /**
+     * Creates a new user on the server.
+     */
     private class CreateUserTask extends AsyncTask<String, Void, Void> {
         @Override
         protected Void doInBackground(String... params) {
@@ -139,6 +146,9 @@ public class User {
         }
     }
 
+    /**
+     * Retrieves a user from the database.
+     */
     private class GetUserTask extends AsyncTask<String, Void, Profile> {
 
         @Override

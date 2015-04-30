@@ -3,6 +3,7 @@ package com.gamr.gamr.Server;
 import com.google.gson.annotations.SerializedName;
 
 /**
+ * Serialization class for the responses retrieved from the server.
  * Created by Jennifer on 3/23/15.
  */
 public class UpdateResponse {

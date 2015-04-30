@@ -3,6 +3,7 @@ package com.gamr.gamr.Server;
 import com.google.gson.annotations.SerializedName;
 
 /**
+ * Serialization class for a user profile retrieved from the server
  * Created by Thomas on 3/29/2015.
  */
 public class Profile {

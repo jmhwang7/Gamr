@@ -10,10 +10,10 @@ import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 
 import com.gamr.gamr.R;
-import com.gamr.gamr.Server.Message;
 import com.google.android.gms.gcm.GoogleCloudMessaging;
 
 /**
+ * Handles any messages from GCM
  * Created by Jennifer on 4/24/15.
  */
 public class GCMIntentService extends IntentService{
@@ -22,6 +22,9 @@ public class GCMIntentService extends IntentService{
     NotificationCompat.Builder mBuilder;
     private static final String LOG_TAG = GCMIntentService.class.getSimpleName();
 
+    /**
+     * Public constructor for GCMIntentService
+     */
     public GCMIntentService () {
         super("GCMIntentService");
     }
@@ -55,10 +58,19 @@ public class GCMIntentService extends IntentService{
         GCMBroadcastReceiver.completeWakefulIntent(intent);
     }
 
+    /**
+     * Private method to handle a "match" message from GCM
+     * @param extras
+     */
     private void handleMatch(Bundle extras) {
         String other_user = extras.getString("other_user", "");
         sendNotification("You have matched with " + other_user);
     }
+
+    /**
+     * Launches a notification to the user with the given message
+     * @param message
+     */
     private void sendNotification(String message) {
         mNotificationManager = (NotificationManager) this.getSystemService(Context.NOTIFICATION_SERVICE);
 
@@ -73,7 +85,5 @@ public class GCMIntentService extends IntentService{
 
         mNotificationManager.notify(NOTIFICATION_ID, mBuilder.build());
     }
-    private Message parseMessage() {
-        return null;
-    }
+
 }
