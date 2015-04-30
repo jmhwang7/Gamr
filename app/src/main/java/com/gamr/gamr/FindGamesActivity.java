@@ -55,6 +55,10 @@ public class FindGamesActivity extends ActionBarActivity
 
     public static final String[] TAB_NAMES = {"Matches", "Near You", "Messages"};
 
+    private MatchesFragment mMatchesFragment;
+    private MessagesFragment mMessagesFragment;
+    private NearYouFragment mNearYouFragment;
+
     /**
      * The {@link android.support.v4.view.PagerAdapter} that will provide
      * fragments for each of the sections. We use a
@@ -134,6 +138,10 @@ public class FindGamesActivity extends ActionBarActivity
         else {
             Log.i(LOG_TAG, "No valid Google Play Services APk found.");
         }
+
+        mMatchesFragment = MatchesFragment.newInstance(MATCHES_FRAGMENT_NUMBER);
+        mMessagesFragment = MessagesFragment.newInstance(MESSAGES_FRAGMENT_NUMBER);
+        mNearYouFragment = NearYouFragment.newInstance(NEAR_YOU_FRAGMENT_NUMBER);
     }
 
     @Override
@@ -290,13 +298,13 @@ public class FindGamesActivity extends ActionBarActivity
             // Return a PlaceholderFragment (defined as a static inner class below).
             switch (position) {
                 case MATCHES_FRAGMENT_NUMBER:
-                    return MatchesFragment.newInstance(MATCHES_FRAGMENT_NUMBER);
+                    return mMatchesFragment;
 
                 case NEAR_YOU_FRAGMENT_NUMBER:
-                    return NearYouFragment.newInstance(NEAR_YOU_FRAGMENT_NUMBER);
+                    return mNearYouFragment;
 
                 case MESSAGES_FRAGMENT_NUMBER:
-                    return MessagesFragment.newInstance(MESSAGES_FRAGMENT_NUMBER);
+                    return mMessagesFragment;
             }
 
             return null;

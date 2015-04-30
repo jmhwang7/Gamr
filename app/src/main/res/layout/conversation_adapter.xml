@@ -10,6 +10,11 @@
         android:layout_margin="10dp"
         android:src="@drawable/profilepic" />
 
+    <Space
+        android:layout_width="20px"
+        android:layout_height="20px"
+        android:id="@+id/leftConversationSpace" />
+
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="wrap_content"
@@ -17,21 +22,25 @@
         android:width="0dip"
         android:background="@drawable/messages_back"
         android:layout_weight="1">
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:maxLines="1"
-                style="@style/BoldMediumTextTheme"
-                android:id="@+id/messageUsername"
-                />
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:maxLines="1"
-                style="@style/MediumTextTheme"
-                android:id="@+id/messageContent"
-                />
-        </LinearLayout>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:maxLines="1"
+            style="@style/BoldMediumTextTheme"
+            android:id="@+id/messageUsername"
+            />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            style="@style/MediumTextTheme"
+            android:id="@+id/messageContent"
+            />
+    </LinearLayout>
+
+    <Space
+        android:layout_width="20px"
+        android:layout_height="20px"
+        android:id="@+id/rightConversationSpace" />
 
     <ImageView
         android:layout_width="wrap_content"

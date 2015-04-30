@@ -13,7 +13,6 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.gamr.gamr.ProfileHandlers.LeagueMatchHandler;
 import com.gamr.gamr.ProfileHandlers.MatchHandler;
@@ -21,6 +20,7 @@ import com.gamr.gamr.R;
 import com.gamr.gamr.Server.Match;
 import com.gamr.gamr.Server.Server;
 import com.gamr.gamr.Server.User;
+import com.gamr.gamr.Utils.LogAndErrors;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -39,6 +39,7 @@ public class MatchesFragment extends Fragment implements View.OnClickListener{
     private MatchHandler mMatchHandler;
     private View mRootView;
     private List<Match> mMatches;
+    private boolean mSearching;
 
     /**
      * Returns a new instance of this fragment for the given section
@@ -55,6 +56,7 @@ public class MatchesFragment extends Fragment implements View.OnClickListener{
     public MatchesFragment() {
         mMatchHandler = new LeagueMatchHandler();
         mMatches = null;
+        mSearching = false;
     }
 
     @Override
@@ -67,6 +69,16 @@ public class MatchesFragment extends Fragment implements View.OnClickListener{
         ((Button) mRootView.findViewById(R.id.findMatchesButton)).setOnClickListener(this);
         ((Button) mRootView.findViewById(R.id.new_search_button)).setOnClickListener(this);
         ((Button) mRootView.findViewById(R.id.createProfileButton)).setOnClickListener(this);
+
+        if (mSearching) {
+            // If we are switching the forms, we need to make one visible and one not visible
+            mRootView.findViewById(R.id.matchesFormLayout).setVisibility(View.INVISIBLE);
+            mRootView.findViewById(R.id.matchScreenLayout).setVisibility(View.VISIBLE);
+        } else {
+            // Now we will bring back the form instead of the search method
+            mRootView.findViewById(R.id.matchesFormLayout).setVisibility(View.VISIBLE);
+            mRootView.findViewById(R.id.matchScreenLayout).setVisibility(View.INVISIBLE);
+        }
 
         if (!User.sUser.getGames().contains("League")) {
             mRootView.findViewById(R.id.matchesFormLayout).setVisibility(View.INVISIBLE);
@@ -91,9 +103,7 @@ public class MatchesFragment extends Fragment implements View.OnClickListener{
             ((TextView) mRootView.findViewById(R.id.ranking)).setText(
                     match.getRank());
         } else {
-            ((TextView) mRootView.findViewById(R.id.matchScreenSummonerName)).setText("No matches found");
-            ((TextView) mRootView.findViewById(R.id.role)).setText("N/A");
-            ((TextView) mRootView.findViewById(R.id.ranking)).setText("N/A");
+            ((TextView) mRootView.findViewById(R.id.matchScreenSummonerName)).setText("There are no summoners near you");
             ((ImageView) mRootView.findViewById(R.id.summoner_icon)).setImageResource(R.drawable.summonericon1);
         }
     }
@@ -137,12 +147,13 @@ public class MatchesFragment extends Fragment implements View.OnClickListener{
 
             case R.id.findMatchesButton:
                 if (!findMatchesFieldsFilled()) {
-                    Toast.makeText(getActivity(), "Please fill out all fields", Toast.LENGTH_LONG).show();
+                    LogAndErrors.displayToast(this.getActivity(), "Please fill out all fields");
                     break;
                 }
                 // If we are switching the forms, we need to make one visible and one not visible
                 mRootView.findViewById(R.id.matchesFormLayout).setVisibility(View.INVISIBLE);
                 mRootView.findViewById(R.id.matchScreenLayout).setVisibility(View.VISIBLE);
+                mSearching = true;
                 newSearch();
                 updateTextFields();
                 mRootView.postInvalidate();
@@ -152,12 +163,13 @@ public class MatchesFragment extends Fragment implements View.OnClickListener{
                 // Now we will bring back the form instead of the search method
                 mRootView.findViewById(R.id.matchesFormLayout).setVisibility(View.VISIBLE);
                 mRootView.findViewById(R.id.matchScreenLayout).setVisibility(View.INVISIBLE);
+                mSearching = false;
                 mRootView.postInvalidate();
                 break;
 
             case R.id.createProfileButton:
                 if (!profileFieldsFilled()) {
-                    Toast.makeText(getActivity(), "Please fill out all fields", Toast.LENGTH_LONG).show();
+                    LogAndErrors.displayToast(this.getActivity(), "Please fill out all fields");
                     break;
                 }
                 mRootView.findViewById(R.id.matchesFormLayout).setVisibility(View.VISIBLE);
