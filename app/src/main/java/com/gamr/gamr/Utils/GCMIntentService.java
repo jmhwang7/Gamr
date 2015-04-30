@@ -56,22 +56,8 @@ public class GCMIntentService extends IntentService{
     }
 
     private void handleMatch(Bundle extras) {
-        int numMatches = Integer.parseInt(extras.getString("0", "0"));
-        String notificationMessage;
-
-        if (numMatches == 0) notificationMessage = "You have no matches!";
-        else if (numMatches == 1) {
-            String match = extras.getString("1", "");
-            notificationMessage = "You have 1 match: " + match + "!";
-        }
-        else {
-            StringBuffer notificationBuffer = new StringBuffer("You have ");
-            notificationBuffer.append(numMatches);
-            notificationBuffer.append(" matches!");
-            notificationMessage = notificationBuffer.toString();
-        }
-
-        sendNotification(notificationMessage);
+        String other_user = extras.getString("other_user", "");
+        sendNotification("You have matched with " + other_user);
     }
     private void sendNotification(String message) {
         mNotificationManager = (NotificationManager) this.getSystemService(Context.NOTIFICATION_SERVICE);
