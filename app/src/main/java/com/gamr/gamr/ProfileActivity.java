@@ -228,6 +228,8 @@ public class ProfileActivity extends ActionBarActivity implements View.OnClickLi
             updateTagNameTask.execute(tagName);
 
             User.sUser.setProfileName(tagName);
+            Toast.makeText(getApplicationContext(), "Profile Saved",
+                    Toast.LENGTH_LONG).show();
         }
     }
 
