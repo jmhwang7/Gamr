@@ -136,6 +136,8 @@ public class MessagesFragment extends Fragment implements SwipeRefreshLayout.OnR
             Intent intent = new Intent(getActivity(), ConversationActivity.class);
             intent.putExtra(ConversationActivity.SENDER_KEY,
                     mMatches.get(position).getMatchId());
+            intent.putExtra(ConversationActivity.OTHER_USERNAME_KEY,
+                    mMatches.get(position).getUsername());
 
             startActivity(intent);
         }
