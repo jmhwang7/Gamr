@@ -10,13 +10,11 @@
         android:layout_height="wrap_content"
         android:layout_centerInParent="true" >
 
-        <TextView android:id="@+id/greeting"
-            android:text="@string/splash_screen_greeting"
-            android:layout_width="fill_parent"
+        <ImageView
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="50dp"
-            android:gravity="center_horizontal"/>
-
+            android:id="@+id/imageView2"
+            android:src="@drawable/largeicon" />
     </RelativeLayout>
 
 </RelativeLayout>
