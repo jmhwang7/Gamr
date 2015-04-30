@@ -3,7 +3,6 @@ package com.gamr.gamr;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -26,15 +25,26 @@ public class ProfileActivity extends ActionBarActivity implements View.OnClickLi
     public static final String PROFILE_NAME_KEY = "PROFILE KEY";
     private boolean mIsUser;
     private boolean[] mButtonsClicked;
+    private String mUserID;
+    private Profile mProfile;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
 
-        mIsUser = User.sUser.getProfileName().equals(getIntent().getExtras().getString(PROFILE_NAME_KEY));
+        mUserID = getIntent().getExtras().getString(PROFILE_NAME_KEY);
+
+        mIsUser = User.sUser.getProfileName().equals(mUserID);
+
+        mProfile = null;
 
         mButtonsClicked = new boolean[5];
+
+        if (!mIsUser) {
+            GetProfileTask task = new GetProfileTask();
+            task.execute(mUserID);
+        }
 
         setInitialStates();
     }
@@ -50,7 +60,6 @@ public class ProfileActivity extends ActionBarActivity implements View.OnClickLi
             List<String> roles = User.sUser.getLeagueProfile().getRoles();
 
             for (String s : roles) {
-                Log.d("Testing", s);
                 switch (s) {
                     case LeagueProfile.ADCARRY:
                         mButtonsClicked[4] = true;
@@ -83,6 +92,46 @@ public class ProfileActivity extends ActionBarActivity implements View.OnClickLi
             ((EditText) findViewById(R.id.tagNameText)).setFocusableInTouchMode(false);
             ((EditText) findViewById(R.id.tagNameText)).setCursorVisible(false);
             ((EditText) findViewById(R.id.tagNameText)).setClickable(false);
+            ((Button) findViewById(R.id.saveProfileButton)).setClickable(false);
+            ((Button) findViewById(R.id.saveProfileButton)).setVisibility(View.INVISIBLE);
+
+            if (mProfile != null) {
+                ((TextView) findViewById(R.id.tagNameText)).setText(mProfile.getUsername());
+
+                LeagueProfile leagueProfile = mProfile.getLeagueProfile();
+
+                if (leagueProfile != null) {
+                    ((TextView) findViewById(R.id.summonerNameText)).setText(
+                            leagueProfile.getSummonerName());
+
+                    List<String> roles = leagueProfile.getRoles();
+
+                    for (String s : roles) {
+                        switch (s.trim()) {
+                            case LeagueProfile.ADCARRY:
+                                mButtonsClicked[4] = true;
+                                break;
+
+                            case LeagueProfile.SUPPORT:
+                                mButtonsClicked[1] = true;
+                                break;
+
+                            case LeagueProfile.JUNGLER:
+                                mButtonsClicked[3] = true;
+                                break;
+
+                            case LeagueProfile.MID:
+                                mButtonsClicked[2] = true;
+                                break;
+
+                            case LeagueProfile.TOP:
+                                mButtonsClicked[0] = true;
+                                break;
+                        }
+                    }
+                }
+                updateButtons();
+            }
         }
     }
 
@@ -248,7 +297,8 @@ public class ProfileActivity extends ActionBarActivity implements View.OnClickLi
 
         @Override
         protected void onPostExecute(Profile p) {
-            ((EditText) findViewById(R.id.tagNameText)).setText(p.getUsername());
+            mProfile = p;
+            setInitialStates();
         }
     }
 }
