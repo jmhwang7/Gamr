@@ -5,6 +5,7 @@ import com.google.gson.annotations.SerializedName;
 import java.util.List;
 
 /**
+ * Serialization class for a match retrieved from the server
  * Created by Thomas on 3/21/2015.
  */
 public class Match {

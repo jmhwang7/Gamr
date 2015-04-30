@@ -15,6 +15,9 @@ public class LeagueMatchHandler implements MatchHandler {
     private Map<String, String>[] mMatchMapArray;
     private int mCurrentMatch;
 
+    /**
+     * Public constructor for League Match Handler
+     */
     public LeagueMatchHandler() {
         mMatchMapArray = new HashMap[3];
 

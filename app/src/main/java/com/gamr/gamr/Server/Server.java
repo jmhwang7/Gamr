@@ -1,7 +1,5 @@
 package com.gamr.gamr.Server;
 
-import android.net.Uri;
-
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
@@ -21,6 +19,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
+ * Contains functions to send and retrieve information from the server
  * Created by Thomas on 3/21/2015.
  */
 public class Server {
@@ -39,6 +38,10 @@ public class Server {
     private static final String UPDATE_GCM_DEVICE_ID_FUNCTION = "update_gcm_device_id";
     private static final String RESPOND_TO_MATCH_FUNCTION = "match_response";
 
+    /**
+     * Testing function
+     * @param args
+     */
     public static void main(String[] args) {
         List<Match> test = Server.getUsersMatchedWith("tdcornish12@gmail.com");
         System.out.println(test.get(1).getUsername() + " " + test.get(1).getMatchId());
@@ -71,6 +74,11 @@ public class Server {
         }
     }
 
+    /**
+     * Retrieves users the current user has matched with.
+     * @param userId
+     * @return
+     */
     public static List<Match> getUsersMatchedWith(String userId) {
         Map<String, String> params = new HashMap<>();
         params.put("user_id", userId);
@@ -85,7 +93,13 @@ public class Server {
         }
     }
 
-
+    /**
+     * Sends the user's decision on a potential match to the server
+     * @param userId
+     * @param otherUserId
+     * @param accepted
+     * @return
+     */
     public static boolean respondToMatch(String userId, String otherUserId, boolean accepted) {
         Map<String, String> params = new HashMap<>();
         params.put("user_id", userId);
@@ -102,6 +116,11 @@ public class Server {
         }
     }
 
+    /**
+     * Creates a user on the database.
+     * @param userId
+     * @param username
+     */
     public static void createUser(String userId, String username) {
         Map<String, String> params = new HashMap<>();
         params.put("user_id", userId);
@@ -115,6 +134,11 @@ public class Server {
         }
     }
 
+    /**
+     * Retrieves the user's profile from the server
+     * @param userId
+     * @return
+     */
     public static Profile getProfile(String userId) {
         Map<String, String> params = new HashMap<>();
         params.put("user_id", userId);
@@ -128,6 +152,11 @@ public class Server {
         }
     }
 
+    /**
+     * Updates the username of the user on the server.
+     * @param userId
+     * @param newUsername
+     */
     public static void updateUsername(String userId, String newUsername) {
         Map<String, String> params = new HashMap<>();
         params.put("user_id", userId);
@@ -141,6 +170,11 @@ public class Server {
         }
     }
 
+    /**
+     * Updates the summoner name of the user on the server.
+     * @param userId
+     * @param newSummonerName
+     */
     public static void updateSummonerName(String userId, String newSummonerName) {
         Map<String, String> params = new HashMap<>();
         params.put("user_id", userId);
@@ -155,6 +189,11 @@ public class Server {
         }
     }
 
+    /**
+     * Updates the server with the user's selected roles
+     * @param userId
+     * @param roles
+     */
     public static void updateLeagueRoles(String userId, List<String> roles) {
         Map<String, String> params = new HashMap<>();
         params.put("user_id", userId);
@@ -176,6 +215,11 @@ public class Server {
         }
     }
 
+    /**
+     * Updates the server with the user's selected league server (ex. NA)
+     * @param userId
+     * @param newServer
+     */
     public static void updateLeagueServer(String userId, String newServer) {
         Map<String, String> params = new HashMap<>();
         params.put("user_id", userId);
@@ -191,6 +235,11 @@ public class Server {
         }
     }
 
+    /**
+     * Updates the server with the user's selected game modes for League of Legends
+     * @param userId
+     * @param modes
+     */
     public static void updateLeagueGameModes(String userId, List<String> modes) {
         Map<String, String> params = new HashMap<>();
         params.put("user_id", userId);
@@ -366,6 +415,12 @@ public class Server {
         return readResponseStream(connection.getInputStream());
     }
 
+    /**
+     * Helper method to read response stream.
+     * @param responseStream
+     * @return
+     * @throws IOException
+     */
     private static String readResponseStream(InputStream responseStream) throws IOException {
         BufferedReader responseReader = new BufferedReader(new InputStreamReader(responseStream));
         StringBuilder response = new StringBuilder();
@@ -376,17 +431,13 @@ public class Server {
         return response.toString();
     }
 
-    private static URL createUrlAndroid(String function, Map<String, String> params) throws MalformedURLException {
-        Uri.Builder builder = Uri.parse(BASE_URL).buildUpon().appendPath(function);
-        for (Map.Entry<String, String> each : params.entrySet()) {
-            if (!each.getKey().equals("body")) {
-                builder.appendQueryParameter(each.getKey(), each.getValue());
-            }
-        }
-        Uri uri = builder.build();
-        return new URL(uri.toString());
-    }
-
+    /**
+     * Private helper method to create api urls.
+     * @param function
+     * @param params
+     * @return
+     * @throws MalformedURLException
+     */
     private static URL createUrlJava(String function, Map<String, String> params) throws MalformedURLException {
         StringBuilder url = new StringBuilder(BASE_URL).append(function).append("?");
         for (Map.Entry each : params.entrySet()) {

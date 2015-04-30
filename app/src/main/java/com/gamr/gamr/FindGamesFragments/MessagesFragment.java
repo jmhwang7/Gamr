@@ -52,6 +52,9 @@ public class MessagesFragment extends Fragment implements SwipeRefreshLayout.OnR
         return fragment;
     }
 
+    /**
+     * Public constructor for MessagesFragment
+     */
     public MessagesFragment() {
     }
 
@@ -66,18 +69,6 @@ public class MessagesFragment extends Fragment implements SwipeRefreshLayout.OnR
         messagesListView.setEmptyView(messagesEmptyView);
 
         updateConversations();
-
-        /*
-        // From there we will populate our list with our current messages
-        if (mMessages == null) {
-            mMessages = getCurrentMessages();
-        }
-
-        if (mAdapter == null) {
-            // We then create the adapter based on that list and attach it to the view
-            final MessagesAdapter adapter = new MessagesAdapter(mRootView.getContext(), mMessages);
-            messagesListView.setAdapter(adapter);
-        } */
 
         // We also need to attach the on click listener
         messagesListView.setOnItemClickListener(new MessagesListener());
@@ -181,6 +172,9 @@ public class MessagesFragment extends Fragment implements SwipeRefreshLayout.OnR
         }
     }
 
+    /**
+     * Retrieves all the messages within a conversation between 2 users from the server.
+     */
     private class GetConversationsTask extends AsyncTask<Void, Void, List<Match>> {
         private Context mContext;
 

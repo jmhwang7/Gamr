@@ -16,7 +16,9 @@ import com.gamr.gamr.Utils.AccountUtils;
 import com.gamr.gamr.Utils.GooglePlayUtils;
 import com.gamr.gamr.Utils.LogAndErrors;
 
-
+/**
+ * Allows user to create an account.
+ */
 public class CreateUserActivity extends ActionBarActivity implements View.OnClickListener {
 
     @Override

@@ -17,6 +17,10 @@ public class ConversationList {
     private List<Message> mMessageList;
     private String mOtherUserID;
 
+    /**
+     * Public constructor for ConversationList
+     * @param otherUserID id of the other user the user is communicating with
+     */
     public ConversationList(String otherUserID) {
         mOtherUserID = otherUserID;
         mMessageList = new ArrayList<Message>();
@@ -53,7 +57,9 @@ public class ConversationList {
         task.execute(otherUser);
     }
 
-
+    /**
+     * Retrieves the entire conversation from the server.
+     */
     private class UpdateTask extends AsyncTask<String, Void, List<Message>> {
         private Context mContext;
 

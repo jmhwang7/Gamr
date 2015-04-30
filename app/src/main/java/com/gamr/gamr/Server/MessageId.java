@@ -3,6 +3,7 @@ package com.gamr.gamr.Server;
 import com.google.gson.annotations.SerializedName;
 
 /**
+ * Serialization class for the message id of a message retrieved from the server
  * Created by Thomas on 3/22/2015.
  */
 public class MessageId {

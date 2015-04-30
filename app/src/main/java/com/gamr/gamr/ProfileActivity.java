@@ -20,7 +20,9 @@ import com.gamr.gamr.Server.User;
 import java.util.ArrayList;
 import java.util.List;
 
-
+/**
+ * Allows the user to view and edit their profile.
+ */
 public class ProfileActivity extends ActionBarActivity implements View.OnClickListener {
     public static final String PROFILE_NAME_KEY = "PROFILE KEY";
     private boolean mIsUser;
@@ -175,7 +177,9 @@ public class ProfileActivity extends ActionBarActivity implements View.OnClickLi
         finish();
     }
 
-
+    /**
+     * Method that updates the profile of the user on the server.
+     */
     public void updateProfile() {
         boolean anyButtonClicked = mButtonsClicked[0] | mButtonsClicked[1] | mButtonsClicked[2] |
                 mButtonsClicked[3] | mButtonsClicked[4];
@@ -264,6 +268,9 @@ public class ProfileActivity extends ActionBarActivity implements View.OnClickLi
         updateButtons();
     }
 
+    /**
+     * Updates the alpha values of the role buttons accordingly.
+     */
     private void updateButtons() {
         findViewById(R.id.tankImageButton).setAlpha(mButtonsClicked[0]?1.0f:0.3f);
         findViewById(R.id.supportImageButton).setAlpha(mButtonsClicked[1]?1.0f:0.3f);
@@ -272,6 +279,9 @@ public class ProfileActivity extends ActionBarActivity implements View.OnClickLi
         findViewById(R.id.adcarryImageButton).setAlpha(mButtonsClicked[4]?1.0f:0.3f);
     }
 
+    /**
+     * Updates the server with the user's selected role.
+     */
     private class UpdateRoleTask extends AsyncTask<List<String>, Void, Void> {
 
         @Override
@@ -281,6 +291,9 @@ public class ProfileActivity extends ActionBarActivity implements View.OnClickLi
         }
     }
 
+    /**
+     * Updates the tag name of the user on the server.
+     */
     private class UpdateTagNameTask extends AsyncTask<String, Void, Void> {
 
         @Override
@@ -290,6 +303,9 @@ public class ProfileActivity extends ActionBarActivity implements View.OnClickLi
         }
     }
 
+    /**
+     * Retrieves the profile of the user from the server.
+     */
     private class GetProfileTask extends AsyncTask<String, Void, Profile> {
 
         @Override

@@ -113,6 +113,10 @@ public class ConversationActivity extends ActionBarActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    /**
+     * Handles send message event from user.
+     * @param v
+     */
     public void sendMessage(View v) {
         TextView textView = (TextView) findViewById(R.id.messageTextBox);
 

@@ -38,8 +38,9 @@ public class MatchesFragment extends Fragment implements View.OnClickListener{
     private boolean mSearching;
 
     /**
-     * Returns a new instance of this fragment for the given section
-     * number.
+     * Returns a new instance of this fragment for the given section number.
+     * @param sectionNumber
+     * @return
      */
     public static MatchesFragment newInstance(int sectionNumber) {
         MatchesFragment fragment = new MatchesFragment();
@@ -49,6 +50,9 @@ public class MatchesFragment extends Fragment implements View.OnClickListener{
         return fragment;
     }
 
+    /**
+     * Constructor for MatchesFragment
+     */
     public MatchesFragment() {
         mMatches = null;
         mSearching = false;
@@ -157,12 +161,18 @@ public class MatchesFragment extends Fragment implements View.OnClickListener{
         }
     }
 
-
+    /**
+     * Returns a boolean representing whether the user has selected a mode list.
+     * @return
+     */
     private boolean findMatchesFieldsFilled() {
         return (getModesList().size() != 0);
     }
 
-
+    /**
+     * Returns a boolean representing whether the user has filled out their profile.
+     * @return
+     */
     private boolean profileFieldsFilled() {
         if (String.valueOf(((EditText) mRootView.findViewById(R.id.summoner_name)).getText()).trim().equals("")) {
             return false;
@@ -174,13 +184,19 @@ public class MatchesFragment extends Fragment implements View.OnClickListener{
         return true;
     }
 
-
+    /**
+     * Updates the server whether the user has approved or rejected a user as a match.
+     * @param isMatch
+     */
     private void passCall(boolean isMatch) {
         MatchTask task = new MatchTask();
         task.execute(isMatch);
         updateTextFields();
     }
 
+    /**
+     * Runs a new search for potential users to match with.
+     */
     private void newSearch() {
         List<String> modes = getModesList();
         UpdateModesTask task = new UpdateModesTask();
@@ -204,6 +220,10 @@ public class MatchesFragment extends Fragment implements View.OnClickListener{
         updateRoleTask.execute(roles);
     }
 
+    /**
+     * Returns a list of roles selected by the user
+     * @return
+     */
     private List<String> getRolesList() {
         List<String> roles = new ArrayList<String>();
 
@@ -230,6 +250,10 @@ public class MatchesFragment extends Fragment implements View.OnClickListener{
         return roles;
     }
 
+    /**
+     * Returns a list of game modes selected by the user.
+     * @return
+     */
     private List<String> getModesList() {
         List<String> roles = new ArrayList<String>();
 
@@ -268,7 +292,9 @@ public class MatchesFragment extends Fragment implements View.OnClickListener{
         return roles;
     }
 
-
+    /**
+     * Updates the server with the user's summoner name
+     */
     private class UpdateSummonerTask extends AsyncTask<String, Void, Void> {
 
         @Override
@@ -278,7 +304,9 @@ public class MatchesFragment extends Fragment implements View.OnClickListener{
         }
     }
 
-
+    /**
+     * Updates the server with the role selected by the user.
+     */
     private class UpdateRoleTask extends AsyncTask<List<String>, Void, Void> {
 
         @Override
@@ -288,7 +316,9 @@ public class MatchesFragment extends Fragment implements View.OnClickListener{
         }
     }
 
-
+    /**
+     * Updates the server with the modes selected by the user.
+     */
     private class UpdateModesTask extends AsyncTask<List<String>, Void, Void> {
 
         @Override
@@ -298,6 +328,9 @@ public class MatchesFragment extends Fragment implements View.OnClickListener{
         }
     }
 
+    /**
+     * Asynchronously retrieves new potential matches from the server.
+     */
     private class SearchTask extends AsyncTask<Void, Void, List<Match>> {
 
         @Override
@@ -315,7 +348,9 @@ public class MatchesFragment extends Fragment implements View.OnClickListener{
         }
     }
 
-
+    /**
+     * Asynchronously sends the user's decision for a potential match to the server.
+     */
     private class MatchTask extends AsyncTask<Boolean, Void, Void> {
 
         @Override

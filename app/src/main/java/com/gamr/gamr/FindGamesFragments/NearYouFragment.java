@@ -30,6 +30,9 @@ public class NearYouFragment extends Fragment {
         return fragment;
     }
 
+    /**
+     * Public constructor for the NearYouFragment
+     */
     public NearYouFragment() {
     }
 
