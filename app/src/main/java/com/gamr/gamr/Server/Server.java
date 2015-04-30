@@ -31,6 +31,7 @@ public class Server {
     private static final String GET_MESSAGE_FUNCTION = "get_messages";
     private static final String GET_MATCHES_FUNCTION = "match";
     private static final String GET_PROFILE_FUNCTION = "get_profile";
+    private static final String GET_USERS_MATCHED_WITH_FUNCTION = "get_users_matched_with";
     private static final String SEND_MESSAGE_FUNCTION = "send_message";
     private static final String UPDATE_LOCATION_FUNCTION = "update_location";
     private static final String UPDATE_PROFILE_FUNCTION = "update_profile";
@@ -38,13 +39,15 @@ public class Server {
     private static final String UPDATE_GCM_DEVICE_ID_FUNCTION = "update_gcm_device_id";
     private static final String RESPOND_TO_MATCH_FUNCTION = "match_response";
 
-    public static void main(String[] args){
-        Server.sendMessage("testuser1@gmail.com", "antoniobrese@gmail.com", "Sup bro");
+    public static void main(String[] args) {
+        List<Match> test = Server.getUsersMatchedWith("tdcornish12@gmail.com");
+        System.out.println(test.get(1).getUsername() + " " + test.get(1).getMatchId());
     }
 
     /**
      * Get a list of messages between two users
-     * @param userId first user
+     *
+     * @param userId      first user
      * @param otherUserId second user
      * @return a list of messages between users, ordered by date
      */
@@ -55,10 +58,11 @@ public class Server {
         if (otherUserId != null) {
             params.put("other_user_id", otherUserId);
         }
-        
+
         try {
             String response = get(GET_MESSAGE_FUNCTION, params);
-            List<Message> conversation = new Gson().fromJson(response, new TypeToken<List<Message>>() {}.getType());
+            List<Message> conversation = new Gson().fromJson(response, new TypeToken<List<Message>>() {
+            }.getType());
             return conversation;
         } catch (IOException e) {
             //If request fails, return empty message list. Probably a better way to handle this but needs discussion
@@ -67,7 +71,22 @@ public class Server {
         }
     }
 
-    public static boolean respondToMatch(String userId, String otherUserId, boolean accepted){
+    public static List<Match> getUsersMatchedWith(String userId) {
+        Map<String, String> params = new HashMap<>();
+        params.put("user_id", userId);
+        try {
+            String response = get(GET_USERS_MATCHED_WITH_FUNCTION, params);
+            List<Match> matches = new Gson().fromJson(response, new TypeToken<List<Match>>() {
+            }.getType());
+            return matches;
+        } catch (IOException e) {
+            e.printStackTrace();
+            return new ArrayList<>();
+        }
+    }
+
+
+    public static boolean respondToMatch(String userId, String otherUserId, boolean accepted) {
         Map<String, String> params = new HashMap<>();
         params.put("user_id", userId);
         params.put("other_user_id", otherUserId);
@@ -83,23 +102,23 @@ public class Server {
         }
     }
 
-    public static void createUser(String userId, String username){
+    public static void createUser(String userId, String username) {
         Map<String, String> params = new HashMap<>();
         params.put("user_id", userId);
         Map<String, String> body = new HashMap<>();
         body.put("username", username);
 
-        try{
+        try {
             post(UPDATE_PROFILE_FUNCTION, params, body);
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
-    public static Profile getProfile(String userId){
+    public static Profile getProfile(String userId) {
         Map<String, String> params = new HashMap<>();
         params.put("user_id", userId);
-        try{
+        try {
             String response = get(GET_PROFILE_FUNCTION, params);
             Profile profile = new Gson().fromJson(response, Profile.class);
             return profile;
@@ -109,55 +128,55 @@ public class Server {
         }
     }
 
-    public static void updateUsername(String userId, String newUsername){
+    public static void updateUsername(String userId, String newUsername) {
         Map<String, String> params = new HashMap<>();
         params.put("user_id", userId);
         Map<String, String> body = new HashMap<>();
         body.put("username", newUsername);
 
-        try{
+        try {
             post(UPDATE_PROFILE_FUNCTION, params, body);
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
-    public static void updateSummonerName(String userId, String newSummonerName){
+    public static void updateSummonerName(String userId, String newSummonerName) {
         Map<String, String> params = new HashMap<>();
         params.put("user_id", userId);
         params.put("game", "1");
         Map<String, String> body = new HashMap<>();
         body.put("in_game_name", newSummonerName);
 
-        try{
+        try {
             post(UPDATE_PROFILE_FUNCTION, params, body);
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
-    public static void updateLeagueRoles(String userId, List<String> roles){
+    public static void updateLeagueRoles(String userId, List<String> roles) {
         Map<String, String> params = new HashMap<>();
         params.put("user_id", userId);
         params.put("game", "1");
         Map<String, String> body = new HashMap<>();
         StringBuilder rolesList = new StringBuilder();
-        for(String each : roles){
+        for (String each : roles) {
             rolesList.append(each).append(",");
         }
         body.put("field", "1");
         String list = rolesList.toString();
-        list = list.substring(0, list.length()-1);
+        list = list.substring(0, list.length() - 1);
         body.put("value", list);
 
-        try{
+        try {
             post(UPDATE_GAME_FIELD_FUNCTION, params, body);
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
-    public static void updateLeagueServer(String userId, String newServer){
+    public static void updateLeagueServer(String userId, String newServer) {
         Map<String, String> params = new HashMap<>();
         params.put("user_id", userId);
         params.put("game", "1");
@@ -165,28 +184,28 @@ public class Server {
         body.put("field", "4");
         body.put("value", newServer);
 
-        try{
+        try {
             post(UPDATE_GAME_FIELD_FUNCTION, params, body);
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
-    public static void updateLeagueGameModes(String userId, List<String> modes){
+    public static void updateLeagueGameModes(String userId, List<String> modes) {
         Map<String, String> params = new HashMap<>();
         params.put("user_id", userId);
         params.put("game", "1");
         Map<String, String> body = new HashMap<>();
         StringBuilder modeList = new StringBuilder();
-        for(String each : modes){
+        for (String each : modes) {
             modeList.append(each).append(",");
         }
         body.put("field", "3");
         String list = modeList.toString();
-        list = list.substring(0, list.length()-1);
+        list = list.substring(0, list.length() - 1);
         body.put("value", list);
 
-        try{
+        try {
             post(UPDATE_GAME_FIELD_FUNCTION, params, body);
         } catch (IOException e) {
             e.printStackTrace();
@@ -195,9 +214,10 @@ public class Server {
 
     /**
      * Gets a list of Matches for the specified user
-     * @param userId user to get matches for
+     *
+     * @param userId      user to get matches for
      * @param useLocation whether to use physical location to match or not
-     * @param useGames whether to match based on game or not
+     * @param useGames    whether to match based on game or not
      * @return List of matches for the user
      */
     public static List<Match> getMatches(String userId, boolean useLocation, boolean useGames) {
@@ -207,7 +227,8 @@ public class Server {
         params.put("use_games", Boolean.toString(useGames));
         try {
             String response = get(GET_MATCHES_FUNCTION, params);
-            List<Match> matches = new Gson().fromJson(response, new TypeToken<List<Match>>() {}.getType());
+            List<Match> matches = new Gson().fromJson(response, new TypeToken<List<Match>>() {
+            }.getType());
             return matches;
         } catch (IOException e) {
             e.printStackTrace();
@@ -217,9 +238,10 @@ public class Server {
 
     /**
      * Sends a message between users
+     *
      * @param fromUserId user the message is being sent from
-     * @param toUserId user the message is being sent to
-     * @param text body of the message
+     * @param toUserId   user the message is being sent to
+     * @param text       body of the message
      * @return database id of the message
      */
     public static int sendMessage(String fromUserId, String toUserId, String text) {
@@ -248,8 +270,9 @@ public class Server {
 
     /**
      * Updates location of the user
-     * @param userId app user
-     * @param latitude latitude of user's location
+     *
+     * @param userId    app user
+     * @param latitude  latitude of user's location
      * @param longitude longitude of user's location
      * @return boolean indicating whether location update was successful
      */
@@ -273,8 +296,9 @@ public class Server {
 
     /**
      * Updates stored Google Cloud Messaging (GCM) Device ID for the user
+     *
      * @param userId app user
-     * @param gcmId gcm device id returned by google when device was registered
+     * @param gcmId  gcm device id returned by google when device was registered
      * @return boolean indicating whether device id update was successful
      */
     public static boolean updateGCMDeviceId(String userId, String gcmId) {
@@ -296,8 +320,9 @@ public class Server {
 
     /**
      * Performs HTTP get for the function provided and the given parameters
+     *
      * @param function API endpoint for the URL
-     * @param params Map of parameters to append to the URL
+     * @param params   Map of parameters to append to the URL
      * @return the server response
      * @throws IOException
      */
@@ -309,9 +334,10 @@ public class Server {
 
     /**
      * Performs HTTP post for the function provided, it's given parameters, and it's given body
+     *
      * @param function API endpoint for the URL
-     * @param params Map of parameters to append to the URL
-     * @param body Map of parameters to put in the body x-www-form-urlencoded style: key=value&key=value
+     * @param params   Map of parameters to append to the URL
+     * @param body     Map of parameters to put in the body x-www-form-urlencoded style: key=value&key=value
      * @return the server response
      * @throws IOException
      */
@@ -326,7 +352,7 @@ public class Server {
 
         //Construct the body based on the body map provided
         StringBuilder text = new StringBuilder();
-        for(Map.Entry each : body.entrySet()){
+        for (Map.Entry each : body.entrySet()) {
             text.append(each.getKey()).append("=").append(each.getValue()).append("&");
         }
         //Set content length header
