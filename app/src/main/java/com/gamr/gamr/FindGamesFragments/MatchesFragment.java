@@ -14,8 +14,6 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.gamr.gamr.ProfileHandlers.LeagueMatchHandler;
-import com.gamr.gamr.ProfileHandlers.MatchHandler;
 import com.gamr.gamr.R;
 import com.gamr.gamr.Server.Match;
 import com.gamr.gamr.Server.Server;
@@ -24,7 +22,6 @@ import com.gamr.gamr.Utils.LogAndErrors;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 /**
  * Fragment that represents the viewing of matches in the area
@@ -36,7 +33,6 @@ public class MatchesFragment extends Fragment implements View.OnClickListener{
      */
     private static final String ARG_SECTION_NUMBER = "section_number";
 
-    private MatchHandler mMatchHandler;
     private View mRootView;
     private List<Match> mMatches;
     private boolean mSearching;
@@ -58,7 +54,6 @@ public class MatchesFragment extends Fragment implements View.OnClickListener{
      * Constructor for MatchesFragment
      */
     public MatchesFragment() {
-        mMatchHandler = new LeagueMatchHandler();
         mMatches = null;
         mSearching = false;
     }
@@ -106,36 +101,14 @@ public class MatchesFragment extends Fragment implements View.OnClickListener{
                     match.getRole().get(0));
             ((TextView) mRootView.findViewById(R.id.ranking)).setText(
                     match.getRank());
+            ((TextView) mRootView.findViewById(R.id.role)).setVisibility(View.VISIBLE);
+            ((TextView) mRootView.findViewById(R.id.ranking)).setVisibility(View.VISIBLE);
         } else {
             ((TextView) mRootView.findViewById(R.id.matchScreenSummonerName)).setText("There are no summoners near you");
+            ((TextView) mRootView.findViewById(R.id.role)).setVisibility(View.INVISIBLE);
+            ((TextView) mRootView.findViewById(R.id.ranking)).setVisibility(View.INVISIBLE);
             ((ImageView) mRootView.findViewById(R.id.summoner_icon)).setImageResource(R.drawable.summonericon1);
         }
-    }
-
-    /**
-     * Changes the image on the ImageView based on the user's profile picture.
-     * @param profileMap
-     */
-    private void setImageView(Map<String, String> profileMap) {
-        int drawResId;
-        switch (profileMap.get(LeagueMatchHandler.ICON_KEY)) {
-            case "1":
-                drawResId = R.drawable.summonericon1;
-                break;
-
-            case "2":
-                drawResId = R.drawable.summonericon2;
-                break;
-
-            case "3":
-                drawResId = R.drawable.summonericon3;
-                break;
-
-            default:
-                drawResId = R.drawable.summonericon1;
-        }
-
-        ((ImageView) mRootView.findViewById(R.id.summoner_icon)).setImageResource(drawResId);
     }
 
     @Override
