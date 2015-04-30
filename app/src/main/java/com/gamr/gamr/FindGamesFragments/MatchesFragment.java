@@ -1,5 +1,6 @@
 package com.gamr.gamr.FindGamesFragments;
 
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -14,6 +15,7 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.gamr.gamr.ProfileActivity;
 import com.gamr.gamr.R;
 import com.gamr.gamr.Server.Match;
 import com.gamr.gamr.Server.Server;
@@ -68,6 +70,7 @@ public class MatchesFragment extends Fragment implements View.OnClickListener{
         ((Button) mRootView.findViewById(R.id.findMatchesButton)).setOnClickListener(this);
         ((Button) mRootView.findViewById(R.id.new_search_button)).setOnClickListener(this);
         ((Button) mRootView.findViewById(R.id.createProfileButton)).setOnClickListener(this);
+        ((ImageView) mRootView.findViewById(R.id.summoner_icon)).setOnClickListener(this);
 
         if (mSearching) {
             // If we are switching the forms, we need to make one visible and one not visible
@@ -92,7 +95,7 @@ public class MatchesFragment extends Fragment implements View.OnClickListener{
      * Used to update the text fields for the given profile.
      */
     private void updateTextFields() {
-        if (mMatches != null && mMatches.size() != 0) {
+        if (mMatches != null && mMatches.size() > 0) {
             Match match = mMatches.get(0);
             ((TextView) mRootView.findViewById(R.id.matchScreenSummonerName)).setText(
                     match.getUsername());
@@ -157,6 +160,12 @@ public class MatchesFragment extends Fragment implements View.OnClickListener{
                 mRootView.findViewById(R.id.createProfileLayout).setVisibility(View.INVISIBLE);
                 createProfile();
                 mRootView.postInvalidate();
+                break;
+
+            case R.id.summoner_icon:
+                Intent intent = new Intent(getActivity(), ProfileActivity.class);
+                intent.putExtra(ProfileActivity.PROFILE_NAME_KEY, mMatches.get(0).getMatchId());
+                startActivity(intent);
                 break;
         }
     }
