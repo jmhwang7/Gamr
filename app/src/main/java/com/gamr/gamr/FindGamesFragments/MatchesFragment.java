@@ -296,7 +296,6 @@ public class MatchesFragment extends Fragment implements View.OnClickListener{
      * Updates the server with the user's summoner name
      */
     private class UpdateSummonerTask extends AsyncTask<String, Void, Void> {
-
         @Override
         protected Void doInBackground(String... params) {
             Server.updateSummonerName(User.sUser.getAccountID(), params[0]);
