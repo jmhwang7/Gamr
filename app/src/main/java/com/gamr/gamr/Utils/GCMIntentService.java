@@ -40,14 +40,40 @@ public class GCMIntentService extends IntentService{
                 Log.i(LOG_TAG, "Deleted messages on server: " + extras.toString());
             }
             else if (GoogleCloudMessaging.MESSAGE_TYPE_MESSAGE.equals(messageType)) {
-                sendNotification();
+                String type = extras.getString("message", "");
+                switch(type) {
+                    case "match":
+                        handleMatch(extras);
+                        break;
+                    case "message":
+                        break;
+                }
                 Log.i(LOG_TAG, extras.toString());
             }
         }
 
         GCMBroadcastReceiver.completeWakefulIntent(intent);
     }
-    private void sendNotification() {
+
+    private void handleMatch(Bundle extras) {
+        int numMatches = Integer.parseInt(extras.getString("0", "0"));
+        String notificationMessage;
+
+        if (numMatches == 0) notificationMessage = "You have no matches!";
+        else if (numMatches == 1) {
+            String match = extras.getString("1", "");
+            notificationMessage = "You have 1 match: " + match + "!";
+        }
+        else {
+            StringBuffer notificationBuffer = new StringBuffer("You have ");
+            notificationBuffer.append(numMatches);
+            notificationBuffer.append(" matches!");
+            notificationMessage = notificationBuffer.toString();
+        }
+
+        sendNotification(notificationMessage);
+    }
+    private void sendNotification(String message) {
         mNotificationManager = (NotificationManager) this.getSystemService(Context.NOTIFICATION_SERVICE);
 
         PendingIntent intent = PendingIntent.getBroadcast(this, 0, new Intent("Gamr.DoNothing"), 0);
@@ -56,7 +82,7 @@ public class GCMIntentService extends IntentService{
                 .setFullScreenIntent(intent, true)
                 .setSmallIcon(R.drawable.ic_launcher)
                 .setContentTitle("Gamr")
-                .setContentText("You've matched with a user!")
+                .setContentText(message)
                 .setAutoCancel(true);
 
         mNotificationManager.notify(NOTIFICATION_ID, mBuilder.build());
